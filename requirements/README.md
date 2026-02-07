@@ -24,7 +24,7 @@ This directory contains comprehensive documentation for the BeatRecall mobile ap
 ---
 
 ### 2. [User Stories](02_user_stories.md)
-**Purpose:** User-centered descriptions of features from the end-user perspective
+**Purpose:** User-centered descriptions focusing on **why** users need features and the value delivered
 
 **Contents:**
 - Epic 1: Core Learning Experience
@@ -33,8 +33,9 @@ This directory contains comprehensive documentation for the BeatRecall mobile ap
 - Epic 4: Information and Settings
 - Epic 5: User Experience Enhancements
 - Epic 6: Advanced Features (Future)
+- **Links to corresponding Functional Requirements** for detailed acceptance criteria
 
-**Use this when:** You need to understand the user's perspective and needs for each feature.
+**Use this when:** You need to understand the user's perspective and needs. For technical details and acceptance criteria, follow the links to the Functional Requirements document.
 
 ---
 
@@ -163,40 +164,46 @@ This directory contains comprehensive documentation for the BeatRecall mobile ap
 ```
 README.md (Project Overview)
     │
-    ├─→ User Stories (02) ────────┐
-    │                              │
-    ├─→ Functional Requirements (01) ←──┘
-    │           │
-    │           └─→ Architecture (04)
-    │                     │
-    ├─→ Development Setup (03) ←──┤
-    │                              │
-    ├─→ Testing Strategy (06) ────┘
+    ├─→ User Stories (02) ─────links to──→ Functional Requirements (01)
+    │                                              │
+    │                                              └─→ Architecture (04)
+    │                                                        │
+    ├─→ Development Setup (03) ←──────────────────────────┘
+    │                              
+    ├─→ Testing Strategy (06)
     │
     ├─→ Non-Functional Requirements (05)
     │
     └─→ Roadmap (07)
 ```
 
+**Note:** User Stories now **link to** Functional Requirements instead of duplicating them. This approach:
+- Reduces duplication and maintenance burden
+- Keeps user stories focused on user value and perspective
+- Centralizes technical details and acceptance criteria in FRs
+- Makes updates easier (change once in FRs, referenced everywhere)
+
 ---
 
 ## ✅ How to Use These Documents
 
 ### During Planning:
-- Use **User Stories** to create sprint backlogs
-- Reference **Functional Requirements** for detailed specifications
+- Start with **User Stories** to understand user value and create sprint backlogs
+- Follow links to **Functional Requirements** for detailed specifications and acceptance criteria
 - Consult **Roadmap** for scheduling and priorities
 
 ### During Development:
+- Begin with **User Stories** to understand the "why" 
+- Consult linked **Functional Requirements** for the "what" and "how"
 - Follow **Architecture** guidelines for code structure
-- Refer to **Functional Requirements** for implementation details
 - Use **Testing Strategy** for writing tests
 - Check **Development Setup** for environment issues
 
 ### During Review:
-- Verify against **Functional Requirements** acceptance criteria
-- Check **Non-Functional Requirements** for quality
-- Validate **User Stories** are fulfilled
+- Verify user stories are fulfilled (user value delivered)
+- Check **Functional Requirements** acceptance criteria are met
+- Validate **Non-Functional Requirements** for quality
+- Ensure all linked requirements are satisfied
 
 ### During Release:
 - Ensure all **Roadmap** milestone criteria are met
