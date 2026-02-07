@@ -9,7 +9,7 @@
 
 ## Purpose
 
-This document describes features from the **user's perspective**, focusing on the value delivered and user needs. For detailed technical specifications and acceptance criteria, refer to the [Functional Requirements](01_functional_requirements.md).
+This document describes features from the **user's perspective**, focusing on the value delivered and user needs. For detailed technical specifications and acceptance criteria, refer to the [Functional Requirements](../requirements/README.md).
 
 ---
 
@@ -20,7 +20,7 @@ This document describes features from the **user's perspective**, focusing on th
 **I want to** review songs that are due for practice  
 **So that** I can maintain my music recognition skills
 
-**Related Requirements:** [FR-1.4.1](01_functional_requirements.md#141-due-queue-management), [FR-1.4.2](01_functional_requirements.md#142-review-session), [FR-3.1.1](01_functional_requirements.md#31-dashboard)
+**Related Requirements:** [DUEQUEUE-001](../requirements/core/DUEQUEUE.md#duequeue-001-due-cards-retrieval), [DUEQUEUE-002](../requirements/core/DUEQUEUE.md#duequeue-002-review-session), [FR-3.1.1](../requirements/03_additional.md#fr-311-overview-display)
 
 **Priority:** High | **Story Points:** 5
 
@@ -31,7 +31,7 @@ This document describes features from the **user's perspective**, focusing on th
 **I want to** hear a song and try to recall its title and artist  
 **So that** I can test my music knowledge
 
-**Related Requirements:** [FR-1.2.1](01_functional_requirements.md#122-flashcard-system), [FR-1.2.2](01_functional_requirements.md#122-youtube-media-player)
+**Related Requirements:** [FLASHSYS-001](../requirements/core/FLASHSYS.md#flashsys-001-dual-sided-card-interface), [FLASHSYS-002](../requirements/core/FLASHSYS.md#flashsys-002-youtube-media-player)
 
 **Priority:** High | **Story Points:** 8
 
@@ -42,7 +42,7 @@ This document describes features from the **user's perspective**, focusing on th
 **I want to** rate how well I remembered the song  
 **So that** the app knows when to show it to me again
 
-**Related Requirements:** [FR-1.1.1](01_functional_requirements.md#111-sm-2-algorithm-implementation), [FR-1.1.2](01_functional_requirements.md#112-review-scheduling), [FR-1.2.3](01_functional_requirements.md#123-answer-rating)
+**Related Requirements:** [SRS-001](../requirements/core/SRS.md#srs-001-sm-2-algorithm-implementation), [SRS-002](../requirements/core/SRS.md#srs-002-review-scheduling), [FLASHSYS-003](../requirements/core/FLASHSYS.md#flashsys-003-answer-rating)
 
 **Priority:** High | **Story Points:** 5
 
@@ -55,7 +55,7 @@ This document describes features from the **user's perspective**, focusing on th
 **I want to** add a new song to my collection  
 **So that** I can practice it later
 
-**Related Requirements:** [FR-1.3.1](01_functional_requirements.md#131-manual-card-creation)
+**Related Requirements:** [CARDMGMT-002](../requirements/core/CARDMGMT.md#cardmgmt-002-manual-card-creation)
 
 **Priority:** High | **Story Points:** 5
 
@@ -66,7 +66,7 @@ This document describes features from the **user's perspective**, focusing on th
 **I want to** view all my saved songs in one place  
 **So that** I can see my collection and manage it
 
-**Related Requirements:** [FR-1.3.4](01_functional_requirements.md#134-card-search-and-filter)
+**Related Requirements:** [CARDMGMT-005](../requirements/core/CARDMGMT.md#cardmgmt-005-card-search-and-filter)
 
 **Priority:** High | **Story Points:** 5
 
@@ -77,7 +77,7 @@ This document describes features from the **user's perspective**, focusing on th
 **I want to** edit the details of an existing card  
 **So that** I can correct mistakes or update information
 
-**Related Requirements:** [FR-1.3.2](01_functional_requirements.md#132-card-editing)
+**Related Requirements:** [CARDMGMT-003](../requirements/core/CARDMGMT.md#cardmgmt-003-card-editing)
 
 **Priority:** Medium | **Story Points:** 3
 
@@ -88,9 +88,22 @@ This document describes features from the **user's perspective**, focusing on th
 **I want to** remove songs I no longer want to practice  
 **So that** my library stays relevant
 
-**Related Requirements:** [FR-1.3.3](01_functional_requirements.md#133-card-deletion)
+**Related Requirements:** [CARDMGMT-004](../requirements/core/CARDMGMT.md#cardmgmt-004-card-deletion)
 
 **Priority:** Medium | **Story Points:** 2
+
+---
+
+### Story 2.5: Import Cards from CSV
+**As a** user with an existing list of songs  
+**I want to** import multiple cards from a CSV file  
+**So that** I can build my library quickly
+
+**Related Requirements:** [CARDMGMT-001](../requirements/core/CARDMGMT.md#cardmgmt-001-csv-import-) (High Priority)
+
+**Priority:** High | **Story Points:** 5
+
+**Note:** CSV import is the primary method for building a card library and has higher priority than manual card creation.
 
 ---
 
@@ -101,7 +114,7 @@ This document describes features from the **user's perspective**, focusing on th
 **I want to** set where each song should start playing  
 **So that** I don't have to listen to long intros during reviews
 
-**Related Requirements:** [FR-2.1.1](01_functional_requirements.md#21-audio-trimming)
+**Related Requirements:** [FR-2.1.1](../requirements/02_phase2.md#fr-211-custom-start-timestamp)
 
 **Priority:** Medium | **Story Points:** 5
 
@@ -112,7 +125,7 @@ This document describes features from the **user's perspective**, focusing on th
 **I want to** type my answer before revealing the correct one  
 **So that** I can test my active recall more rigorously
 
-**Related Requirements:** [FR-1.2.4](01_functional_requirements.md#124-answer-input-optional), [FR-2.2.1](01_functional_requirements.md#22-fuzzy-matching)
+**Related Requirements:** [FLASHSYS-004](../requirements/core/FLASHSYS.md#flashsys-004-answer-input-optional), [FR-2.2.1](../requirements/02_phase2.md#fr-221-answer-validation)
 
 **Priority:** Low | **Story Points:** 8
 
@@ -123,7 +136,7 @@ This document describes features from the **user's perspective**, focusing on th
 **I want to** import multiple songs from a YouTube playlist  
 **So that** I can build my library quickly
 
-**Related Requirements:** [FR-2.4.1](01_functional_requirements.md#24-playlist-import)
+**Related Requirements:** [FR-2.4.1](../requirements/02_phase2.md#fr-241-bulk-import-from-playlist)
 
 **Priority:** Low | **Story Points:** 13
 
@@ -136,7 +149,7 @@ This document describes features from the **user's perspective**, focusing on th
 **I want to** see my learning progress and statistics  
 **So that** I can stay motivated and track my improvement
 
-**Related Requirements:** [FR-1.1.3](01_functional_requirements.md#113-performance-tracking), [FR-3.1.1](01_functional_requirements.md#31-dashboard)
+**Related Requirements:** [SRS-003](../requirements/core/SRS.md#srs-003-performance-tracking), [FR-3.1.1](../requirements/03_additional.md#fr-311-overview-display)
 
 **Priority:** Medium | **Story Points:** 5
 
@@ -147,7 +160,7 @@ This document describes features from the **user's perspective**, focusing on th
 **I want to** customize how the app works  
 **So that** it fits my learning style and preferences
 
-**Related Requirements:** [FR-3.2.1](01_functional_requirements.md#32-settings)
+**Related Requirements:** [FR-3.2.1](../requirements/03_additional.md#fr-321-application-settings)
 
 **Priority:** Medium | **Story Points:** 5
 
@@ -158,7 +171,7 @@ This document describes features from the **user's perspective**, focusing on th
 **I want to** export and import my card collection  
 **So that** I can back up my data or transfer it to another device
 
-**Related Requirements:** [FR-3.2.2](01_functional_requirements.md#322-data-management)
+**Related Requirements:** [FR-3.2.2](../requirements/03_additional.md#fr-322-data-management)
 
 **Priority:** Low | **Story Points:** 8
 
@@ -184,7 +197,7 @@ This document describes features from the **user's perspective**, focusing on th
 **I want to** see clear messages when things go wrong  
 **So that** I understand what's happening and what to do
 
-**Related Requirements:** Cross-cutting requirement - covered in [Section 5: Cross-Cutting Requirements](01_functional_requirements.md#5-cross-cutting-requirements)
+**Related Requirements:** Cross-cutting requirement - covered in [Cross-Cutting Requirements](../requirements/05_cross_cutting.md#5-cross-cutting-requirements)
 
 **Priority:** Medium | **Story Points:** 5
 
@@ -195,7 +208,7 @@ This document describes features from the **user's perspective**, focusing on th
 **I want to** experience smooth and polished animations  
 **So that** the app feels professional and enjoyable to use
 
-**Related Requirements:** Non-functional requirement - see [05_non_functional_requirements.md](05_non_functional_requirements.md#12-ui-performance)
+**Related Requirements:** Non-functional requirement - see [Non-Functional Requirements](../../engineering/non_functional/non_functional_requirements.md#12-ui-performance)
 
 **Priority:** Low | **Story Points:** 3
 
@@ -208,7 +221,7 @@ This document describes features from the **user's perspective**, focusing on th
 **I want to** have the title and artist filled automatically  
 **So that** I save time when creating cards
 
-**Related Requirements:** [FR-2.3.1](01_functional_requirements.md#23-auto-metadata-retrieval)
+**Related Requirements:** [FR-2.3.1](../requirements/02_phase2.md#fr-231-youtube-metadata-fetch)
 
 **Priority:** Medium | **Story Points:** 8
 
@@ -219,7 +232,7 @@ This document describes features from the **user's perspective**, focusing on th
 **I want to** review cards without an internet connection  
 **So that** I can practice anywhere
 
-**Related Requirements:** [FR-4.3.1](01_functional_requirements.md#41-potential-features) (Future consideration)
+**Related Requirements:** [FR-4.3.1](../requirements/04_future.md#fr-431-offline-mode-with-cached-audio) (Future consideration)
 
 **Priority:** Low | **Story Points:** 13
 
@@ -230,7 +243,7 @@ This document describes features from the **user's perspective**, focusing on th
 **I want to** share my card collection with friends  
 **So that** they can learn the same songs
 
-**Related Requirements:** [FR-4.2.1](01_functional_requirements.md#41-potential-features) (Future consideration)
+**Related Requirements:** [FR-4.2.1](../requirements/04_future.md#fr-421-collaborative-playlists) (Future consideration)
 
 **Priority:** Low | **Story Points:** 8
 
@@ -251,7 +264,7 @@ This document describes features from the **user's perspective**, focusing on th
 **I want to** [action/goal]  
 **So that** [benefit/value]
 
-**Related Requirements:** [FR-X.X.X](01_functional_requirements.md#link)
+**Related Requirements:** [FR-X.X.X](../requirements/README.md)
 
 **Priority:** [High/Medium/Low] | **Story Points:** [1-13]
 
@@ -264,3 +277,5 @@ This document describes features from the **user's perspective**, focusing on th
 - **8:** Complex feature, 3-5 days
 - **13:** Very complex, 1-2 weeks
 - **21+:** Epic should be broken down into smaller stories
+
+

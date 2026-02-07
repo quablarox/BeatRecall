@@ -8,35 +8,49 @@ Welcome to BeatRecall development! This guide will help you get started quickly.
 BeatRecall/
 ├── README.md                          # Product specification (start here!)
 ├── GETTING_STARTED.md                 # This file - quick start guide
-└── requirements/                      # Comprehensive development documentation
+└── docs/                              # All documentation
     ├── README.md                      # Documentation index
-    ├── 01_functional_requirements.md  # What to build
-    ├── 02_user_stories.md            # User perspective
-    ├── 03_development_setup.md       # How to set up
-    ├── 04_architecture.md            # How it's structured
-    ├── 05_non_functional_requirements.md  # Quality requirements
-    ├── 06_testing_strategy.md        # How to test
-    └── 07_roadmap.md                 # When to build it
+    ├── product/                       # WHAT we're building & WHY
+    │   ├── requirements/              # Functional requirements (split)
+    │   │   ├── README.md
+    │   │   ├── core/                  # Core MVP features (feature per file)
+    │   │   │   ├── README.md
+    │   │   │   ├── SRS.md             # Spaced repetition system
+    │   │   │   ├── FLASHSYS.md        # Flashcard interface
+    │   │   │   ├── CARDMGMT.md        # Card management
+    │   │   │   └── DUEQUEUE.md        # Review queue
+    │   │   ├── 02_phase2.md
+    │   │   ├── 03_additional.md
+    │   │   ├── 04_future.md
+    │   │   └── 05_cross_cutting.md
+    │   ├── user_stories/
+    │   │   └── user_stories.md
+    │   └── roadmap/
+    │       └── roadmap.md
+    └── engineering/                   # HOW we're building it
+        ├── architecture/
+        │   └── architecture.md
+        ├── setup/
+        │   └── development_setup.md
+        ├── testing/
+        │   └── testing_strategy.md
+        └── non_functional/
+            └── non_functional_requirements.md
 ```
 
-## 🚀 Quick Start (5 Minutes)
-
-### 1. Read the Vision (2 minutes)
-Start with the main [README.md](README.md) to understand what BeatRecall is and its goals.
-
 ### 2. Understand What We're Building (3 minutes)
-Read the [User Stories](requirements/02_user_stories.md) to see the features from a user's perspective.
+Read the [User Stories](docs/product/user_stories/user_stories.md) to see the features from a user's perspective.
 
 ## 📖 For Different Roles
 
 ### 👨‍💻 **I'm a Developer - I want to start coding**
 
 **Your Path:**
-1. ✅ [Development Setup Guide](requirements/03_development_setup.md) - Set up your environment
-2. ✅ [Architecture Documentation](requirements/04_architecture.md) - Understand the code structure
-3. ✅ [Functional Requirements](requirements/01_functional_requirements.md) - Know what to implement
-4. ✅ [Testing Strategy](requirements/06_testing_strategy.md) - Learn how to test
-5. ✅ [Roadmap](requirements/07_roadmap.md) - See current priorities
+1. ✅ [Development Setup Guide](docs/engineering/setup/development_setup.md) - Set up your environment
+2. ✅ [Architecture Documentation](docs/engineering/architecture/architecture.md) - Understand the code structure
+3. ✅ [Functional Requirements](docs/product/requirements/README.md) - Know what to implement
+4. ✅ [Testing Strategy](docs/engineering/testing/testing_strategy.md) - Learn how to test
+5. ✅ [Roadmap](docs/product/roadmap/roadmap.md) - See current priorities
 
 **Quick Commands:**
 ```bash
@@ -62,10 +76,10 @@ flutter test
 ### 📋 **I'm a Project Manager - I need to plan**
 
 **Your Path:**
-1. ✅ [Roadmap](requirements/07_roadmap.md) - Timeline and milestones
-2. ✅ [User Stories](requirements/02_user_stories.md) - Feature backlog
-3. ✅ [Functional Requirements](requirements/01_functional_requirements.md) - Detailed scope
-4. ✅ [Non-Functional Requirements](requirements/05_non_functional_requirements.md) - Quality gates
+1. ✅ [Roadmap](docs/product/roadmap/roadmap.md) - Timeline and milestones
+2. ✅ [User Stories](docs/product/user_stories/user_stories.md) - Feature backlog
+3. ✅ [Functional Requirements](docs/product/requirements/README.md) - Detailed scope
+4. ✅ [Non-Functional Requirements](docs/engineering/non_functional/non_functional_requirements.md) - Quality gates
 
 **Key Information:**
 - **MVP Timeline:** 8 weeks
@@ -78,9 +92,9 @@ flutter test
 ### 🎨 **I'm a Designer - I need to create mockups**
 
 **Your Path:**
-1. ✅ [User Stories](requirements/02_user_stories.md) - User needs and journeys
-2. ✅ [Functional Requirements](requirements/01_functional_requirements.md) - UI requirements
-3. ✅ [Non-Functional Requirements](requirements/05_non_functional_requirements.md) - Accessibility & usability
+1. ✅ [User Stories](docs/product/user_stories/user_stories.md) - User needs and journeys
+2. ✅ [Functional Requirements](docs/product/requirements/README.md) - UI requirements
+3. ✅ [Non-Functional Requirements](docs/engineering/non_functional/non_functional_requirements.md) - Accessibility & usability
 
 **Key Screens to Design:**
 1. Dashboard (due cards count, quick actions)
@@ -101,10 +115,10 @@ flutter test
 ### 🧪 **I'm a QA Tester - I need to test**
 
 **Your Path:**
-1. ✅ [Testing Strategy](requirements/06_testing_strategy.md) - Testing approach
-2. ✅ [Functional Requirements](requirements/01_functional_requirements.md) - Acceptance criteria
-3. ✅ [User Stories](requirements/02_user_stories.md) - User scenarios
-4. ✅ [Non-Functional Requirements](requirements/05_non_functional_requirements.md) - Performance metrics
+1. ✅ [Testing Strategy](docs/engineering/testing/testing_strategy.md) - Testing approach
+2. ✅ [Functional Requirements](docs/product/requirements/README.md) - Acceptance criteria
+3. ✅ [User Stories](docs/product/user_stories/user_stories.md) - User scenarios
+4. ✅ [Non-Functional Requirements](docs/engineering/non_functional/non_functional_requirements.md) - Performance metrics
 
 **Test Priorities:**
 1. Core SRS loop (add → review → rate → reschedule)
@@ -140,7 +154,7 @@ Priority features to implement:
 ## 🔗 Important Links
 
 - **Product Spec:** [README.md](README.md)
-- **All Documentation:** [requirements/README.md](requirements/README.md)
+- **All Documentation:** [docs/README.md](docs/README.md)
 - **Technical Stack:**
   - Framework: Flutter
   - Database: Isar (NoSQL)
@@ -164,17 +178,17 @@ Priority features to implement:
 
 ## 🤝 Contributing
 
-1. Read the [Architecture](requirements/04_architecture.md) to understand code structure
-2. Pick a user story from the [backlog](requirements/02_user_stories.md)
-3. Check [Functional Requirements](requirements/01_functional_requirements.md) for details
-4. Write tests following [Testing Strategy](requirements/06_testing_strategy.md)
+1. Read the [Architecture](docs/engineering/architecture/architecture.md) to understand code structure
+2. Pick a user story from the [backlog](docs/product/user_stories/user_stories.md)
+3. Check [Functional Requirements](docs/product/requirements/README.md) for details
+4. Write tests following [Testing Strategy](docs/engineering/testing/testing_strategy.md)
 5. Submit PR with clear description
 
 ## 📞 Need Help?
 
-- **Documentation Issues:** Check [requirements/README.md](requirements/README.md)
+- **Documentation Issues:** Check [docs/README.md](docs/README.md)
 - **Technical Questions:** Open a GitHub issue
-- **Setup Problems:** See [Development Setup](requirements/03_development_setup.md)
+- **Setup Problems:** See [Development Setup](docs/engineering/setup/development_setup.md)
 
 ## ✅ Checklist: Before You Start Coding
 
