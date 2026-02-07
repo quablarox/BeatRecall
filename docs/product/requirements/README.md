@@ -46,12 +46,13 @@ Each feature is documented in a separate file with stable identifiers (e.g., `SR
 
 ---
 
-### 3. [Additional Features](03_additional.md)
-**Purpose:** Dashboard and settings
+### 3. [Additional Features](additional/README.md)
+**Purpose:** Dashboard, settings, and data management
 
 **Contents:**
-- Dashboard overview
-- Application settings and data management
+- **[Dashboard](additional/DASHBOARD.md)** - Overview display (⭐ Detailed Spec)
+- **[Settings](03_additional.md)** - Application settings (Draft)
+- **[Data Management](03_additional.md)** - Backup and restore (Draft)
 
 ---
 

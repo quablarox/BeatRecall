@@ -68,7 +68,7 @@
 **Focus:** Data layer and basic services
 
 **Features:**
-- [ ] **FR-1.1:** SRS Logic (SM-2 algorithm)
+- [ ] **SRS-001:** SM-2 Algorithm Implementation
   - Implement SM-2 algorithm
   - Unit tests for SRS calculations
   - Documentation
@@ -90,15 +90,15 @@
 **Focus:** Add, edit, delete cards
 
 **Features:**
-- [ ] **FR-1.3.1:** Manual card creation
+- [ ] **CARDMGMT-002:** Manual card creation
   - Add Card screen UI
   - Form validation
   - YouTube URL parsing
   - Save to database
-- [ ] **FR-1.3.2:** Card editing
+- [ ] **CARDMGMT-003:** Card editing
   - Edit Card screen
   - Update operations
-- [ ] **FR-1.3.3:** Card deletion
+- [ ] **CARDMGMT-004:** Card deletion
   - Delete confirmation dialog
   - Cascade delete logic
 - [ ] **Library Screen:**
@@ -116,15 +116,15 @@
 **Focus:** Quiz loop and flashcard player
 
 **Features:**
-- [ ] **FR-1.2.1:** Dual-sided card interface
+- [ ] **FLASHSYS-001:** Dual-sided card interface
   - Flashcard widget
   - Show/hide answer
   - Smooth transitions
-- [ ] **FR-1.2.2:** YouTube player integration
+- [ ] **FLASHSYS-002:** YouTube player integration
   - Integrate youtube_player_flutter
   - Play/pause controls
   - Error handling
-- [ ] **FR-1.4.1:** Due queue retrieval
+- [ ] **DUEQUEUE-001:** Due queue retrieval
   - Query due cards
   - Sort by due date
   - Queue management
@@ -143,16 +143,16 @@
 **Focus:** Complete SRS loop and MVP polish
 
 **Features:**
-- [ ] **FR-1.2.3:** Answer rating
+- [ ] **FLASHSYS-003:** Answer rating
   - Four rating buttons (Again, Hard, Good, Easy)
   - Color coding
   - Keyboard shortcuts
   - Next interval display
-- [ ] **FR-1.4.2:** Review session management
+- [ ] **DUEQUEUE-002:** Review session management
   - Session state tracking
   - Progress calculation
   - Session summary
-- [ ] **FR-3.1.1:** Dashboard
+- [ ] **DASHBOARD-001:** Dashboard overview display
   - Due cards count
   - Total cards count
   - Quick action buttons
@@ -202,7 +202,7 @@
   - Levenshtein distance algorithm
   - Answer validation
   - Visual feedback
-- [ ] **FR-1.2.4:** Answer input UI
+- [ ] **FLASHSYS-004:** Answer input UI
   - Optional text input mode
   - Toggle in settings
   - Keyboard-friendly

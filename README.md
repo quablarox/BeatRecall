@@ -15,15 +15,15 @@ BeatRecall is a mobile application built with **Flutter** designed to help users
 
 ---
 
-## 3. Functional Requirements (FR)
+## 3. Functional Requirements
 
 ### Phase 1: Core MVP (SRS & Quiz Loop)
 | ID | Feature | Description |
 | :--- | :--- | :--- |
-| **FR-1.1** | **SRS Logic (SM-2)** | Implementation of the SM-2 algorithm to calculate next review dates (Again, Hard, Good, Easy). |
-| **FR-1.2** | **Flashcard Player** | Dual-sided card UI. Front: YouTube audio/video plays. Back: Title & Artist are revealed. |
-| **FR-1.3** | **Manual Import** | Form to add songs via YouTube URL, Title, and Artist name. |
-| **FR-1.4** | **Due Queue** | Logic to fetch only cards where `nextReviewDate <= now`. |
+| **SRS-001** | **SRS Logic (SM-2)** | Implementation of the SM-2 algorithm to calculate next review dates (Again, Hard, Good, Easy). |
+| **FLASHSYS-001/002** | **Flashcard Player** | Dual-sided card UI. Front: YouTube audio/video plays. Back: Title & Artist are revealed. |
+| **CARDMGMT-001/002** | **Card Import** | CSV bulk import and manual form to add songs via YouTube URL, Title, and Artist name. |
+| **DUEQUEUE-001/002** | **Due Queue & Sessions** | Logic to fetch cards where `nextReviewDate <= now` and manage review sessions. |
 
 ### Phase 2: Enhanced Management & Automation
 | ID | Feature | Description |

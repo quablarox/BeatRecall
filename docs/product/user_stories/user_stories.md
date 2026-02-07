@@ -20,7 +20,7 @@ This document describes features from the **user's perspective**, focusing on th
 **I want to** review songs that are due for practice  
 **So that** I can maintain my music recognition skills
 
-**Related Requirements:** [DUEQUEUE-001](../requirements/core/DUEQUEUE.md#duequeue-001-due-cards-retrieval), [DUEQUEUE-002](../requirements/core/DUEQUEUE.md#duequeue-002-review-session), [FR-3.1.1](../requirements/03_additional.md#fr-311-overview-display)
+**Related Requirements:** [DUEQUEUE-001](../requirements/core/DUEQUEUE.md#duequeue-001-due-cards-retrieval), [DUEQUEUE-002](../requirements/core/DUEQUEUE.md#duequeue-002-review-session), [DASHBOARD-001](../requirements/additional/DASHBOARD.md#dashboard-001-overview-display)
 
 **Priority:** High | **Story Points:** 5
 
@@ -149,7 +149,7 @@ This document describes features from the **user's perspective**, focusing on th
 **I want to** see my learning progress and statistics  
 **So that** I can stay motivated and track my improvement
 
-**Related Requirements:** [SRS-003](../requirements/core/SRS.md#srs-003-performance-tracking), [FR-3.1.1](../requirements/03_additional.md#fr-311-overview-display)
+**Related Requirements:** [SRS-003](../requirements/core/SRS.md#srs-003-performance-tracking), [DASHBOARD-001](../requirements/additional/DASHBOARD.md#dashboard-001-overview-display)
 
 **Priority:** Medium | **Story Points:** 5
 
