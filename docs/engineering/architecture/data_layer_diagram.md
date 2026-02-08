@@ -4,6 +4,7 @@
 
 ```mermaid
 classDiagram
+<<<<<<< HEAD
     class Domain_Flashcard {
         <<Entity>>
         +String uuid
@@ -15,6 +16,80 @@ classDiagram
         +int repetitions
         +DateTime nextReviewDate
     }
+=======
+    namespace DomainLayer {
+        class Flashcard {
+            <<Entity>>
+            +String uuid
+            +String youtubeId
+            +String title
+            +String artist
+            +int intervalDays
+            +double easeFactor
+            +int repetitions
+            +DateTime nextReviewDate
+        }
+        
+        class FlashcardFactory {
+            <<Factory>>
+            +create() Flashcard
+            +createDueCard() Flashcard
+            +createFutureCard() Flashcard
+        }
+        
+        class CardRepository {
+            <<Interface>>
+            +findByUuid(String) Flashcard?
+            +save(Flashcard) Future~void~
+            +deleteByUuid(String) Future~void~
+            +fetchDueCards() Future~List~Flashcard~~
+            +fetchAllCards() Future~List~Flashcard~~
+        }
+    }
+    
+    namespace DataLayer {
+        class IsarCardRepository {
+            <<Implementation>>
+            -Isar _isar
+            -FlashcardMapper _mapper
+            +findByUuid(String) Flashcard?
+            +save(Flashcard) Future~void~
+            +deleteByUuid(String) Future~void~
+        }
+        
+        class FlashcardMapper {
+            <<Mapper>>
+            +toDomain(IsarFlashcard) Flashcard
+            +toData(Flashcard, Id?) IsarFlashcard
+            +toDomainList(List) List~Flashcard~
+            +toDataList(List) List~IsarFlashcard~
+        }
+        
+        class IsarFlashcard {
+            <<@collection>>
+            +Id id
+            +String uuid
+            +String youtubeId
+            +String title
+            +String artist
+            +int intervalDays
+            +double easeFactor
+            +int repetitions
+            +DateTime nextReviewDate
+        }
+    }
+    
+    FlashcardFactory --> Flashcard : creates
+    CardRepository --> Flashcard : uses
+    IsarCardRepository ..|> CardRepository : implements
+    IsarCardRepository --> FlashcardMapper : uses
+    IsarCardRepository --> IsarFlashcard : persists
+    FlashcardMapper --> Flashcard : converts to
+    FlashcardMapper --> IsarFlashcard : converts to
+    
+    note for Flashcard "Pure Dart\nNo database coupling"
+    note for IsarFlashcard "uuid: @Index(unique)\nyoutubeId: @Index()\nnextReviewDate: @Index()"
+>>>>>>> ae36b5984e69ec77c6f9d69665b72b9c489edc51
 
     class Domain_FlashcardFactory {
         <<Factory>>
@@ -104,7 +179,11 @@ sequenceDiagram
     Note over DB: Isar updates/inserts<br/>based on ID
     DB-->>Repo: Success
     Repo-->>UI: Complete
+<<<<<<< HEAD
 ```
+=======
+
+>>>>>>> ae36b5984e69ec77c6f9d69665b72b9c489edc51
 ## Data Flow: Find Operation
 
 ```mermaid
@@ -129,7 +208,11 @@ sequenceDiagram
     else Not found
         Repo-->>UI: null
     end
+<<<<<<< HEAD
 ```
+=======
+
+>>>>>>> ae36b5984e69ec77c6f9d69665b72b9c489edc51
 ## Index Strategy
 
 ### IsarFlashcard Indexes
