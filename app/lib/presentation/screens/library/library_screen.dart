@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'library_viewmodel.dart';
 import 'widgets/card_list_item.dart';
-import '../csv_import/csv_import_screen.dart';
 
 /// Library Screen - Display and manage flashcard collection.
 /// 
@@ -70,11 +69,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const CsvImportScreen(),
-            ),
-          );
+          Navigator.of(context).pushNamed('/csv-import');
         },
         icon: const Icon(Icons.upload_file),
         label: const Text('Import CSV'),
