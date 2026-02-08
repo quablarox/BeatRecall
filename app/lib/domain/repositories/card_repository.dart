@@ -49,6 +49,12 @@ abstract class CardRepository {
   /// Useful for duplicate detection during import/creation.
   Future<bool> existsByYoutubeId(String youtubeId);
 
+  /// Finds a flashcard by its YouTube ID.
+  ///
+  /// Returns null if no card with the given YouTube ID exists.
+  /// Useful for duplicate detection and updating existing cards.
+  Future<Flashcard?> findByYoutubeId(String youtubeId);
+
   /// Updates only the SRS fields of a card.
   ///
   /// This is an optimization for review operations that don't modify

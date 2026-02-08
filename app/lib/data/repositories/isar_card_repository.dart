@@ -56,6 +56,16 @@ class IsarCardRepository implements CardRepository {
   }
 
   @override
+  Future<Flashcard?> findByYoutubeId(String youtubeId) async {
+    final result = await _isar.isarFlashcards
+        .filter()
+        .youtubeIdEqualTo(youtubeId)
+        .findFirst();
+
+    return result != null ? _mapper.toDomain(result) : null;
+  }
+
+  @override
   Future<List<Flashcard>> fetchAllCards({
     int offset = 0,
     int limit = 50,

@@ -43,6 +43,13 @@ dependencies:
   # UUID generation
   uuid: ^4.5.0
 
+  # CSV import
+  csv: ^6.0.0
+  file_picker: ^8.1.6
+
+  # State management
+  provider: ^6.1.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
