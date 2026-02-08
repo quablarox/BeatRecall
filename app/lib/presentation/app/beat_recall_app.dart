@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../data/database/isar_database.dart';
 import '../../data/repositories/isar_card_repository.dart';
+import '../../services/csv_import_service.dart';
 import '../screens/library/library_screen.dart';
 import '../screens/library/library_viewmodel.dart';
 
@@ -34,11 +35,25 @@ class BeatRecallApp extends StatelessWidget {
             );
           }
 
-          return ChangeNotifierProvider(
-            create: (context) {
-              final repository = IsarCardRepository();
-              return LibraryViewModel(cardRepository: repository);
-            },
+          return MultiProvider(
+            providers: [
+              // Repository
+              Provider<IsarCardRepository>(
+                create: (context) => IsarCardRepository(),
+              ),
+              // Services
+              Provider<CsvImportService>(
+                create: (context) => CsvImportService(
+                  context.read<IsarCardRepository>(),
+                ),
+              ),
+              // ViewModels
+              ChangeNotifierProvider<LibraryViewModel>(
+                create: (context) => LibraryViewModel(
+                  cardRepository: context.read<IsarCardRepository>(),
+                ),
+              ),
+            ],
             child: const LibraryScreen(),
           );
         },

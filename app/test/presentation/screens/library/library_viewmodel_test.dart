@@ -495,7 +495,6 @@ class MockCardRepository implements CardRepository {
     }
   }
 
-  @override
   Future<Flashcard?> fetchByUuid(String uuid) async {
     try {
       return cardsToReturn.firstWhere((card) => card.uuid == uuid);
@@ -532,7 +531,6 @@ class MockCardRepository implements CardRepository {
     savedCards.addAll(cards);
   }
 
-  @override
   Future<void> saveCard(Flashcard card) async {
     savedCards.add(card);
   }

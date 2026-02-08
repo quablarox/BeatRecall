@@ -116,12 +116,22 @@
 **User Stories:** [Epic 1: Card Management](../user_stories/user_stories.md#epic-1-card-management) (Stories 1.1-1.5)
 
 **Features:**
-- [ ] **CARDMGMT-001:** CSV Import ⭐ (Story 1.1)
-  - File picker integration
-  - CSV parsing and validation
-  - Duplicate detection
-  - Import summary UI
-  - Progress indicator
+- [x] **CARDMGMT-001:** CSV Import ⭐ (Story 1.1)
+  - ✅ File picker integration
+  - ✅ CSV parsing and validation
+  - ✅ Duplicate detection
+  - ✅ Import summary UI
+  - ✅ Progress indicator
+  - ✅ Error reporting
+- [x] **CARDMGMT-005:** Library Screen (Story 1.3)
+  - ✅ List all cards
+  - ✅ Search by title/artist (real-time, case-insensitive)
+  - ✅ Filter by status (New/Learning/Review)
+  - ✅ Filter by due date (Today/Overdue/This Week/All)
+  - ✅ Sort options (A-Z, Z-A, Artist, Due Date, Created)
+  - ✅ Result count display
+  - ✅ Clear filters button
+  - ✅ Navigation to CSV import
 - [ ] **CARDMGMT-002:** Manual card creation (Story 1.2)
   - Add Card screen UI
   - Form validation
@@ -133,17 +143,13 @@
 - [ ] **CARDMGMT-004:** Card deletion (Story 1.5)
   - Delete confirmation dialog
   - Cascade delete logic
-- [ ] **Library Screen:** (Story 1.3)
-  - List all cards
-  - Search functionality
-  - Navigation
 
 **Success Criteria:**
-- [ ] Can import cards from CSV files (primary method)
+- [x] Can import cards from CSV files (primary method)
+- [x] Library displays all cards with search and filters
 - [ ] Can add cards manually with YouTube URLs
 - [ ] Can edit existing cards
 - [ ] Can delete cards with confirmation
-- [ ] Library displays all cards
 
 ### 3.3 Sprint 3: Review System (2 weeks)
 **Focus:** Quiz loop and flashcard player  
