@@ -6,6 +6,8 @@ import '../../data/repositories/isar_card_repository.dart';
 import '../../services/csv_import_service.dart';
 import '../../services/srs_service.dart';
 import '../screens/csv_import/csv_import_screen.dart';
+import '../screens/dashboard/dashboard_screen.dart';
+import '../screens/dashboard/dashboard_viewmodel.dart';
 import '../screens/library/library_screen.dart';
 import '../screens/library/library_viewmodel.dart';
 import '../screens/quiz/quiz_screen.dart';
@@ -58,6 +60,11 @@ class BeatRecallApp extends StatelessWidget {
                 cardRepository: context.read<IsarCardRepository>(),
               ),
             ),
+            ChangeNotifierProvider<DashboardViewModel>(
+              create: (context) => DashboardViewModel(
+                cardRepository: context.read<IsarCardRepository>(),
+              ),
+            ),
             ChangeNotifierProvider<QuizViewModel>(
               create: (context) => QuizViewModel(
                 cardRepository: context.read<IsarCardRepository>(),
@@ -72,7 +79,8 @@ class BeatRecallApp extends StatelessWidget {
               useMaterial3: true,
             ),
             routes: {
-              '/': (context) => const LibraryScreen(),
+              '/': (context) => const DashboardScreen(),
+              '/library': (context) => const LibraryScreen(),
               '/csv-import': (context) => const CsvImportScreen(),
               '/quiz': (context) => const QuizScreen(),
             },

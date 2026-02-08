@@ -63,6 +63,8 @@ dev_dependencies:
 
   build_runner: ^2.4.13
   isar_generator: ^3.1.0
+  flutter_launcher_icons: ^0.14.1
+  flutter_native_splash: ^2.4.3
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -112,3 +114,31 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+flutter_launcher_icons:
+  image_path: "macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_1024.png"
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  web:
+    generate: true
+    image_path: "macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_1024.png"
+    background_color: "#F6FBF7"
+    theme_color: "#1DB954"
+  windows:
+    generate: true
+    image_path: "macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_1024.png"
+    icon_size: 48
+  macos:
+    generate: true
+    image_path: "macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_1024.png"
+
+flutter_native_splash:
+  color: "#F6FBF7"
+  image: "macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_1024.png"
+  android: true
+  ios: true
+  web: true
+  android_12:
+    color: "#F6FBF7"
+    image: "macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_1024.png"
