@@ -451,5 +451,117 @@ void main() {
         expect(easeFactor, closeTo(2.95, 0.01));
       });
     });
+
+    group('@FLASHSYS-005 Enhanced Interval Display', () {
+      test('Given 0 days, When formatting, Then returns "<1m"', () {
+        final result = SrsService.formatInterval(0);
+        expect(result, '<1m');
+      });
+
+      test('Given 1 day, When formatting, Then returns "1d"', () {
+        final result = SrsService.formatInterval(1);
+        expect(result, '1d');
+      });
+
+      test('Given 3 days, When formatting, Then returns "3d"', () {
+        final result = SrsService.formatInterval(3);
+        expect(result, '3d');
+      });
+
+      test('Given 6 days, When formatting, Then returns "6d"', () {
+        final result = SrsService.formatInterval(6);
+        expect(result, '6d');
+      });
+
+      test('Given 7 days, When formatting, Then returns "1w"', () {
+        final result = SrsService.formatInterval(7);
+        expect(result, '1w');
+      });
+
+      test('Given 14 days, When formatting, Then returns "2w"', () {
+        final result = SrsService.formatInterval(14);
+        expect(result, '2w');
+      });
+
+      test('Given 21 days, When formatting, Then returns "3w"', () {
+        final result = SrsService.formatInterval(21);
+        expect(result, '3w');
+      });
+
+      test('Given 28 days, When formatting, Then returns "4w"', () {
+        final result = SrsService.formatInterval(28);
+        expect(result, '4w');
+      });
+
+      test('Given 30 days, When formatting, Then returns "1mo"', () {
+        final result = SrsService.formatInterval(30);
+        expect(result, '1mo');
+      });
+
+      test('Given 60 days, When formatting, Then returns "2mo"', () {
+        final result = SrsService.formatInterval(60);
+        expect(result, '2mo');
+      });
+
+      test('Given 90 days, When formatting, Then returns "3mo"', () {
+        final result = SrsService.formatInterval(90);
+        expect(result, '3mo');
+      });
+
+      test('Given 180 days, When formatting, Then returns "6mo"', () {
+        final result = SrsService.formatInterval(180);
+        expect(result, '6mo');
+      });
+
+      test('Given 364 days, When formatting, Then returns "12mo"', () {
+        final result = SrsService.formatInterval(364);
+        expect(result, '12mo');
+      });
+
+      test('Given 365 days, When formatting, Then returns absolute date', () {
+        final referenceDate = DateTime(2025, 1, 1);
+        final result = SrsService.formatInterval(365, referenceDate: referenceDate);
+        
+        // Expected: Jan 1, 2025 + 365 days = Jan 1, 2026
+        expect(result, 'Jan 1, 2026');
+      });
+
+      test('Given 400 days, When formatting, Then returns absolute date', () {
+        final referenceDate = DateTime(2025, 1, 15);
+        final result = SrsService.formatInterval(400, referenceDate: referenceDate);
+        
+        // Expected: Jan 15, 2025 + 400 days = Feb 19, 2026
+        expect(result, 'Feb 19, 2026');
+      });
+
+      test('Given 730 days, When formatting, Then returns absolute date 2 years later', () {
+        final referenceDate = DateTime(2025, 3, 1);
+        final result = SrsService.formatInterval(730, referenceDate: referenceDate);
+        
+        // Expected: Mar 1, 2025 + 730 days = Feb 29, 2027 (leap year)
+        expect(result, 'Mar 1, 2027');
+      });
+
+      test('Given no reference date for large interval, When formatting, Then uses DateTime.now()', () {
+        // This test just verifies it doesn't crash
+        final result = SrsService.formatInterval(500);
+        
+        // Result should be a date string (format: "Mon DD, YYYY")
+        expect(result, matches(r'\w{3} \d{1,2}, \d{4}'));
+      });
+
+      test('Given boundary cases, When formatting, Then handles correctly', () {
+        expect(SrsService.formatInterval(0), '<1m');
+        expect(SrsService.formatInterval(6), '6d'); // Last day before weeks
+        expect(SrsService.formatInterval(7), '1w'); // First week
+        expect(SrsService.formatInterval(29), '4w'); // Last week before months
+        expect(SrsService.formatInterval(30), '1mo'); // First month
+        expect(SrsService.formatInterval(364), '12mo'); // Last month before absolute
+        
+        final ref = DateTime(2025, 1, 1);
+        final result365 = SrsService.formatInterval(365, referenceDate: ref);
+        expect(result365, 'Jan 1, 2026'); // First absolute date
+      });
+    });
   });
 }

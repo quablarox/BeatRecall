@@ -108,6 +108,39 @@ class SrsService {
     return (currentIntervalDays * 1.2).round().clamp(1, maxIntervalDays);
   }
 
+  /// Format interval in days to human-readable string
+  /// 
+  /// Formats:
+  /// - "<1m" = Less than 1 minute (0 days)
+  /// - "Xh" = Hours (< 1 day)
+  /// - "Xd" = Days (1-29)
+  /// - "Xw" = Weeks (30-89 days)
+  /// - "Xmo" = Months (90-364 days)
+  /// - Date string for 365+ days
+  static String formatInterval(int days, {DateTime? referenceDate}) {
+    if (days == 0) return '<1m';
+    
+    if (days < 7) {
+      return '${days}d';
+    } else if (days < 30) {
+      final weeks = (days / 7).floor();
+      return '${weeks}w';
+    } else if (days < 365) {
+      final months = (days / 30).floor();
+      return '${months}mo';
+    } else {
+      // For long intervals, show absolute date
+      final targetDate = (referenceDate ?? DateTime.now()).add(Duration(days: days));
+      return '${_monthName(targetDate.month)} ${targetDate.day}, ${targetDate.year}';
+    }
+  }
+
+  static String _monthName(int month) {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                   'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return months[month - 1];
+  }
+
   /// Calculates interval for "Good" rating (standard SM-2)
   int _calculateGoodInterval(
     int repetitions,

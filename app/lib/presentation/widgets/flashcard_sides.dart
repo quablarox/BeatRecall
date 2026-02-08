@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart' as iframe;
+import '../../services/settings_service.dart';
 import 'flashcard_widget.dart';
 
 /// Front side of a flashcard that displays a YouTube player.
@@ -155,49 +157,56 @@ class _FlashcardFrontState extends State<FlashcardFront> {
 
   @override
   Widget build(BuildContext context) {
-    return FlashcardSide(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // YouTube Player or Error State
-          AspectRatio(
-            aspectRatio: 16 / 9,
-            child: _hasError
-                ? _buildErrorState(context)
-                : _useIframePlayer
-                    ? _buildIframePlayer(context)
-                    : YoutubePlayer(
-                        controller: _controller!,
-                        showVideoProgressIndicator: true,
-                        progressIndicatorColor: Theme.of(context).primaryColor,
-                      ),
-          ),
-          
-          // Show Answer Button
-          Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              children: [
-                const Text(
-                  'Listen and try to recall...',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontStyle: FontStyle.italic,
-                  ),
-                  textAlign: TextAlign.center,
+    return Consumer<SettingsService>(
+      builder: (context, settingsService, child) {
+        final audioOnlyMode = settingsService.settings.audioOnlyMode;
+        
+        return FlashcardSide(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // YouTube Player, Audio Bar, or Error State
+              if (audioOnlyMode)
+                _buildAudioOnlyBar(context)
+              else
+                AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: _hasError
+                      ? _buildErrorState(context)
+                      : _useIframePlayer
+                          ? _buildIframePlayer(context)
+                          : YoutubePlayer(
+                              controller: _controller!,
+                              showVideoProgressIndicator: true,
+                              progressIndicatorColor: Theme.of(context).primaryColor,
+                            ),
                 ),
-                const SizedBox(height: 16),
-                Tooltip(
-                  message: 'Reveal the answer',
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: widget.onShowAnswer,
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 32,
-                          vertical: 16,
-                        ),
+              
+              // Show Answer Button
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  children: [
+                    const Text(
+                      'Listen and try to recall...',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontStyle: FontStyle.italic,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 16),
+                    Tooltip(
+                      message: 'Reveal the answer',
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: widget.onShowAnswer,
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 32,
+                              vertical: 16,
+                            ),
                         textStyle: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -220,6 +229,8 @@ class _FlashcardFrontState extends State<FlashcardFront> {
           ),
         ],
       ),
+        );
+      },
     );
   }
 
@@ -286,6 +297,61 @@ class _FlashcardFrontState extends State<FlashcardFront> {
     return iframe.YoutubePlayer(
       controller: _iframeController!,
       aspectRatio: 16 / 9,
+    );
+  }
+
+  /// Builds a compact audio-only bar when video is hidden.
+  /// 
+  /// **Feature:** @SETTINGS-002 (Audio-only mode)
+  Widget _buildAudioOnlyBar(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.primaryContainer,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.audiotrack,
+            size: 32,
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Audio-Only Mode',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'Audio is playing in the background',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(0.8),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Tooltip(
+            message: 'Change in Settings',
+            child: Icon(
+              Icons.settings,
+              size: 20,
+              color: Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(0.6),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
