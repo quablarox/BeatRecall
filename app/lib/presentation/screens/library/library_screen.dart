@@ -43,6 +43,13 @@ class _LibraryScreenState extends State<LibraryScreen> {
         title: const Text('My Library'),
         actions: [
           IconButton(
+            icon: const Icon(Icons.play_arrow),
+            onPressed: () {
+              Navigator.of(context).pushNamed('/quiz');
+            },
+            tooltip: 'Start Review',
+          ),
+          IconButton(
             icon: const Icon(Icons.sort),
             onPressed: _showSortOptions,
             tooltip: 'Sort',
