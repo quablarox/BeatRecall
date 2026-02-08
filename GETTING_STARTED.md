@@ -143,11 +143,13 @@ flutter test
 - ✅ Architecture & API Contracts
 - ✅ Testing Strategy
 - ✅ Documentation Hub
+- ✅ Flutter project scaffold (in `app/`)
+- ✅ Isar database configured
 
 **Next Steps:**
-- ⏳ UI Mockups
-- ⏳ Flutter Project Setup
 - ⏳ CI/CD Pipeline
+- ⏳ Implement SRS-001 (SM-2) + unit tests
+- ⏳ Implement CARDMGMT flows (CSV import + manual add/edit)
 
 **See:** [Roadmap](docs/product/roadmap/roadmap.md) for details
 

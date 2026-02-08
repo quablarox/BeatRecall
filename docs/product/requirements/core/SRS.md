@@ -23,7 +23,7 @@ The Spaced Repetition System (SRS) implements the SuperMemo-2 (SM-2) algorithm t
 
 **Key Benefits:**
 - Evidence-based learning intervals
-- Adaptive difficulty based on performance
+- Adaptive scheduling based on performance
 - Long-term retention optimization
 - Efficient study time management
 
@@ -89,7 +89,8 @@ Schedule and manage card reviews based on SRS calculations. The system maintains
 **Status:** Not Started
 
 **Description:**  
-Track user performance over time to provide insights into learning progress and card difficulty.
+Track user performance over time to provide insights into learning progress and flashcard scheduling (e.g., ease factor and intervals).
+
 
 **Acceptance Criteria:**
 - Store review history for each card:

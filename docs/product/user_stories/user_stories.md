@@ -80,9 +80,9 @@ Epics are organized by **implementation phase** to align with the [Development R
 
 ---
 
-### Story 1.3: Browse My Song Library
+### Story 1.3: Browse My Flashcard Library
 **As a** user  
-**I want to** view all my saved songs in one place  
+**I want to** view all my saved flashcards in one place  
 **So that** I can see my collection and manage it
 
 **Related Requirements:** [CARDMGMT-005](../requirements/core/CARDMGMT.md#cardmgmt-005-card-search-and-filter)
@@ -99,7 +99,7 @@ Epics are organized by **implementation phase** to align with the [Development R
 
 ---
 
-### Story 1.4: Edit a Song Card
+### Story 1.4: Edit a Flashcard
 **As a** user  
 **I want to** edit the details of an existing card  
 **So that** I can correct mistakes or update information
@@ -118,7 +118,7 @@ Epics are organized by **implementation phase** to align with the [Development R
 
 ---
 
-### Story 1.5: Delete a Song Card
+### Story 1.5: Delete a Flashcard
 **As a** user  
 **I want to** remove songs I no longer want to practice  
 **So that** my library stays relevant
@@ -545,9 +545,9 @@ Epics are organized by **implementation phase** to align with the [Development R
 
 ---
 
-### Story 2.2: Browse My Song Library
+### Story 2.2: Browse My Flashcard Library
 **As a** user  
-**I want to** view all my saved songs in one place  
+**I want to** view all my saved flashcards in one place  
 **So that** I can see my collection and manage it
 
 **Related Requirements:** [CARDMGMT-005](../requirements/core/CARDMGMT.md#cardmgmt-005-card-search-and-filter)
@@ -556,7 +556,7 @@ Epics are organized by **implementation phase** to align with the [Development R
 
 ---
 
-### Story 2.3: Edit a Song Card
+### Story 2.3: Edit a Flashcard
 **As a** user  
 **I want to** edit the details of an existing card  
 **So that** I can correct mistakes or update information
@@ -567,7 +567,7 @@ Epics are organized by **implementation phase** to align with the [Development R
 
 ---
 
-### Story 2.4: Delete a Song Card
+### Story 2.4: Delete a Flashcard
 **As a** user  
 **I want to** remove songs I no longer want to practice  
 **So that** my library stays relevant

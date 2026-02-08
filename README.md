@@ -30,7 +30,7 @@ BeatRecall is a mobile application built with **Flutter** designed to help users
 ### Phase 2: Enhanced Management & Automation
 | ID | Feature | Description |
 | :--- | :--- | :--- |
-| **FR-2.1** | **Audio Trimming** | Custom `startAt` timestamp for each song to skip intros. |
+| **FR-2.1** | **Audio Trimming** | Custom start timestamp (in seconds) for each song to skip intros. |
 | **FR-2.2** | **Fuzzy Matching** | Answer validation using Levenshtein Distance for typo tolerance. |
 | **FR-2.3** | **Auto-Metadata** | Fetching Title/Artist automatically via YouTube metadata. |
 | **FR-2.4** | **Playlist Import** | Bulk-adding songs from public YouTube playlist URLs. |
@@ -41,19 +41,19 @@ BeatRecall is a mobile application built with **Flutter** designed to help users
 
 ```dart
 class Flashcard {
-  String id;            // Unique identifier
+  int id;               // Unique identifier
   String youtubeId;     // Extracted from URL
   String title;
   String artist;
 
   // SRS Data
-  int interval;         // In days
+  int intervalDays;     // In days
   double easeFactor;    // Default: 2.5
   int repetitions;      // Successive correct answers
-  DateTime nextReview;  // Timestamp for next quiz session
+  DateTime nextReviewDate;  // Timestamp for next review
 
   // Configuration
-  int startAtSecond;    // Custom start point for playback
+  int startAtSecond;    // Start Timestamp (seconds)
 }
 ```
 

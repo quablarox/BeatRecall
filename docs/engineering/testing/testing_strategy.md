@@ -150,15 +150,15 @@ void main() {
     
     test('should update card with new SRS data', () async {
       // Arrange
-      final card = SongCard(
-        id: '1',
+      final card = Flashcard(
+        id: 1,
         youtubeId: 'abc123',
         title: 'Test Song',
         artist: 'Test Artist',
-        nextReview: DateTime.now(),
+        nextReviewDate: DateTime.now(),
       );
       
-      when(mockRepository.getCardById('1'))
+        when(mockRepository.getCardById('1'))
           .thenAnswer((_) async => card);
       
       when(mockSRSService.calculateNextReview(
@@ -367,35 +367,35 @@ void main() {
 ```dart
 // test/fixtures/test_data.dart
 class TestData {
-  static SongCard createTestCard({
-    String id = '1',
+  static Flashcard createTestFlashcard({
+    int id = 1,
     String youtubeId = 'dQw4w9WgXcQ',
     String title = 'Test Song',
     String artist = 'Test Artist',
-    int interval = 0,
+    int intervalDays = 0,
     double easeFactor = 2.5,
     int repetitions = 0,
-    DateTime? nextReview,
+    DateTime? nextReviewDate,
     int startAtSecond = 0,
   }) {
-    return SongCard(
+    return Flashcard(
       id: id,
       youtubeId: youtubeId,
       title: title,
       artist: artist,
-      interval: interval,
+      intervalDays: intervalDays,
       easeFactor: easeFactor,
       repetitions: repetitions,
-      nextReview: nextReview ?? DateTime.now(),
+      nextReviewDate: nextReviewDate ?? DateTime.now(),
       startAtSecond: startAtSecond,
     );
   }
   
-  static List<SongCard> createTestCards(int count) {
+  static List<Flashcard> createTestFlashcards(int count) {
     return List.generate(
       count,
-      (i) => createTestCard(
-        id: i.toString(),
+      (i) => createTestFlashcard(
+        id: i,
         title: 'Test Song $i',
       ),
     );

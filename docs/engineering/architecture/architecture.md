@@ -204,7 +204,7 @@ class VideoMetadata {
 **Responsibility:** Business Rules and Core Logic
 
 **Components:**
-- **Entities:** Core business objects (SongCard entity)
+- **Entities:** Core business objects (Flashcard entity)
 - **Use Cases:** Specific business operations
 - **Repository Interfaces:** Abstract data access
 
@@ -212,7 +212,7 @@ class VideoMetadata {
 ```
 lib/domain/
 ├── entities/
-│   └── song_card.dart
+│   └── flashcard.dart
 ├── repositories/
 │   └── card_repository.dart
 └── use_cases/
@@ -224,30 +224,30 @@ lib/domain/
 
 **Entity Example:**
 ```dart
-class SongCard {
-  final String id;
+class Flashcard {
+  final int id;
   final String youtubeId;
   final String title;
   final String artist;
   
   // SRS data
-  final int interval;
+  final int intervalDays;
   final double easeFactor;
   final int repetitions;
-  final DateTime nextReview;
+  final DateTime nextReviewDate;
   
   // Configuration
   final int startAtSecond;
   
-  const SongCard({
+  const Flashcard({
     required this.id,
     required this.youtubeId,
     required this.title,
     required this.artist,
-    this.interval = 0,
+    this.intervalDays = 0,
     this.easeFactor = 2.5,
     this.repetitions = 0,
-    required this.nextReview,
+    required this.nextReviewDate,
     this.startAtSecond = 0,
   });
 }
@@ -261,21 +261,21 @@ class ReviewCardUseCase {
 
   ReviewCardUseCase(this.repository, this.srsService);
 
-  Future<SongCard> execute(String cardId, Rating rating) async {
+  Future<Flashcard> execute(String cardId, Rating rating) async {
     final card = await repository.getCardById(cardId);
     
     final result = srsService.calculateNextReview(
-      currentInterval: card.interval,
+      currentInterval: card.intervalDays,
       currentEaseFactor: card.easeFactor,
       currentRepetitions: card.repetitions,
       rating: rating,
     );
     
     final updatedCard = card.copyWith(
-      interval: result.nextInterval,
+      intervalDays: result.nextInterval,
       easeFactor: result.nextEaseFactor,
       repetitions: result.nextRepetitions,
-      nextReview: result.nextReviewDate,
+      nextReviewDate: result.nextReviewDate,
     );
     
     await repository.updateCard(updatedCard);
@@ -299,7 +299,7 @@ class ReviewCardUseCase {
 ```
 lib/data/
 ├── models/
-│   └── song_card_model.dart
+│   └── flashcard_model.dart
 ├── repositories/
 │   └── card_repository_impl.dart
 └── data_sources/
@@ -312,17 +312,17 @@ lib/data/
 **Model Example (Isar):**
 ```dart
 @collection
-class SongCardModel {
+class FlashcardModel {
   Id id = Isar.autoIncrement;
   
   late String youtubeId;
   late String title;
   late String artist;
   
-  late int interval;
+  late int intervalDays;
   late double easeFactor;
   late int repetitions;
-  late DateTime nextReview;
+  late DateTime nextReviewDate;
   
   late int startAtSecond;
 }
@@ -336,14 +336,14 @@ class CardRepositoryImpl implements CardRepository {
   CardRepositoryImpl(this.localDataSource);
 
   @override
-  Future<List<SongCard>> getDueCards() async {
+  Future<List<Flashcard>> getDueCards() async {
     final models = await localDataSource.getDueCards();
     return models.map((m) => m.toEntity()).toList();
   }
 
   @override
-  Future<void> addCard(SongCard card) async {
-    final model = SongCardModel.fromEntity(card);
+  Future<void> addCard(Flashcard card) async {
+    final model = FlashcardModel.fromEntity(card);
     await localDataSource.insertCard(model);
   }
 
@@ -376,7 +376,7 @@ User Tap → Provider → Use Case → Service (SRS) → Repository → Isar DB
 1. User enters YouTube URL, title, artist
 2. AddCardScreen validates input
 3. AddCardProvider calls AddCardUseCase
-4. Use case validates and creates SongCard entity
+4. Use case validates and creates Flashcard entity
 5. Repository saves to database
 6. Provider updates UI with success message
 
@@ -585,14 +585,14 @@ class QuizProvider extends ChangeNotifier {
   final ReviewCardUseCase reviewCardUseCase;
   final GetDueCardsUseCase getDueCardsUseCase;
   
-  List<SongCard> _dueCards = [];
+  List<Flashcard> _dueCards = [];
   int _currentIndex = 0;
   bool _isLoading = false;
   
   QuizProvider(this.reviewCardUseCase, this.getDueCardsUseCase);
 
-  List<SongCard> get dueCards => _dueCards;
-  SongCard? get currentCard => _currentIndex < _dueCards.length 
+  List<Flashcard> get dueCards => _dueCards;
+  Flashcard? get currentCard => _currentIndex < _dueCards.length 
       ? _dueCards[_currentIndex] 
       : null;
   bool get isLoading => _isLoading;

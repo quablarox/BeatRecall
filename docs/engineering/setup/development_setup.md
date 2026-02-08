@@ -180,7 +180,7 @@ BeatRecall/
 │   │   ├── utils/
 │   │   └── config/
 │   ├── data/                     # Data layer
-│   │   ├── models/              # Data models (SongCard)
+│   │   ├── models/              # Data models (Flashcard)
 │   │   ├── repositories/        # Data access
 │   │   └── data_sources/        # Local/Remote data sources
 │   ├── domain/                   # Business logic layer
@@ -230,7 +230,7 @@ import 'package:isar/isar.dart';
 Future<void> initDatabase() async {
   final dir = await getApplicationDocumentsDirectory();
   final isar = await Isar.open(
-    [SongCardSchema],
+    [FlashcardSchema],
     directory: dir.path,
   );
 }
