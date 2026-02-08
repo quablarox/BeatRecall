@@ -75,10 +75,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16),
-            ElevatedButton.icon(
-              onPressed: viewModel.loadSummary,
-              icon: const Icon(Icons.refresh),
-              label: const Text('Retry'),
+            Tooltip(
+              message: 'Retry loading dashboard',
+              child: ElevatedButton.icon(
+                onPressed: viewModel.loadSummary,
+                icon: const Icon(Icons.refresh),
+                label: const Text('Retry'),
+              ),
             ),
           ],
         ),
@@ -183,31 +186,42 @@ class _DashboardScreenState extends State<DashboardScreen> {
         Row(
           children: [
             Expanded(
-              child: ElevatedButton.icon(
-                onPressed: viewModel.dueCards == 0
-                    ? null
-                    : () => Navigator.of(context).pushNamed('/quiz'),
-                icon: const Icon(Icons.play_arrow),
-                label: const Text('Start Review'),
+              child: Tooltip(
+                message: viewModel.dueCards == 0
+                    ? 'No cards due for review'
+                    : 'Begin reviewing due cards',
+                child: ElevatedButton.icon(
+                  onPressed: viewModel.dueCards == 0
+                      ? null
+                      : () => Navigator.of(context).pushNamed('/quiz'),
+                  icon: const Icon(Icons.play_arrow),
+                  label: const Text('Start Review'),
+                ),
               ),
             ),
             const SizedBox(width: 12),
             Expanded(
-              child: OutlinedButton.icon(
-                onPressed: () => Navigator.of(context).pushNamed('/library'),
-                icon: const Icon(Icons.folder_open),
-                label: const Text('Library'),
+              child: Tooltip(
+                message: 'View all flashcards',
+                child: OutlinedButton.icon(
+                  onPressed: () => Navigator.of(context).pushNamed('/library'),
+                  icon: const Icon(Icons.folder_open),
+                  label: const Text('Library'),
+                ),
               ),
             ),
           ],
         ),
         const SizedBox(height: 12),
-        SizedBox(
-          width: double.infinity,
-          child: OutlinedButton.icon(
-            onPressed: () => Navigator.of(context).pushNamed('/csv-import'),
-            icon: const Icon(Icons.upload_file),
-            label: const Text('Import CSV'),
+        Tooltip(
+          message: 'Import flashcards from CSV file',
+          child: SizedBox(
+            width: double.infinity,
+            child: OutlinedButton.icon(
+              onPressed: () => Navigator.of(context).pushNamed('/csv-import'),
+              icon: const Icon(Icons.upload_file),
+              label: const Text('Import CSV'),
+            ),
           ),
         ),
       ],

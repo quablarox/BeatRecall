@@ -222,14 +222,17 @@ class _CsvImportScreenState extends State<CsvImportScreen> {
             ),
             if (result.successCount > 0) ...[
               const SizedBox(height: 16),
-              ElevatedButton.icon(
-                onPressed: () {
-                  // Refresh library and go back
-                  context.read<LibraryViewModel>().loadCards();
-                  Navigator.of(context).pop();
-                },
-                icon: const Icon(Icons.library_music),
-                label: const Text('View Library'),
+              Tooltip(
+                message: 'View imported flashcards in library',
+                child: OutlinedButton.icon(
+                  onPressed: () {
+                    // Refresh library and go back
+                    context.read<LibraryViewModel>().loadCards();
+                    Navigator.of(context).pop();
+                  },
+                  icon: const Icon(Icons.library_music),
+                  label: const Text('View Library'),
+                ),
               ),
             ],
           ],
@@ -296,12 +299,17 @@ class _CsvImportScreenState extends State<CsvImportScreen> {
   }
 
   Widget _buildSelectFileButton() {
-    return ElevatedButton.icon(
-      onPressed: _isImporting ? null : _selectAndImportFile,
-      icon: const Icon(Icons.upload_file),
-      label: Text(_importResult == null ? 'Select CSV File' : 'Import Another File'),
-      style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.all(16),
+    return Tooltip(
+      message: 'Select a CSV file to import flashcards',
+      child: SizedBox(
+        width: double.infinity,
+        child: OutlinedButton.icon(
+          onPressed: _isImporting ? null : _selectAndImportFile,
+          icon: const Icon(Icons.upload_file),
+          label: Text(
+            _importResult == null ? 'Select CSV File' : 'Import Another File',
+          ),
+        ),
       ),
     );
   }

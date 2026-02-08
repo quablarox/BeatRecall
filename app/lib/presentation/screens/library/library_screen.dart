@@ -100,12 +100,15 @@ class _LibraryScreenState extends State<LibraryScreen> {
               hintText: 'Search by title or artist...',
               prefixIcon: const Icon(Icons.search),
               suffixIcon: viewModel.searchQuery.isNotEmpty
-                  ? IconButton(
-                      icon: const Icon(Icons.clear),
-                      onPressed: () {
-                        _searchController.clear();
-                        viewModel.setSearchQuery('');
-                      },
+                  ? Tooltip(
+                      message: 'Clear search',
+                      child: IconButton(
+                        icon: const Icon(Icons.clear),
+                        onPressed: () {
+                          _searchController.clear();
+                          viewModel.setSearchQuery('');
+                        },
+                      ),
                     )
                   : null,
               border: OutlineInputBorder(
@@ -370,46 +373,52 @@ class _LibraryScreenState extends State<LibraryScreen> {
           '⚠️ Debug feature only',
         ),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              Navigator.pop(context);
-              
-              // Show loading indicator
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Resetting progress...')),
-              );
-              
-              try {
-                await context.read<LibraryViewModel>().resetAllProgress();
-                
-                if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('✓ All progress reset successfully'),
-                      backgroundColor: Colors.green,
-                    ),
-                  );
-                }
-              } catch (e) {
-                if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Error: ${e.toString()}'),
-                      backgroundColor: Colors.red,
-                    ),
-                  );
-                }
-              }
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-              foregroundColor: Colors.white,
+          Tooltip(
+            message: 'Cancel reset',
+            child: TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
             ),
-            child: const Text('Reset All'),
+          ),
+          Tooltip(
+            message: 'Reset all card progress',
+            child: ElevatedButton(
+              onPressed: () async {
+                Navigator.pop(context);
+                
+                // Show loading indicator
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Resetting progress...')),
+                );
+                
+                try {
+                  await context.read<LibraryViewModel>().resetAllProgress();
+                  
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('✓ All progress reset successfully'),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+                  }
+                } catch (e) {
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Error: ${e.toString()}'),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                foregroundColor: Colors.white,
+              ),
+              child: const Text('Reset All'),
+            ),
           ),
         ],
       ),

@@ -162,9 +162,12 @@ class _QuizScreenState extends State<QuizScreen> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 32),
-            ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Back to Dashboard'),
+            Tooltip(
+              message: 'Return to dashboard',
+              child: ElevatedButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Back to Dashboard'),
+              ),
             ),
           ],
         ),
@@ -307,16 +310,19 @@ class _QuizScreenState extends State<QuizScreen> {
             const SizedBox(height: 32),
             
             // Actions
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () => Navigator.of(context).pop(),
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.all(16),
-                ),
-                child: const Text(
-                  'Finish',
-                  style: TextStyle(fontSize: 18),
+            Tooltip(
+              message: 'Finish review session',
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.all(16),
+                  ),
+                  child: const Text(
+                    'Finish',
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
               ),
             ),

@@ -77,12 +77,18 @@ class _FlashcardFrontState extends State<FlashcardFront> {
       );
 
       _controller!.addListener(() {
-        if (!mounted) return;
-        if (_controller?.value.hasError ?? false) {
-          setState(() {
-            _hasError = true;
-            _errorMessage = 'Video unavailable';
-          });
+        if (!mounted || _controller == null) return;
+        try {
+          if (_controller?.value.hasError ?? false) {
+            if (mounted) {
+              setState(() {
+                _hasError = true;
+                _errorMessage = 'Video unavailable';
+              });
+            }
+          }
+        } catch (e) {
+          // Controller was disposed, ignore
         }
       });
     } catch (e) {
@@ -121,8 +127,16 @@ class _FlashcardFrontState extends State<FlashcardFront> {
 
   @override
   void dispose() {
-    _controller?.dispose();
-    _iframeController?.close();
+    try {
+      _controller?.dispose();
+    } catch (e) {
+      // Controller already disposed
+    }
+    try {
+      _iframeController?.close();
+    } catch (e) {
+      // Controller already disposed
+    }
     super.dispose();
   }
 
@@ -173,21 +187,24 @@ class _FlashcardFrontState extends State<FlashcardFront> {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 16),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: widget.onShowAnswer,
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 32,
-                        vertical: 16,
+                Tooltip(
+                  message: 'Reveal the answer',
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: widget.onShowAnswer,
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 32,
+                          vertical: 16,
+                        ),
+                        textStyle: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      textStyle: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      child: const Text('Show Answer'),
                     ),
-                    child: const Text('Show Answer'),
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -239,10 +256,13 @@ class _FlashcardFrontState extends State<FlashcardFront> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ElevatedButton.icon(
-                    onPressed: _retry,
-                    icon: const Icon(Icons.refresh),
-                    label: const Text('Retry'),
+                  Tooltip(
+                    message: 'Retry loading video',
+                    child: ElevatedButton.icon(
+                      onPressed: _retry,
+                      icon: const Icon(Icons.refresh),
+                      label: const Text('Retry'),
+                    ),
                   ),
                 ],
               ),
@@ -425,36 +445,46 @@ class _RatingButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: color,
-        foregroundColor: Colors.white,
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-        minimumSize: const Size(120, 72), // Touch-friendly size
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+    final tooltipMessages = {
+      0: 'Complete failure - Start over (1 or A)',
+      1: 'Difficult - Review sooner (2 or H)',
+      3: 'Good - Standard interval (3 or G)',
+      4: 'Easy - Longer interval (4 or E)',
+    };
+
+    return Tooltip(
+      message: tooltipMessages[rating] ?? '',
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: color,
+          foregroundColor: Colors.white,
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+          minimumSize: const Size(120, 72), // Touch-friendly size
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
         ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            label,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              label,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            subtitle,
-            style: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.normal,
+            const SizedBox(height: 4),
+            Text(
+              subtitle,
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.normal,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
