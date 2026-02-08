@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:youtube_player_iframe/youtube_player_iframe.dart' as iframe;
 import 'flashcard_widget.dart';
 
 /// Front side of a flashcard that displays a YouTube player.
@@ -22,14 +24,44 @@ class FlashcardFront extends StatefulWidget {
 }
 
 class _FlashcardFrontState extends State<FlashcardFront> {
-  late YoutubePlayerController _controller;
+  YoutubePlayerController? _controller;
+  iframe.YoutubePlayerController? _iframeController;
   bool _hasError = false;
   String? _errorMessage;
+
+  bool get _useIframePlayer => defaultTargetPlatform == TargetPlatform.windows;
 
   @override
   void initState() {
     super.initState();
-    _initializePlayer();
+    if (_useIframePlayer) {
+      _initializeIframePlayer();
+    } else {
+      _initializePlayer();
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant FlashcardFront oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.youtubeId != widget.youtubeId ||
+        oldWidget.startAtSecond != widget.startAtSecond) {
+      if (!mounted) return;
+      
+      _hasError = false;
+      _errorMessage = null;
+
+      // Dispose old controllers and reinitialize with new video
+      if (_useIframePlayer) {
+        _iframeController?.close();
+        _iframeController = null;
+        _initializeIframePlayer();
+      } else {
+        _controller?.dispose();
+        _controller = null;
+        _initializePlayer();
+      }
+    }
   }
 
   void _initializePlayer() {
@@ -44,8 +76,9 @@ class _FlashcardFrontState extends State<FlashcardFront> {
         ),
       );
 
-      _controller.addListener(() {
-        if (_controller.value.hasError) {
+      _controller!.addListener(() {
+        if (!mounted) return;
+        if (_controller?.value.hasError ?? false) {
           setState(() {
             _hasError = true;
             _errorMessage = 'Video unavailable';
@@ -53,6 +86,32 @@ class _FlashcardFrontState extends State<FlashcardFront> {
         }
       });
     } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _hasError = true;
+        _errorMessage = 'Failed to load video';
+      });
+    }
+  }
+
+  void _initializeIframePlayer() {
+    try {
+      _iframeController = iframe.YoutubePlayerController.fromVideoId(
+        videoId: widget.youtubeId,
+        autoPlay: true,
+        params: const iframe.YoutubePlayerParams(
+          showControls: true,
+          showFullscreenButton: true,
+          mute: false,
+        ),
+      );
+      
+      // Seek to start position after initialization
+      if (widget.startAtSecond > 0) {
+        _iframeController?.seekTo(seconds: widget.startAtSecond.toDouble());
+      }
+    } catch (e) {
+      if (!mounted) return;
       setState(() {
         _hasError = true;
         _errorMessage = 'Failed to load video';
@@ -62,16 +121,22 @@ class _FlashcardFrontState extends State<FlashcardFront> {
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller?.dispose();
+    _iframeController?.close();
     super.dispose();
   }
 
   void _retry() {
+    if (!mounted) return;
     setState(() {
       _hasError = false;
       _errorMessage = null;
     });
-    _initializePlayer();
+    if (_useIframePlayer) {
+      _initializeIframePlayer();
+    } else {
+      _initializePlayer();
+    }
   }
 
   @override
@@ -85,11 +150,13 @@ class _FlashcardFrontState extends State<FlashcardFront> {
             aspectRatio: 16 / 9,
             child: _hasError
                 ? _buildErrorState(context)
-                : YoutubePlayer(
-                    controller: _controller,
-                    showVideoProgressIndicator: true,
-                    progressIndicatorColor: Theme.of(context).primaryColor,
-                  ),
+                : _useIframePlayer
+                    ? _buildIframePlayer(context)
+                    : YoutubePlayer(
+                        controller: _controller!,
+                        showVideoProgressIndicator: true,
+                        progressIndicatorColor: Theme.of(context).primaryColor,
+                      ),
           ),
           
           // Show Answer Button
@@ -183,6 +250,22 @@ class _FlashcardFrontState extends State<FlashcardFront> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildIframePlayer(BuildContext context) {
+    if (_iframeController == null) {
+      return Container(
+        color: Colors.black,
+        child: const Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
+    return iframe.YoutubePlayer(
+      controller: _iframeController!,
+      aspectRatio: 16 / 9,
     );
   }
 }

@@ -178,6 +178,13 @@ class LibraryViewModel extends ChangeNotifier {
       return CardStatus.review;
     }
   }
+
+  /// Reset learning progress for all cards (debug feature).
+  /// Sets all cards to default SRS values and reloads the library.
+  Future<void> resetAllProgress() async {
+    await _cardRepository.resetAllProgress();
+    await loadCards();
+  }
 }
 
 /// Card status based on SRS progress.

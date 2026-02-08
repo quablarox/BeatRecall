@@ -65,7 +65,7 @@ class _FlashcardWidgetState extends State<FlashcardWidget>
   void didUpdateWidget(FlashcardWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.showBack != oldWidget.showBack) {
-      _flip();
+      _flip(notifyParent: false);
     }
   }
 
@@ -75,7 +75,7 @@ class _FlashcardWidgetState extends State<FlashcardWidget>
     super.dispose();
   }
 
-  void _flip() {
+  void _flip({bool notifyParent = true}) {
     if (_showBack) {
       _controller.reverse();
     } else {
@@ -84,7 +84,9 @@ class _FlashcardWidgetState extends State<FlashcardWidget>
     setState(() {
       _showBack = !_showBack;
     });
-    widget.onFlip?.call();
+    if (notifyParent) {
+      widget.onFlip?.call();
+    }
   }
 
   @override

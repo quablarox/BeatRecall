@@ -50,6 +50,11 @@ class _LibraryScreenState extends State<LibraryScreen> {
             tooltip: 'Start Review',
           ),
           IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () => _showResetDialog(context),
+            tooltip: 'Reset Progress (Debug)',
+          ),
+          IconButton(
             icon: const Icon(Icons.sort),
             onPressed: _showSortOptions,
             tooltip: 'Sort',
@@ -351,6 +356,63 @@ class _LibraryScreenState extends State<LibraryScreen> {
         viewModel.setSortOption(option);
         Navigator.pop(context);
       },
+    );
+  }
+
+  void _showResetDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Reset Learning Progress'),
+        content: const Text(
+          'This will reset all cards to "due now" and clear all SRS progress.\n\n'
+          'This action cannot be undone!\n\n'
+          '⚠️ Debug feature only',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              Navigator.pop(context);
+              
+              // Show loading indicator
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Resetting progress...')),
+              );
+              
+              try {
+                await context.read<LibraryViewModel>().resetAllProgress();
+                
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('✓ All progress reset successfully'),
+                      backgroundColor: Colors.green,
+                    ),
+                  );
+                }
+              } catch (e) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Error: ${e.toString()}'),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('Reset All'),
+          ),
+        ],
+      ),
     );
   }
 }

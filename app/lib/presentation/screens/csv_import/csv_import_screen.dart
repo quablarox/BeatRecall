@@ -309,6 +309,7 @@ class _CsvImportScreenState extends State<CsvImportScreen> {
   Future<void> _selectAndImportFile() async {
     // Capture context-dependent values before any async operations
     final importService = context.read<CsvImportService>();
+    final libraryViewModel = context.read<LibraryViewModel>();
     final messenger = ScaffoldMessenger.of(context);
 
     try {
@@ -347,6 +348,8 @@ class _CsvImportScreenState extends State<CsvImportScreen> {
         _isImporting = false;
         _importResult = importResult;
       });
+
+      await libraryViewModel.loadCards();
 
       // Show success snackbar
       if (!mounted) return;

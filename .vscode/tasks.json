@@ -1,0 +1,21 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // For a list of available AVDs, run: emulator -list-avds
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "android: start emulator",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-NoProfile",
+                "-Command",
+                "$emulatorRunning = adb devices | Select-String 'emulator-'; if (-not $emulatorRunning) { Write-Host 'Starting Android emulator...'; Start-Process -NoNewWindow emulator -ArgumentList @('-avd', 'Pixel_7_API_34'); adb wait-for-device; Write-Host 'Waiting for emulator to boot...'; do { Start-Sleep -Seconds 2; $bootComplete = adb shell getprop sys.boot_completed 2>$null } while ($bootComplete -ne '1'); Write-Host 'Emulator ready!' } else { Write-Host 'Emulator already running' }"
+            ],
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            }
+        }
+    ]
+}

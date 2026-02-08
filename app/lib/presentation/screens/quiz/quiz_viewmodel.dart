@@ -22,6 +22,7 @@ class QuizViewModel extends ChangeNotifier {
   // Session state
   List<Flashcard> _dueCards = [];
   int _currentIndex = 0;
+  int _displayedCardIndex = 0; // The card currently displayed (may lag behind _currentIndex during animation)
   bool _isLoading = false;
   String? _error;
   bool _showBack = false;
@@ -38,8 +39,8 @@ class QuizViewModel extends ChangeNotifier {
   bool get showBack => _showBack;
   
   Flashcard? get currentCard =>
-      _dueCards.isNotEmpty && _currentIndex < _dueCards.length
-          ? _dueCards[_currentIndex]
+      _dueCards.isNotEmpty && _displayedCardIndex < _dueCards.length
+          ? _dueCards[_displayedCardIndex]
           : null;
 
   int get totalCards => _dueCards.length;
@@ -67,6 +68,7 @@ class QuizViewModel extends ChangeNotifier {
     try {
       _dueCards = await _cardRepository.fetchDueCards();
       _currentIndex = 0;
+      _displayedCardIndex = 0;
       _showBack = false;
       _ratingCounts.clear();
       _ratingCounts.addAll({0: 0, 1: 0, 3: 0, 4: 0});
@@ -87,7 +89,7 @@ class QuizViewModel extends ChangeNotifier {
   }
 
   /// Rate the current card and move to the next one
-  Future<void> rateCard(int rating) async {
+  Future<void> rateCard(int rating, {Duration? advanceDelay}) async {
     if (currentCard == null) return;
 
     try {
@@ -115,8 +117,9 @@ class QuizViewModel extends ChangeNotifier {
       // Update statistics
       _ratingCounts[rating] = (_ratingCounts[rating] ?? 0) + 1;
 
-      // Move to next card
+      // Move to next card and show its front side
       _currentIndex++;
+      _displayedCardIndex = _currentIndex;
       _showBack = false;
       notifyListeners();
     } catch (e) {
@@ -160,6 +163,7 @@ class QuizViewModel extends ChangeNotifier {
   void resetSession() {
     _dueCards.clear();
     _currentIndex = 0;
+    _displayedCardIndex = 0;
     _showBack = false;
     _error = null;
     _ratingCounts.clear();

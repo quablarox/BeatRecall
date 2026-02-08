@@ -66,4 +66,13 @@ abstract class CardRepository {
     required int intervalDays,
     required int repetitions,
   });
+
+  /// Resets the learning progress for all cards (debug/testing only).
+  ///
+  /// Sets all cards to default SRS values:
+  /// - nextReviewDate = now (all cards become due)
+  /// - easeFactor = 2.5
+  /// - intervalDays = 0
+  /// - repetitions = 0
+  Future<void> resetAllProgress();
 }

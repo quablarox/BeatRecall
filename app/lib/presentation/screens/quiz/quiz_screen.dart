@@ -21,6 +21,8 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> {
+  static const Duration _cardAdvanceDelay = Duration(milliseconds: 600);
+
   @override
   void initState() {
     super.initState();
@@ -191,19 +193,19 @@ class _QuizScreenState extends State<QuizScreen> {
             // Rating shortcuts
             if (event.logicalKey == LogicalKeyboardKey.digit1 ||
                 event.logicalKey == LogicalKeyboardKey.keyA) {
-              viewModel.rateCard(0); // Again
+              viewModel.rateCard(0, advanceDelay: _cardAdvanceDelay); // Again
               return KeyEventResult.handled;
             } else if (event.logicalKey == LogicalKeyboardKey.digit2 ||
                 event.logicalKey == LogicalKeyboardKey.keyH) {
-              viewModel.rateCard(1); // Hard
+              viewModel.rateCard(1, advanceDelay: _cardAdvanceDelay); // Hard
               return KeyEventResult.handled;
             } else if (event.logicalKey == LogicalKeyboardKey.digit3 ||
                 event.logicalKey == LogicalKeyboardKey.keyG) {
-              viewModel.rateCard(3); // Good
+              viewModel.rateCard(3, advanceDelay: _cardAdvanceDelay); // Good
               return KeyEventResult.handled;
             } else if (event.logicalKey == LogicalKeyboardKey.digit4 ||
                 event.logicalKey == LogicalKeyboardKey.keyE) {
-              viewModel.rateCard(4); // Easy
+              viewModel.rateCard(4, advanceDelay: _cardAdvanceDelay); // Easy
               return KeyEventResult.handled;
             }
           }
@@ -225,6 +227,7 @@ class _QuizScreenState extends State<QuizScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: FlashcardWidget(
+                  key: ValueKey(card.uuid), // Force rebuild when card changes
                   showBack: viewModel.showBack,
                   onFlip: viewModel.flipCard,
                   front: FlashcardFront(
@@ -235,7 +238,8 @@ class _QuizScreenState extends State<QuizScreen> {
                   back: FlashcardBack(
                     title: card.title,
                     artist: card.artist,
-                    onRate: (rating) => viewModel.rateCard(rating),
+                    onRate: (rating) =>
+                        viewModel.rateCard(rating, advanceDelay: _cardAdvanceDelay),
                     nextIntervals: viewModel.getNextIntervals(),
                   ),
                 ),

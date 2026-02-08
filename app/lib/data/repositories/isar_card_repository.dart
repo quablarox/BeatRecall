@@ -184,4 +184,23 @@ class IsarCardRepository implements CardRepository {
       await _isar.isarFlashcards.put(card);
     });
   }
+
+  @override
+  Future<void> resetAllProgress() async {
+    final now = DateTime.now();
+    
+    await _isar.writeTxn(() async {
+      final allCards = await _isar.isarFlashcards.where().findAll();
+      
+      for (final card in allCards) {
+        card.nextReviewDate = now;
+        card.easeFactor = 2.5;
+        card.intervalDays = 0;
+        card.repetitions = 0;
+        card.updatedAt = now;
+      }
+      
+      await _isar.isarFlashcards.putAll(allCards);
+    });
+  }
 }
