@@ -1,0 +1,7 @@
+youtube_url,title,artist,start_at_seconds
+dQw4w9WgXcQ,Valid Song 1,Valid Artist 1,0
+invalid-id,Missing Title,,30
+kJQP7kiw5Fk,Valid Song 2,Valid Artist 2,0
+,Empty URL,Artist Name,15
+https://www.youtube.com/watch?v=abc1234567,Valid Song 3,Valid Artist 3,invalid
+9bZkp7q19f0,Valid Song 4,Valid Artist 4,-10
