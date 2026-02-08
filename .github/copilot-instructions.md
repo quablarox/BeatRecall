@@ -94,6 +94,12 @@ Presentation → Service → Domain → Data
 - Constants: UPPER_SNAKE_CASE (`DEFAULT_EASE_FACTOR`)
 - Files: snake_case.dart, tests: `*_test.dart`
 
+**Diagrams:**
+- **Always use Mermaid** for diagrams in documentation
+- Supported types: Class diagrams, sequence diagrams, flowcharts, entity-relationship
+- Never use ASCII art or PlantUML
+- Example: See `docs/engineering/architecture/data_layer_diagram.md`
+
 ---
 
 ## Key Principles
@@ -110,18 +116,7 @@ Presentation → Service → Domain → Data
 **Consult when needed:**
 - Requirements: `docs/product/requirements/core/`
 - API Contracts: `docs/engineering/architecture/api_contracts.md`
-- Glossary: `docs/product/GLOSSARY.md`
-- Roadmap: `docs/product/roadmap/roadmap.md`
-- Testing: `docs/engineering/testing/testing_strategy.md`
-
-**Commit Messages:** `.github/commit-conventions.md`
-
----
-
-## Documentation References
-**Consult when needed:**
-- Requirements: `docs/product/requirements/core/`
-- API Contracts: `docs/engineering/architecture/api_contracts.md`
+- Data Layer Architecture: `docs/engineering/architecture/data_layer_diagram.md`
 - Glossary: `docs/product/GLOSSARY.md`
 - Roadmap: `docs/product/roadmap/roadmap.md`
 - Testing: `docs/engineering/testing/testing_strategy.md`
