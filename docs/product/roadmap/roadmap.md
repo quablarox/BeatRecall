@@ -22,7 +22,7 @@
 ┌─────────────┐     ┌─────────────┐     ┌─────────────┐     ┌─────────────┐
 │   Phase 0   │────▶│   Phase 1   │────▶│   Phase 2   │────▶│   Phase 3   │
 │  Planning   │     │  Core MVP   │     │  Enhanced   │     │   Future    │
-│  (Current)  │     │  (8 weeks)  │     │  (6 weeks)  │     │  Features   │
+│  (Complete) │     │  (Current)  │     │  (6 weeks)  │     │  Features   │
 └─────────────┘     └─────────────┘     └─────────────┘     └─────────────┘
 ```
 
@@ -112,7 +112,7 @@
 - See `app/lib/data/README.md` for architecture details
 
 ### 3.2 Sprint 2: Card Management (2 weeks)
-**Status:** 🔄 In Progress (40% complete)  
+**Status:** 🔄 In Progress (60% complete)  
 **Focus:** Add, edit, delete cards  
 **User Stories:** [Epic 1: Card Management](../user_stories/user_stories.md#epic-1-card-management) (Stories 1.1-1.5)
 
@@ -138,6 +138,7 @@
   - ✅ Navigation to CSV import (named routes)
   - ✅ LibraryViewModel with 23 tests
   - ✅ Provider state management
+  - ✅ Debug: Reset learning progress button (confirmation dialog)
 - [ ] **CARDMGMT-002:** Manual card creation (Story 1.2)
   - Add Card screen UI
   - Form validation
@@ -161,68 +162,91 @@
 - Provider scope restructured: All providers now above MaterialApp for global access
 - Named routes implemented (`/`, `/csv-import`)
 - Bug fix: ProviderNotFoundException resolved (4 new tests in provider_scope_test.dart)
+- Debug tooling: Reset progress button with confirmation dialog for testing
 - Test coverage: 113 tests total (46 SRS + 35 CSV Import + 23 Library + 5 Fixtures + 4 Provider)
 - CSV format: `youtube_url,title,artist,start_at_seconds` (album field not supported)
+- Git commits: 8ad7890 (card display fixes), d99c56c (test fixes)
 
 ### 3.3 Sprint 3: Review System (2 weeks)
+**Status:** ✅ Complete  
 **Focus:** Quiz loop and flashcard player  
 **User Stories:** [Epic 2: Core Learning Experience](../user_stories/user_stories.md#epic-2-core-learning-experience) (Stories 2.1-2.2)
 
 **Features:**
-- [ ] **FLASHSYS-001:** Dual-sided card interface (Story 2.1)
-  - Flashcard widget
-  - Show/hide answer
-  - Smooth transitions
-- [ ] **FLASHSYS-002:** YouTube player integration (Story 2.1)
-  - Integrate youtube_player_flutter
-  - Play/pause controls
-  - Error handling
-- [ ] **DUEQUEUE-001:** Due queue retrieval (Story 2.2)
-  - Query due cards
-  - Sort by due date
-  - Queue management
-- [ ] **Quiz Screen:** (Story 2.2)
-  - Display flashcards
-  - Progress indicator
-  - Navigation controls
+- [x] **FLASHSYS-001:** Dual-sided card interface (Story 2.1) **COMPLETE**
+  - ✅ Flashcard widget with flip animation (600ms)
+  - ✅ Show/hide answer with tap gesture
+  - ✅ Smooth transitions with AnimationController
+  - ✅ ValueKey forcing rebuild on card change
+- [x] **FLASHSYS-002:** YouTube player integration (Story 2.1) **COMPLETE**
+  - ✅ youtube_player_flutter integration (mobile)
+  - ✅ Start at specific timestamp support
+  - ✅ Play/pause controls
+  - ✅ Error handling and fallback UI
+  - ✅ Lifecycle management (mounted checks, controller disposal)
+- [x] **DUEQUEUE-001:** Due queue retrieval (Story 2.2) **COMPLETE**
+  - ✅ fetchDueCards query by nextReviewDate
+  - ✅ Sort by due date (oldest first)
+  - ✅ Queue management in QuizViewModel
+- [x] **Quiz Screen:** (Story 2.2) **COMPLETE**
+  - ✅ Display flashcards with due queue
+  - ✅ Progress indicator ("Card X of Y")
+  - ✅ Navigation through card progression
+  - ✅ Loading, error, empty, and session complete states
 
 **Success Criteria:**
-- [ ] YouTube videos play correctly
-- [ ] Due cards are retrieved and displayed
-- [ ] Can navigate through cards
-- [ ] Answer reveal works smoothly
+- [x] YouTube videos play correctly ✅ (mobile, Windows pending WebView2 fix)
+- [x] Due cards are retrieved and displayed ✅
+- [x] Can navigate through cards ✅
+- [x] Answer reveal works smoothly ✅
+
+**Implementation Notes:**
+- Card flip spoiler bug fixed: Separated `_displayedCardIndex` from `_currentIndex` to prevent premature card data updates during animations
+- YouTube player lifecycle: Added `mounted` checks before setState to prevent disposed controller errors
+- Windows YouTube playback: Error 153 (WebView2 blocking embeds) remains unresolved, deferred
+- FlashcardWidget uses ValueKey(card.uuid) to force rebuild vs update on card change
 
 ### 3.4 Sprint 4: Rating & Polish (2 weeks)
+**Status:** 🔄 In Progress (60% complete)  
 **Focus:** Complete SRS loop and MVP polish  
 **User Stories:** Epic 2 (Story 2.3), [Epic 3: Progress Tracking](../user_stories/user_stories.md#epic-3-progress-tracking) (Story 3.1)
 
 **Features:**
-- [ ] **FLASHSYS-003:** Answer rating (Story 2.3)
-  - Four rating buttons (Again, Hard, Good, Easy)
-  - Color coding
-  - Keyboard shortcuts
-  - Next interval display
-- [ ] **DUEQUEUE-002:** Review session management (Story 2.2)
-  - Session state tracking
-  - Progress calculation
-  - Session summary
+- [x] **FLASHSYS-003:** Answer rating (Story 2.3) **COMPLETE**
+  - ✅ Four rating buttons (Again, Hard, Good, Easy)
+  - ✅ Color coding (Red, Orange, Green, Blue)
+  - ❌ Keyboard shortcuts (not implemented)
+  - ❌ Next interval display (not implemented)
+- [x] **DUEQUEUE-002:** Review session management (Story 2.2) **COMPLETE**
+  - ✅ Session state tracking (QuizViewModel)
+  - ✅ Progress calculation (currentIndex/totalCards)
+  - ✅ Session summary with rating counts
+  - ✅ Session duration tracking
+  - ✅ SRS integration (updateSrsFields after rating)
 - [ ] **DASHBOARD-001:** Dashboard overview display (Story 3.1)
+  - ❌ Placeholder only (not implemented)
   - Due cards count
   - Total cards count
   - Success rate
   - Current streak
   - Quick action buttons
-- [ ] **Polish:**
-  - Loading states
-  - Error messages
-  - Empty states
-  - App icon and splash screen
+- [x] **Polish:** **PARTIAL**
+  - ✅ Loading states (Quiz screen)
+  - ✅ Error messages (Quiz screen)
+  - ✅ Empty states ("No cards due" message)
+  - ✅ Session summary screen
+  - ❌ App icon and splash screen (not implemented)
 
 **Success Criteria:**
-- [ ] Complete review loop works end-to-end
-- [ ] SRS intervals update correctly
-- [ ] Dashboard shows accurate statistics
-- [ ] App is polished and ready for testing
+- [x] Complete review loop works end-to-end ✅
+- [x] SRS intervals update correctly ✅
+- [ ] Dashboard shows accurate statistics (not implemented)
+- [ ] App is polished and ready for testing (partial)
+
+**Implementation Notes:**
+- Rating loop fully functional: Rate card → Calculate SRS interval → Update database → Advance to next card
+- Session statistics tracked: Rating counts, total reviewed, session duration, progress percentage
+- Dashboard screen exists but only shows placeholder text
 
 **MVP Release:** 🎯 End of Week 8
 - [ ] Internal testing complete
