@@ -5,15 +5,17 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:beat_recall/presentation/app/beat_recall_app.dart';
 
 void main() {
-  testWidgets('App boots to dashboard placeholder', (WidgetTester tester) async {
+  testWidgets('App widget can be created', (WidgetTester tester) async {
+    // This is a smoke test to ensure the app widget can be instantiated
     await tester.pumpWidget(const BeatRecallApp());
-
-    expect(find.text('BeatRecall'), findsOneWidget);
-    expect(find.text('Dashboard (placeholder)'), findsOneWidget);
+    
+    // Initial frame should show loading indicator while database initializes
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
   });
 }

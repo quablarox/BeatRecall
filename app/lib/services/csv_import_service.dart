@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:csv/csv.dart';
-import '../domain/entities/flashcard.dart';
 import '../domain/factories/flashcard_factory.dart';
 import '../domain/repositories/card_repository.dart';
 import '../domain/value_objects/import_result.dart';

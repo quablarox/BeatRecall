@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../screens/dashboard/dashboard_screen.dart';
+import '../../data/database/isar_database.dart';
+import '../../data/repositories/isar_card_repository.dart';
+import '../screens/library/library_screen.dart';
+import '../screens/library/library_viewmodel.dart';
 
 class BeatRecallApp extends StatelessWidget {
   const BeatRecallApp({super.key});
@@ -13,7 +17,32 @@ class BeatRecallApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF1DB954)),
         useMaterial3: true,
       ),
-      home: const DashboardScreen(),
+      home: FutureBuilder(
+        future: IsarDatabase.open(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          }
+
+          if (snapshot.hasError) {
+            return Scaffold(
+              body: Center(
+                child: Text('Error initializing database: ${snapshot.error}'),
+              ),
+            );
+          }
+
+          return ChangeNotifierProvider(
+            create: (context) {
+              final repository = IsarCardRepository();
+              return LibraryViewModel(cardRepository: repository);
+            },
+            child: const LibraryScreen(),
+          );
+        },
+      ),
     );
   }
 }

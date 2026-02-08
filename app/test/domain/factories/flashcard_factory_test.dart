@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:beat_recall/domain/entities/flashcard.dart';
 import 'package:beat_recall/domain/factories/flashcard_factory.dart';
 
 /// Unit tests for [FlashcardFactory].
