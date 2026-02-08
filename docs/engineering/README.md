@@ -22,7 +22,20 @@ This directory contains technical documentation - **how** we're building the pro
 
 ---
 
-### 2. [Development Setup Guide](setup/development_setup.md)
+### 2. [Data Layer Architecture Diagram](architecture/data_layer_diagram.md)
+**Purpose:** Visual diagrams of data layer implementation with UUID-based domain/data separation
+
+**Contents:**
+- Component overview (Mermaid class diagram)
+- Data flow diagrams (save, find operations)
+- Index strategy and query performance
+- Benefits of clean architecture approach
+
+**Use this when:** You need to understand data persistence, entity mapping, or repository implementation.
+
+---
+
+### 3. [Development Setup Guide](setup/development_setup.md)
 **Purpose:** Complete guide to setting up the development environment
 
 **Contents:**
@@ -38,7 +51,7 @@ This directory contains technical documentation - **how** we're building the pro
 
 ---
 
-### 3. [Testing Strategy](testing/testing_strategy.md)
+### 4. [Testing Strategy](testing/testing_strategy.md)
 **Purpose:** Comprehensive testing approach and guidelines
 
 **Contents:**
@@ -53,7 +66,7 @@ This directory contains technical documentation - **how** we're building the pro
 
 ---
 
-### 4. [Non-Functional Requirements](non_functional/non_functional_requirements.md)
+### 5. [Non-Functional Requirements](non_functional/non_functional_requirements.md)
 **Purpose:** Quality attributes and technical constraints
 
 **Contents:**
@@ -73,8 +86,9 @@ This directory contains technical documentation - **how** we're building the pro
 ### For New Developers:
 1. **First**, follow [Development Setup Guide](setup/development_setup.md) to configure your environment
 2. **Then**, study [Architecture Documentation](architecture/architecture.md) to understand code structure
-3. **Next**, review [Testing Strategy](testing/testing_strategy.md) for quality standards
-4. **Finally**, check [Non-Functional Requirements](non_functional/non_functional_requirements.md) for constraints
+3. **Review** [Data Layer Architecture Diagram](architecture/data_layer_diagram.md) for database implementation details
+4. **Next**, review [Testing Strategy](testing/testing_strategy.md) for quality standards
+5. **Finally**, check [Non-Functional Requirements](non_functional/non_functional_requirements.md) for constraints
 
 ### For QA/Testers:
 1. **Testing Strategy** for test approach and coverage goals
@@ -86,16 +100,27 @@ This directory contains technical documentation - **how** we're building the pro
 
 ## 📖 Document Relationships
 
-```
-Engineering Documentation
-    │
-    ├─→ Architecture ──────defines──→ Code Structure
-    │         │
-    │         └──────────guides──→ Development Setup
-    │
-    ├─→ Testing Strategy ──────validates──→ Architecture
-    │
-    └─→ Non-Functional Requirements ──────constrains──→ All Implementation
+```mermaid
+graph TD
+    A[Engineering Documentation]
+    B[Architecture]
+    C[Data Layer Diagram]
+    D[Development Setup]
+    E[Testing Strategy]
+    F[Non-Functional Requirements]
+    G[Code Structure]
+    
+    A --> B
+    A --> C
+    A --> D
+    A --> E
+    A --> F
+    
+    B -->|defines| G
+    C -->|details| B
+    B -->|guides| D
+    E -->|validates| B
+    F -->|constrains| G
 ```
 
 ---
