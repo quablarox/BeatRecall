@@ -214,6 +214,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         const SizedBox(height: 12),
         Tooltip(
+          message: 'Adjust learning and app preferences',
+          child: SizedBox(
+            width: double.infinity,
+            child: OutlinedButton.icon(
+              onPressed: () => Navigator.of(context).pushNamed('/settings'),
+              icon: const Icon(Icons.settings),
+              label: const Text('Settings'),
+            ),
+          ),
+        ),
+        const SizedBox(height: 12),
+        Tooltip(
           message: 'Import flashcards from CSV file',
           child: SizedBox(
             width: double.infinity,

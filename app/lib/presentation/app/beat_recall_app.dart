@@ -145,3 +145,4 @@ class _BeatRecallAppState extends State<BeatRecallApp> {
         return ThemeMode.system;
     }
   }
+}

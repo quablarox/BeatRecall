@@ -193,10 +193,41 @@ Epics are organized by **implementation phase** to align with the [Development R
 **Acceptance:**
 - Four rating buttons: Again, Hard, Good, Easy
 - Buttons color-coded and clearly labeled
-- Next interval displayed after rating
+- **Next interval displayed on each button before rating:**
+  - Shows when card will appear next (e.g., "Soon", "4d", "10d", "2w")
+  - Helps user choose appropriate rating
+  - Absolute date for long intervals (>30 days)
 - Card rescheduled according to SM-2 algorithm
 - Review logged in database
 - Automatically loads next card
+
+---
+
+### Story 2.4: Complete All Due Reviews
+**As a** user starting a review session  
+**I want to** review all cards that are due today in one session  
+**So that** I stay on track with my learning schedule
+
+**Related Requirements:** [DUEQUEUE-003](../requirements/core/DUEQUEUE.md#duequeue-002-review-session), [SETTINGS-001](../requirements/core/SETTINGS.md#settings-001-daily-new-cards-limit)
+
+**Priority:** High | **Story Points:** 5  
+**Sprint:** Sprint 4.5 (Week 9)
+
+**Acceptance:**
+- Session automatically includes all cards due today
+- Session continues until no more due cards remain
+- Progress shows "Cards reviewed: X" and "Due remaining: Y"
+- New cards included up to daily limit (configurable in settings)
+- Cards rated "Again" can re-enter the session queue
+- Session summary shows total reviewed, ratings breakdown, time spent
+- Can pause and resume session anytime
+- "All caught up!" message when session completes
+
+**User Impact:**
+- No need to manually start multiple sessions
+- Confidence that all due reviews are completed
+- Clear progress tracking throughout session
+- Flexible with "Again" cards appearing later in session
 
 ---
 
@@ -271,7 +302,7 @@ Epics are organized by **implementation phase** to align with the [Development R
 ---
 
 ## Epic 5: Settings & Data Management
-**Phase:** Post-MVP (Sprint 7) | **Priority:** Medium  
+**Phase:** Post-MVP (Sprint 4.5, 7) | **Priority:** High → Medium  
 **Goal:** Give users control over app behavior and data safety
 
 ### Story 5.1: Configure App Settings
@@ -279,20 +310,45 @@ Epics are organized by **implementation phase** to align with the [Development R
 **I want to** customize how the app works  
 **So that** it fits my learning style and preferences
 
-**Related Requirements:** [FR-3.2.1](../requirements/03_additional.md#fr-321-application-settings)
+**Related Requirements:** [SETTINGS-001](../requirements/core/SETTINGS.md#settings-001-daily-new-cards-limit), [SETTINGS-002](../requirements/core/SETTINGS.md#settings-002-audio-only-mode), [SETTINGS-003](../requirements/core/SETTINGS.md#settings-003-general-preferences)
 
-**Priority:** Medium | **Story Points:** 5  
-**Sprint:** Sprint 7 (Week 12-13)
+**Priority:** High (Sprint 4.5) → Medium (Sprint 7)  
+**Story Points:** 8  
+**Sprint:** Sprint 4.5 (Week 9) - Foundation, Sprint 7 (Week 12-13) - Advanced
 
-**Acceptance:**
-- Settings screen accessible
-- Can configure:
-  - Theme (light/dark)
-  - SRS parameters (optional)
-  - Notification preferences
-  - Auto-play behavior
+**Acceptance (Sprint 4.5 - High Priority):**
+- Settings screen accessible from dashboard/menu
+- **Learning Settings:**
+  - Set daily new cards limit (e.g., 20 cards/day)
+  - Default: 20 cards per day
+  - Range: 0-999
+  - Dashboard shows "X new cards remaining today"
+- **Media Settings:**
+  - Toggle audio-only mode (collapse video player)
+  - Audio continues playing, video hidden
+  - Saves bandwidth and battery life
+  - Compact control bar with play/pause
+- **Appearance:**
+  - Theme selection (light/dark/system default)
 - Settings persist across sessions
 - Changes applied immediately
+
+**Acceptance (Sprint 7 - Advanced):**
+- **Additional Learning Settings:**
+  - SRS parameter customization (optional, advanced users)
+  - Auto-play behavior (auto/manual)
+- **Notification Settings:**
+  - Daily reminder toggle
+  - Reminder time selection
+- **App Information:**
+  - Version number
+  - About page
+  - Privacy policy, terms of service links
+
+**User Impact:**
+- New cards limit prevents overwhelming users
+- Audio-only mode essential for bandwidth-limited users
+- Theme selection improves accessibility
 
 ---
 

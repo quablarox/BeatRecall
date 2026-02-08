@@ -166,21 +166,15 @@ class _FlashcardFrontState extends State<FlashcardFront> {
             mainAxisSize: MainAxisSize.min,
             children: [
               // YouTube Player, Audio Bar, or Error State
-              if (audioOnlyMode)
-                _buildAudioOnlyBar(context)
-              else
-                AspectRatio(
-                  aspectRatio: 16 / 9,
-                  child: _hasError
-                      ? _buildErrorState(context)
-                      : _useIframePlayer
-                          ? _buildIframePlayer(context)
-                          : YoutubePlayer(
-                              controller: _controller!,
-                              showVideoProgressIndicator: true,
-                              progressIndicatorColor: Theme.of(context).primaryColor,
-                            ),
+              if (audioOnlyMode) ...[
+                // Keep the player in the tree so audio continues playing
+                Offstage(
+                  offstage: true,
+                  child: _buildPlayerWidget(context),
                 ),
+                _buildAudioOnlyBar(context),
+              ] else
+                _buildPlayerWidget(context),
               
               // Show Answer Button
               Padding(
@@ -297,6 +291,23 @@ class _FlashcardFrontState extends State<FlashcardFront> {
     return iframe.YoutubePlayer(
       controller: _iframeController!,
       aspectRatio: 16 / 9,
+    );
+  }
+
+  Widget _buildPlayerWidget(BuildContext context) {
+    return AspectRatio(
+      aspectRatio: 16 / 9,
+      child: _hasError
+          ? _buildErrorState(context)
+          : _useIframePlayer
+              ? _buildIframePlayer(context)
+              : _controller == null
+                  ? const SizedBox.shrink()
+                  : YoutubePlayer(
+                      controller: _controller!,
+                      showVideoProgressIndicator: true,
+                      progressIndicatorColor: Theme.of(context).primaryColor,
+                    ),
     );
   }
 

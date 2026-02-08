@@ -22,14 +22,16 @@ BeatRecall is a mobile application built with **Flutter** designed to help users
 ### Phase 1: Core MVP (SRS & Quiz Loop)
 | ID | Feature | Status | Description |
 | :--- | :--- | :---: | :--- |
-| **SRS-001** | **SRS Logic (SM-2)** | ✅ | Implementation of the SM-2 algorithm to calculate next review dates (Again, Hard, Good, Easy). **46 tests passing** |
+| **SRS-001** | **SRS Logic (SM-2)** | ✅ | Implementation of the SM-2 algorithm to calculate next review dates (Again, Hard, Good, Easy). **59 tests passing** |
 | **CARDMGMT-001** | **CSV Import** | ✅ | CSV bulk import with validation, duplicate detection, error reporting. **40 tests passing** |
 | **CARDMGMT-005** | **Library Screen** | ✅ | List cards with search, filters (status/due date), and sorting. **23 tests passing** |
 | **CARDMGMT-002** | **Manual Card Creation** | ⏳ | Add songs via form with YouTube URL, Title, and Artist name. |
-| **FLASHSYS-001/002** | **Flashcard Player** | ⏳ | Dual-sided card UI. Front: YouTube audio/video plays. Back: Title & Artist are revealed. |
-| **DUEQUEUE-001/002** | **Due Queue & Sessions** | ⏳ | Logic to fetch cards where `nextReviewDate <= now` and manage review sessions. |
+| **FLASHSYS-001/002/005** | **Flashcard Player** | ✅ | Dual-sided card UI. Front: YouTube audio/video plays with audio-only mode. Back: Title & Artist are revealed. Enhanced interval display. Keyboard shortcuts for rating. **13 tests passing** |
+| **DUEQUEUE-001/002/003** | **Due Queue & Sessions** | ✅ | Logic to fetch cards with continuous session mode until no more due. Daily new cards limit integration. **11 tests passing** |
+| **DASHBOARD-001** | **Dashboard** | ✅ | Overview with stats (total/due cards, success rate, streak), quick actions, refresh. **11 tests passing** |
+| **SETTINGS-001/002/003** | **Settings System** | ✅ | Daily new cards limit (0-999), audio-only mode, theme switching, auto-play toggle. **34 tests passing** |
 
-**Current Status:** Sprint 2 (40% complete) | **Tests:** 113 passing
+**Current Status:** Sprint 4.5 Complete | **Tests:** 191 passing (185 core + 6 infrastructure)
 
 ### Phase 2: Enhanced Management & Automation
 | ID | Feature | Description |
@@ -68,6 +70,7 @@ class Flashcard {
 ---
 
 ## 5. UI/UX Requirements
-- **Dashboard:** Display count of "Due Today" cards.
-- **Quiz Loop:** Minimalist player, big "Show Answer" button, color-coded rating buttons.
-- **Library:** Searchable list of all cards with Edit/Delete options.
+- **Dashboard:** Overview stats (total, due, reviewed cards, success rate, streak), quick action buttons (Start Review, Library, Import CSV), pull-to-refresh.
+- **Quiz Loop:** YouTube player, "Show Answer" button, color-coded rating buttons (Again/Hard/Good/Easy), keyboard shortcuts (1-4 or A/H/G/E), next interval display, tooltips, session summary.
+- **Library:** Searchable list with filters (status, due date), sort options, card details, Edit/Delete options, debug reset progress.
+- **Branding:** App icons for all platforms (Android/iOS/web/Windows/macOS), splash screens (Android/iOS/web with Android 12 support).

@@ -109,8 +109,19 @@ Allow users to rate their recall performance with four options: Again, Hard, Goo
   - Hard: Orange (#FF9800)
   - Good: Green (#4CAF50)
   - Easy: Blue (#2196F3)
-- Display next review interval for each option (e.g., "Soon", "4d", "10d", "15d")
-- Keyboard shortcuts for quick rating:
+- **Display next review interval for each option:**
+  - Show interval below each rating button (e.g., "Soon", "4d", "10d", "15d")
+  - Calculate interval using SRS-001 before user rates
+  - Format intervals clearly:
+    - "<1m" = Less than 1 minute (will re-appear this session)
+    - "<1h" = Less than 1 hour
+    - "Xh" = Hours (e.g., "3h")
+    - "Xd" = Days (e.g., "4d")
+    - "Xw" = Weeks (e.g., "2w")
+    - "Xmo" = Months (e.g., "3mo")
+  - **Display absolute date for longer intervals:** "Jan 15, 2026" for intervals >30 days
+  - Interval display helps users make informed rating decisions
+- **Keyboard shortcuts for quick rating:**
   - `1` or `A`: Again
   - `2` or `H`: Hard
   - `3` or `G`: Good

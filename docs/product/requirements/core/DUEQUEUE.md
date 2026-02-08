@@ -75,43 +75,58 @@ final dueCards = await isar.flashcards
 ### DUEQUEUE-002: Review Session
 
 **Priority:** High  
-**Status:** Not Started
+**Status:** In Progress
 
 **Description:**  
-Manage a continuous review session where users work through all due cards. Provide progress tracking, session controls, and completion summary.
+Manage a continuous review session where users work through all cards due for the day. The session continues dynamically as long as cards are due, rather than limiting to a fixed count. Users can study both due cards (reviews) and new cards (up to daily limit).
 
 **Acceptance Criteria:**
-- Display progress indicator:
-  - "Card X of Y" (e.g., "Card 5 of 23")
-  - Progress bar showing percentage complete
-  - Estimated time remaining (optional): based on average time per card
-- Navigate through due cards sequentially:
-  - Automatically load next card after rating current card
+- **Session Scope:**
+  - Session includes ALL cards where `nextReviewDate <= now`
+  - Plus new cards (up to daily new cards limit from SETTINGS-001)
+  - Session continues until no more cards are due today
+  - Cards rated "Again" re-enter the session queue if still due today
+  - Dynamic card count: "Card X of ~Y" (count may change as Again cards re-enter)
+- **Progress Tracking:**
+  - Display "Cards reviewed: X" (total reviewed in session)
+  - Show "Due cards remaining: Y" (updates dynamically)
+  - Progress indicator: percentage of initially due cards completed
+  - Optional: Estimated time remaining based on average time per card
+- **Navigation:**
+  - Automatically load next due card after rating current card
   - Smooth transition between cards (no jarring jumps)
-- Support session pause/resume:
-  - "Pause" button to exit session
+  - If user rates "Again": card is rescheduled and may appear later in same session
+- **Session Controls:**
+  - "Pause" button to exit session mid-review
   - Resume from where user left off
   - Session state persists across app restarts
-- Session summary at completion:
-  - Total cards reviewed
-  - Breakdown by rating: Again, Hard, Good, Easy
-  - Total time spent in session
-  - Encouraging message (e.g., "Great job! 🎉")
-  - "Review More" button if new cards are due
+  - "Finish Early" option to end session before all cards reviewed
+- **Session Completion:**
+  - Session ends automatically when no more cards are due
+  - Session summary displays:
+    - Total cards reviewed
+    - Breakdown by rating: Again, Hard, Good, Easy
+    - Total time spent in session
+    - New cards studied today vs daily limit
+    - Encouraging message (e.g., "All caught up! 🎉")
   - "Finish" button to return to dashboard
-- Option to review more cards when queue is empty:
-  - "All caught up! Review more cards?" prompt
-  - "Review New Cards" button (if new cards exist)
-  - "Finish Session" button
-- Handle edge cases:
-  - No cards due: Show "All caught up!" message with next review time
-  - Only 1 card due: Show "1 card due" instead of progress bar
+- **Edge Cases:**
+  - No cards due: Show "All caught up!" with next review time
+  - Only new cards due but limit reached: Show "Come back tomorrow for new cards"
   - Session interrupted: Auto-save progress
+  - Very long sessions (>100 cards): Suggest break after every 25 cards
 
 **Design Notes:**
+- Dynamic card count requires careful UX: avoid confusing users when count changes
+- "~" prefix on card count indicates approximate (e.g., "Card 5 of ~20")
 - Progress indicator should be prominent but not distracting
 - Session summary should feel rewarding
 - Consider confetti animation on session completion (optional)
+
+**Integration with Settings:**
+- Respects SETTINGS-001 (daily new cards limit)
+- Query includes: all due cards + new cards up to remaining daily limit
+- Session continues until both due cards and new card quota exhausted
 
 ---
 

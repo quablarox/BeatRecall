@@ -207,7 +207,7 @@
 - FlashcardWidget uses ValueKey(card.uuid) to force rebuild vs update on card change
 
 ### 3.4 Sprint 4: Rating & Polish (2 weeks)
-**Status:** 🔄 In Progress (60% complete)  
+**Status:** ✅ Complete (100%)  
 **Focus:** Complete SRS loop and MVP polish  
 **User Stories:** Epic 2 (Story 2.3), [Epic 3: Progress Tracking](../user_stories/user_stories.md#epic-3-progress-tracking) (Story 3.1)
 
@@ -215,44 +215,102 @@
 - [x] **FLASHSYS-003:** Answer rating (Story 2.3) **COMPLETE**
   - ✅ Four rating buttons (Again, Hard, Good, Easy)
   - ✅ Color coding (Red, Orange, Green, Blue)
-  - ❌ Keyboard shortcuts (not implemented)
-  - ❌ Next interval display (not implemented)
+  - ✅ Keyboard shortcuts (1-4 or A/H/G/E)
+  - ✅ Next interval display on rating buttons
+  - ✅ Tooltips with keyboard hints
 - [x] **DUEQUEUE-002:** Review session management (Story 2.2) **COMPLETE**
   - ✅ Session state tracking (QuizViewModel)
   - ✅ Progress calculation (currentIndex/totalCards)
   - ✅ Session summary with rating counts
   - ✅ Session duration tracking
   - ✅ SRS integration (updateSrsFields after rating)
-- [ ] **DASHBOARD-001:** Dashboard overview display (Story 3.1)
-  - ❌ Placeholder only (not implemented)
-  - Due cards count
-  - Total cards count
-  - Success rate
-  - Current streak
-  - Quick action buttons
-- [x] **Polish:** **PARTIAL**
-  - ✅ Loading states (Quiz screen)
-  - ✅ Error messages (Quiz screen)
-  - ✅ Empty states ("No cards due" message)
+- [x] **DASHBOARD-001:** Dashboard overview display (Story 3.1) **COMPLETE**
+  - ✅ DashboardViewModel with repository integration (11 tests)
+  - ✅ Due cards count
+  - ✅ Total cards count
+  - ✅ Reviewed cards count
+  - ✅ Success rate calculation
+  - ✅ Current streak (max repetitions)
+  - ✅ Quick action buttons (Start Review, Library, Import CSV)
+  - ✅ Pull-to-refresh functionality
+  - ✅ Loading/error/empty states
+- [x] **Polish:** **COMPLETE**
+  - ✅ Loading states (all screens)
+  - ✅ Error messages with retry buttons
+  - ✅ Empty states with helpful messages
   - ✅ Session summary screen
-  - ❌ App icon and splash screen (not implemented)
+  - ✅ App icons (Android/iOS/web/Windows/macOS)
+  - ✅ Splash screens (Android/iOS/web with Android 12 support)
+  - ✅ Tooltips on all interactive elements
+  - ✅ AndroidInAppWebViewController disposal error fixed
 
 **Success Criteria:**
 - [x] Complete review loop works end-to-end ✅
 - [x] SRS intervals update correctly ✅
-- [ ] Dashboard shows accurate statistics (not implemented)
-- [ ] App is polished and ready for testing (partial)
+- [x] Dashboard shows accurate statistics ✅
+- [x] App is polished and ready for testing ✅
 
 **Implementation Notes:**
 - Rating loop fully functional: Rate card → Calculate SRS interval → Update database → Advance to next card
 - Session statistics tracked: Rating counts, total reviewed, session duration, progress percentage
-- Dashboard screen exists but only shows placeholder text
+- Dashboard fully implemented: Stats calculation, quick actions, refresh indicator
+- Branding complete: flutter_launcher_icons 0.14.4, flutter_native_splash 2.4.7
+- UX improvements: Tooltips throughout, defensive programming for YouTube player disposal
 
 **MVP Release:** 🎯 End of Week 8
 - [ ] Internal testing complete
-- [ ] Documentation updated
+- [x] Documentation updated (README.md, roadmap.md reflect Sprint 4 completion)
 - [ ] Release notes prepared
 - [ ] Beta release to TestFlight/Play Store Beta
+
+### 3.5 Sprint 4.5: MVP Enhancements (1-2 weeks)
+**Status:** ✅ Complete  
+**Focus:** Critical UX improvements based on initial testing feedback  
+**Priority:** High (addresses user feedback before Phase 2)
+
+**Features:**
+- [x] **DUEQUEUE-003:** Continuous session mode
+  - ✅ Session runs until all due cards for the day are reviewed
+  - ✅ Remove fixed card limit
+  - ✅ Dynamic card count display
+  - ✅ Cards rated "Again" re-enter session queue when interval=0
+  - ✅ Integration with new cards daily limit (SETTINGS-001)
+- [x] **FLASHSYS-005:** Enhanced interval display
+  - ✅ Show when each card will repeat on rating buttons
+  - ✅ Format: "<1m", "3h", "4d", "2w", "3mo"
+  - ✅ Display absolute date for intervals >30 days
+  - ✅ SrsService.formatInterval() with 13 tests
+- [x] **SETTINGS-001:** Daily new cards limit
+  - ✅ Settings screen with "New Cards Per Day" configuration
+  - ✅ Default: 20 cards/day, range 0-999
+  - ✅ Track daily new card count with midnight reset
+  - ✅ SettingsService with SharedPreferences persistence
+- [x] **SETTINGS-002:** Audio-only mode
+  - ✅ Toggle to collapse YouTube video player
+  - ✅ Audio continues playing normally
+  - ✅ Compact visual indicator when collapsed
+  - ✅ Saves bandwidth and battery
+- [x] **SETTINGS-003:** Settings screen foundation
+  - ✅ Complete settings UI structure
+  - ✅ Theme selection (light/dark/system) with live switching
+  - ✅ Auto-play behavior toggle
+  - ✅ Settings persistence with AppSettings value object
+
+**Success Criteria:**
+- [x] Session UX improved: users review all due cards in one session ✅
+- [x] Users can control learning pace with new cards limit ✅
+- [x] Bandwidth-conscious users can use audio-only mode ✅
+- [x] Interval display helps users make better rating decisions ✅
+- [x] All settings persist across app restarts ✅
+- [x] **Test Coverage:** 191 passing tests (108 services + 25 domain + 58 presentation)
+
+**Implementation Notes:**
+- Requirements document SETTINGS.md created with all feature specifications
+- QuizViewModel enhanced with SettingsService integration
+- FlashcardFront widget updated for audio-only mode with Consumer<SettingsService>
+- BeatRecallApp updated for theme switching
+- AppSettings value object created for immutable settings model
+- All UI text follows proper capitalization (e.g., "Audio-Only Mode", "New Cards Per Day")
 
 ---
 

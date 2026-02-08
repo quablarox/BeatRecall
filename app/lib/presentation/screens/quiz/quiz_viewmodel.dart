@@ -47,6 +47,7 @@ class QuizViewModel extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get error => _error;
   bool get showBack => _showBack;
+  int get newCardsStudiedInSession => _newCardsStudiedInSession;
   
   Flashcard? get currentCard =>
       _dueCards.isNotEmpty && _displayedCardIndex < _dueCards.length
@@ -82,7 +83,7 @@ class QuizViewModel extends ChangeNotifier {
       List<Flashcard> newCards = [];
       
       if (remainingNewCards > 0) {
-        final allCards = await _cardRepository.fetchAll();
+        final allCards = await _cardRepository.fetchAllCards();
         // New cards are those with repetitions == 0
         newCards = allCards
             .where((card) => card.repetitions == 0)

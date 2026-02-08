@@ -35,7 +35,7 @@ void main() {
       
       // Find the new cards per day tile
       expect(find.text('New Cards Per Day'), findsOneWidget);
-      expect(find.textContaining('20 cards'), findsOneWidget); // "Current: 20 cards"
+      expect(find.text('Current: 20 cards'), findsOneWidget);
     });
 
     testWidgets('Given new cards tile, When tapped, Then shows edit dialog', (tester) async {
@@ -64,7 +64,7 @@ void main() {
       
       // Value should be updated
       expect(settingsService.settings.newCardsPerDay, 50);
-      expect(find.textContaining('50 cards'), findsOneWidget);
+      expect(find.text('Current: 50 cards'), findsOneWidget);
     });
 
     testWidgets('Given edit dialog, When canceling, Then does not update', (tester) async {
@@ -152,7 +152,7 @@ void main() {
       
       // Find theme tile
       expect(find.text('Theme'), findsOneWidget);
-      expect(find.text('System default'), findsOneWidget); // Default
+      expect(find.text('System Default'), findsOneWidget); // Default
     });
 
     testWidgets('Given theme tile, When tapped, Then shows theme dialog', (tester) async {
@@ -166,7 +166,7 @@ void main() {
       expect(find.text('Choose Theme'), findsOneWidget);
       expect(find.text('Light'), findsOneWidget);
       expect(find.text('Dark'), findsOneWidget);
-      expect(find.text('System default'), findsAtLeastNWidgets(1));
+      expect(find.text('System Default'), findsAtLeastNWidgets(1));
     });
 
     testWidgets('Given theme dialog, When selecting dark, Then updates theme', (tester) async {

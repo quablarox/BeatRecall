@@ -77,7 +77,7 @@ flutter test
 2. [User Stories](docs/product/user_stories/user_stories.md) - Feature backlog
 3. [Requirements](docs/product/requirements/core/README.md) - Detailed scope
 
-**Key Info:** MVP in 8 weeks | 20+ user stories | Phase 0 Week 2 (current)
+**Key Info:** MVP in 8 weeks | 20+ user stories | Phase 1 Sprint 4 Complete | 124 tests passing
 
 ---
 
@@ -136,17 +136,25 @@ flutter test
 
 ## 🎯 4. Current Status
 
-**Phase 0 - Week 2:** Planning & Setup
+**Phase 1 - Sprint 4.5:** Enhanced Sessions & Settings (Complete)
 
-**Completed:**
-- ✅ Requirements & User Stories
-- ✅ Architecture & API Contracts
-- ✅ Testing Strategy
-- ✅ Documentation Hub
-- ✅ Flutter project scaffold (in `app/`)
-- ✅ Isar database configured
+**Sprint 4.5 Deliverables:**
+- ✅ Continuous session mode (review until no more due cards)
+- ✅ Daily new cards limit (0-999 configurable)
+- ✅ Enhanced interval display on rating buttons
+- ✅ Audio-only mode (collapse video, save bandwidth)
+- ✅ Settings screen with theme switching
+- ✅ **Test Suite:** 191 passing tests (108 services + 58 presentation + 25 domain)
+
+**Previous Milestones:**
+- ✅ Sprint 4: Dashboard, branding, UI polish (124 tests)
+- ✅ Sprint 3: Quiz loop & flashcard playback
+- ✅ Sprint 2: Library screen, filters, search
+- ✅ Sprint 1: Core SRS (SM-2), CSV import, Isar integration
 
 **Next Steps:**
+- ⏳ Manual card creation UI
+- ⏳ Audio trimming (custom start timestamp)
 - ⏳ CI/CD Pipeline
 - ⏳ Implement SRS-001 (SM-2) + unit tests
 - ⏳ Implement CARDMGMT flows (CSV import + manual add/edit)
