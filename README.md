@@ -38,7 +38,7 @@ BeatRecall is a mobile application built with **Flutter** designed to help users
 ## 4. Data Model (Entity Definition)
 
 ```dart
-class SongCard {
+class Flashcard {
   String id;            // Unique identifier
   String youtubeId;     // Extracted from URL
   String title;

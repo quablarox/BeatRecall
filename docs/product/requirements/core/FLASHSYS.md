@@ -89,7 +89,7 @@ Allow users to rate their recall performance with four options: Again, Hard, Goo
 **Acceptance Criteria:**
 - Four rating buttons displayed on card back:
   - **Again (0):** Did not recall
-  - **Hard (1-2):** Recalled with difficulty
+  - **Hard (1):** Recalled with difficulty
   - **Good (3):** Recalled correctly
   - **Easy (4):** Recalled easily
 - Color-coded buttons for easy identification:
@@ -97,7 +97,7 @@ Allow users to rate their recall performance with four options: Again, Hard, Goo
   - Hard: Orange (#FF9800)
   - Good: Green (#4CAF50)
   - Easy: Blue (#2196F3)
-- Display next review interval for each option (e.g., "< 10m", "4d", "10d", "15d")
+- Display next review interval for each option (e.g., "Soon", "4d", "10d", "15d")
 - Keyboard shortcuts for quick rating:
   - `1` or `A`: Again
   - `2` or `H`: Hard

@@ -33,8 +33,8 @@ Implement the SuperMemo-2 (SM-2) algorithm for calculating optimal learning inte
 - System calculates next review date based on user response (Again, Hard, Good, Easy)
 - Ease factor starts at 2.5 and adjusts based on performance
 - Interval calculation follows SM-2 formula:
-  - Again (0): Reset to learning mode (1 day, 10 minutes)
-  - Hard (1-2): Shorter interval, ease factor decreased by 0.15
+  - Again (0): Reset to learning mode (interval=0, repetitions=0)
+  - Hard (1): Shorter interval, ease factor decreased by 0.15
   - Good (3): Standard interval, ease factor unchanged
   - Easy (4): Longer interval, ease factor increased by 0.15
 - Minimum ease factor is 1.3

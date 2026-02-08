@@ -43,6 +43,7 @@
 
 ### 2.1 Availability
 - **Target:** App should be available 99.9% of the time for offline usage
+- **Offline-first architecture:** All core features work without internet
 - Network failures should not prevent offline features
 - Graceful degradation when YouTube is unavailable
 
@@ -143,9 +144,12 @@
 - Clear privacy policy (Phase 2)
 
 ### 5.4 Authorization
-- No multi-user support (single-user app)
+- **Single-user app:** No authentication or user accounts (MVP)
+- No multi-user support
 - No permissions required except internet access
 - No camera/microphone access
+
+**Design Decision:** Keep MVP simple by avoiding authentication complexity. Each device has its own local data.
 
 ---
 

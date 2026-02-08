@@ -109,18 +109,7 @@ This document describes features from the **user's perspective**, focusing on th
 
 ## Epic 3: Enhanced Learning Features
 
-### Story 3.1: Skip Song Intros
-**As a** user  
-**I want to** set where each song should start playing  
-**So that** I don't have to listen to long intros during reviews
-
-**Related Requirements:** [FR-2.1.1](../requirements/02_phase2.md#fr-211-custom-start-timestamp)
-
-**Priority:** Medium | **Story Points:** 5
-
----
-
-### Story 3.2: Type My Answer
+### Story 3.1: Type My Answer
 **As a** user who wants more challenge  
 **I want to** type my answer before revealing the correct one  
 **So that** I can test my active recall more rigorously
@@ -131,7 +120,7 @@ This document describes features from the **user's perspective**, focusing on th
 
 ---
 
-### Story 3.3: Import From Playlist
+### Story 3.2: Import From Playlist
 **As a** user with a large collection  
 **I want to** import multiple songs from a YouTube playlist  
 **So that** I can build my library quickly
@@ -197,7 +186,7 @@ This document describes features from the **user's perspective**, focusing on th
 **I want to** see clear messages when things go wrong  
 **So that** I understand what's happening and what to do
 
-**Related Requirements:** Cross-cutting requirement - covered in [Cross-Cutting Requirements](../requirements/05_cross_cutting.md#5-cross-cutting-requirements)
+**Related Requirements:** See [Non-Functional Requirements](../../engineering/non_functional/non_functional_requirements.md) - Error Handling & Network Resilience
 
 **Priority:** Medium | **Story Points:** 5
 

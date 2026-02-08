@@ -72,7 +72,7 @@ Load flashcards in bulk from a CSV file. This is the primary method for quickly 
 youtube_url,title,artist,start_at_seconds
 https://www.youtube.com/watch?v=dQw4w9WgXcQ,Never Gonna Give You Up,Rick Astley,0
 https://youtu.be/9bZkp7q19f0,Gangnam Style,PSY,30
-dQw4w9WgXcQ,Never Gonna Give You Up,Rick Astley,
+kJQP7kiw5Fk,Despacito,Luis Fonsi,15
 ```
 
 ---

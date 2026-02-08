@@ -17,7 +17,6 @@ This glossary defines the **Ubiquitous Language** used throughout BeatRecall doc
 ### Flashcard
 A learning unit consisting of a question (YouTube audio/video clip) and an answer (song title + artist). Each flashcard tracks its own learning progress through the spaced repetition system.
 
-**Synonyms:** Card  
 **Related Terms:** Review, Due Card
 
 ---
@@ -64,7 +63,7 @@ The learning state of a flashcard:
 ### Rating
 User's self-assessment of recall performance for a reviewed card:
 - **Again (0):** Failed to recall; card resets to learning mode
-- **Hard (1-2):** Recalled with difficulty; shorter interval
+- **Hard (1):** Recalled with difficulty; shorter interval
 - **Good (3):** Recalled correctly; standard interval
 - **Easy (4):** Recalled easily; longer interval
 

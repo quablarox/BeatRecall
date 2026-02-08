@@ -15,7 +15,27 @@ BeatRecall follows a **Layered Architecture** pattern with clear separation of c
 - **Scalability:** Easy to add new features
 - **Flexibility:** Can swap implementations without affecting other layers
 
-### 1.1 Architecture Diagram
+### 1.1 Development Priorities
+
+**Core Principle:** SRS correctness > UI polish
+
+**Rationale:** BeatRecall is a learning application. The spaced repetition algorithm must be implemented correctly for the app to be effective. A simple but correct implementation is better than a beautiful but flawed one.
+
+**Implications:**
+- Thorough testing of SRS calculations (70% unit test coverage minimum)
+- Clear, explicit code over clever abstractions
+- Domain language from GLOSSARY.md used consistently
+- Pure functions for business logic where possible
+
+### 1.2 Code Style Preferences
+
+- **Explicit over implicit:** Clear code > clever code
+- **Domain language:** Use exact terms from GLOSSARY.md (Flashcard not Card, Ease Factor not Difficulty)
+- **Immutability:** Prefer const constructors, final fields, return new instances
+- **Pure functions:** Business logic should be side-effect free where possible
+- **Dependency Injection:** Constructor injection for testability
+
+### 1.3 Architecture Diagram
 
 ```
 ┌─────────────────────────────────────────────────────────┐

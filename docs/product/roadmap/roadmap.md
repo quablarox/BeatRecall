@@ -72,7 +72,7 @@
   - Implement SM-2 algorithm
   - Unit tests for SRS calculations
   - Documentation
-- [ ] **Data Model:** SongCard entity
+- [ ] **Data Model:** Flashcard entity
   - Isar schema definition
   - Model classes
   - Type converters
@@ -90,6 +90,12 @@
 **Focus:** Add, edit, delete cards
 
 **Features:**
+- [ ] **CARDMGMT-001:** CSV Import ⭐
+  - File picker integration
+  - CSV parsing and validation
+  - Duplicate detection
+  - Import summary UI
+  - Progress indicator
 - [ ] **CARDMGMT-002:** Manual card creation
   - Add Card screen UI
   - Form validation
@@ -107,7 +113,8 @@
   - Navigation
 
 **Success Criteria:**
-- [ ] Can add cards with YouTube URLs
+- [ ] Can import cards from CSV files (primary method)
+- [ ] Can add cards manually with YouTube URLs
 - [ ] Can edit existing cards
 - [ ] Can delete cards with confirmation
 - [ ] Library displays all cards
@@ -180,34 +187,29 @@
 
 **Goal:** Add quality-of-life features and improvements.
 
-### 4.1 Sprint 5: Audio Trimming (1.5 weeks)
-**Features:**
-- [ ] **FR-2.1.1:** Custom start timestamp
-  - Timestamp input field
-  - Preview functionality
-  - Seek to timestamp
-  - Save with card
-
-### 4.2 Sprint 6: Auto-Metadata (1.5 weeks)
+### 4.1 Sprint 5: Auto-Metadata (2 weeks)
 **Features:**
 - [ ] **FR-2.3.1:** YouTube metadata fetch
   - YouTube API integration
   - Metadata parsing
   - Auto-fill form fields
   - Error handling
+  - Preview before save
 
-### 4.3 Sprint 7: Answer Input (2 weeks)
+### 4.2 Sprint 6: Answer Validation (Optional) (1.5 weeks)
 **Features:**
 - [ ] **FR-2.2.1:** Fuzzy matching
   - Levenshtein distance algorithm
   - Answer validation
   - Visual feedback
-- [ ] **FLASHSYS-004:** Answer input UI
+- [ ] **FLASHSYS-004:** Answer input UI (Optional)
   - Optional text input mode
   - Toggle in settings
   - Keyboard-friendly
 
-### 4.4 Sprint 8: Settings & Polish (1 week)
+**Note:** This feature is optional and low priority. Can be deferred if time is limited.
+
+### 4.3 Sprint 7: Settings & Data Management (1.5 weeks)
 **Features:**
 - [ ] **FR-3.2.1:** Application settings
   - Settings screen
@@ -218,6 +220,21 @@
   - Export database
   - Import database
   - Backup/restore
+
+### 4.4 Sprint 8: Polish & Testing (1 week)
+**Features:**
+- [ ] **Performance optimization**
+  - Database query optimization
+  - UI performance improvements
+  - Memory optimization
+- [ ] **Bug fixes and polish**
+  - Address beta feedback
+  - Edge case handling
+  - Error message improvements
+- [ ] **Testing and QA**
+  - Integration testing
+  - User acceptance testing
+  - Performance testing
 
 **Phase 2 Release:** 🎯 End of Week 14
 - [ ] Beta testing with users
