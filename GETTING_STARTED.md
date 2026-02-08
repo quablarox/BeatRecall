@@ -47,6 +47,9 @@ Flutter mobile app for **music recognition training** using **Spaced Repetition 
 git clone https://github.com/quablarox/BeatRecall.git
 cd BeatRecall
 
+# App source code lives in ./app
+cd app
+
 # 2. Install Flutter: https://flutter.dev/docs/get-started/install
 
 # 3. Get dependencies
