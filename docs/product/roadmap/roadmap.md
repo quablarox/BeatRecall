@@ -1,8 +1,8 @@
 # Project Roadmap - BeatRecall
 
 ## Document Information
-- **Version:** 1.0
-- **Last Updated:** 2026-02-07
+- **Version:** 2.0
+- **Last Updated:** 2026-02-08
 - **Status:** Draft
 
 ## Table of Contents
@@ -73,6 +73,8 @@
 
 **Goal:** Deliver a functional SRS-based music quiz app with basic features.
 
+**User Stories:** See [Epic 1-3](../user_stories/user_stories.md) for user perspective
+
 ### 3.1 Sprint 1: Foundation (2 weeks)
 **Focus:** Data layer and basic services
 
@@ -96,27 +98,28 @@
 - [ ] 90% test coverage for business logic
 
 ### 3.2 Sprint 2: Card Management (2 weeks)
-**Focus:** Add, edit, delete cards
+**Focus:** Add, edit, delete cards  
+**User Stories:** [Epic 1: Card Management](../user_stories/user_stories.md#epic-1-card-management) (Stories 1.1-1.5)
 
 **Features:**
-- [ ] **CARDMGMT-001:** CSV Import ⭐
+- [ ] **CARDMGMT-001:** CSV Import ⭐ (Story 1.1)
   - File picker integration
   - CSV parsing and validation
   - Duplicate detection
   - Import summary UI
   - Progress indicator
-- [ ] **CARDMGMT-002:** Manual card creation
+- [ ] **CARDMGMT-002:** Manual card creation (Story 1.2)
   - Add Card screen UI
   - Form validation
   - YouTube URL parsing
   - Save to database
-- [ ] **CARDMGMT-003:** Card editing
+- [ ] **CARDMGMT-003:** Card editing (Story 1.4)
   - Edit Card screen
   - Update operations
-- [ ] **CARDMGMT-004:** Card deletion
+- [ ] **CARDMGMT-004:** Card deletion (Story 1.5)
   - Delete confirmation dialog
   - Cascade delete logic
-- [ ] **Library Screen:**
+- [ ] **Library Screen:** (Story 1.3)
   - List all cards
   - Search functionality
   - Navigation
@@ -129,22 +132,23 @@
 - [ ] Library displays all cards
 
 ### 3.3 Sprint 3: Review System (2 weeks)
-**Focus:** Quiz loop and flashcard player
+**Focus:** Quiz loop and flashcard player  
+**User Stories:** [Epic 2: Core Learning Experience](../user_stories/user_stories.md#epic-2-core-learning-experience) (Stories 2.1-2.2)
 
 **Features:**
-- [ ] **FLASHSYS-001:** Dual-sided card interface
+- [ ] **FLASHSYS-001:** Dual-sided card interface (Story 2.1)
   - Flashcard widget
   - Show/hide answer
   - Smooth transitions
-- [ ] **FLASHSYS-002:** YouTube player integration
+- [ ] **FLASHSYS-002:** YouTube player integration (Story 2.1)
   - Integrate youtube_player_flutter
   - Play/pause controls
   - Error handling
-- [ ] **DUEQUEUE-001:** Due queue retrieval
+- [ ] **DUEQUEUE-001:** Due queue retrieval (Story 2.2)
   - Query due cards
   - Sort by due date
   - Queue management
-- [ ] **Quiz Screen:**
+- [ ] **Quiz Screen:** (Story 2.2)
   - Display flashcards
   - Progress indicator
   - Navigation controls
@@ -156,21 +160,24 @@
 - [ ] Answer reveal works smoothly
 
 ### 3.4 Sprint 4: Rating & Polish (2 weeks)
-**Focus:** Complete SRS loop and MVP polish
+**Focus:** Complete SRS loop and MVP polish  
+**User Stories:** Epic 2 (Story 2.3), [Epic 3: Progress Tracking](../user_stories/user_stories.md#epic-3-progress-tracking) (Story 3.1)
 
 **Features:**
-- [ ] **FLASHSYS-003:** Answer rating
+- [ ] **FLASHSYS-003:** Answer rating (Story 2.3)
   - Four rating buttons (Again, Hard, Good, Easy)
   - Color coding
   - Keyboard shortcuts
   - Next interval display
-- [ ] **DUEQUEUE-002:** Review session management
+- [ ] **DUEQUEUE-002:** Review session management (Story 2.2)
   - Session state tracking
   - Progress calculation
   - Session summary
-- [ ] **DASHBOARD-001:** Dashboard overview display
+- [ ] **DASHBOARD-001:** Dashboard overview display (Story 3.1)
   - Due cards count
   - Total cards count
+  - Success rate
+  - Current streak
   - Quick action buttons
 - [ ] **Polish:**
   - Loading states
@@ -196,9 +203,13 @@
 
 **Goal:** Add quality-of-life features and improvements.
 
+**User Stories:** See [Epic 4-5](../user_stories/user_stories.md#epic-4-enhanced-learning-features) for user perspective
+
 ### 4.1 Sprint 5: Auto-Metadata (2 weeks)
+**User Stories:** [Epic 4: Enhanced Learning Features](../user_stories/user_stories.md#epic-4-enhanced-learning-features) (Story 4.1)
+
 **Features:**
-- [ ] **FR-2.3.1:** YouTube metadata fetch
+- [ ] **FR-2.3.1:** YouTube metadata fetch (Story 4.1)
   - YouTube API integration
   - Metadata parsing
   - Auto-fill form fields
@@ -206,12 +217,14 @@
   - Preview before save
 
 ### 4.2 Sprint 6: Answer Validation (Optional) (1.5 weeks)
+**User Stories:** Epic 4 (Story 4.2)
+
 **Features:**
-- [ ] **FR-2.2.1:** Fuzzy matching
+- [ ] **FR-2.2.1:** Fuzzy matching (Story 4.2)
   - Levenshtein distance algorithm
   - Answer validation
   - Visual feedback
-- [ ] **FLASHSYS-004:** Answer input UI (Optional)
+- [ ] **FLASHSYS-004:** Answer input UI (Optional) (Story 4.2)
   - Optional text input mode
   - Toggle in settings
   - Keyboard-friendly
@@ -219,13 +232,15 @@
 **Note:** This feature is optional and low priority. Can be deferred if time is limited.
 
 ### 4.3 Sprint 7: Settings & Data Management (1.5 weeks)
+**User Stories:** [Epic 5: Settings & Data Management](../user_stories/user_stories.md#epic-5-settings--data-management) (Stories 5.1-5.2)
+
 **Features:**
-- [ ] **FR-3.2.1:** Application settings
+- [ ] **FR-3.2.1:** Application settings (Story 5.1)
   - Settings screen
   - SRS parameter configuration
   - Theme selection
   - Preferences storage
-- [ ] **FR-3.2.2:** Data management
+- [ ] **FR-3.2.2:** Data management (Story 5.2)
   - Export database
   - Import database
   - Backup/restore
@@ -257,9 +272,13 @@
 
 **Goal:** Add advanced features based on user feedback.
 
+**User Stories:** See [Epic 6: Advanced Features](../user_stories/user_stories.md#epic-6-advanced-features) for user perspective
+
 ### 5.1 Sprint 9-10: Playlist Import (3 weeks)
+**User Stories:** Epic 6 (Story 6.1)
+
 **Features:**
-- [ ] **FR-2.4.1:** Bulk import from playlist
+- [ ] **FR-2.4.1:** Bulk import from playlist (Story 6.1)
   - Playlist URL input
   - Fetch all videos
   - Preview and selection UI
@@ -267,24 +286,31 @@
   - Progress indicator
 
 ### 5.2 Sprint 11: Statistics & Analytics (2 weeks)
+**User Stories:** Epic 6 (Story 6.2)
+
 **Features:**
-- [ ] Enhanced statistics dashboard
+- [ ] Enhanced statistics dashboard (Story 6.2)
 - [ ] Charts and graphs
 - [ ] Review history timeline
 - [ ] Performance trends
 - [ ] Export statistics
 
 ### 5.3 Sprint 12: UX Improvements (2 weeks)
+**User Stories:** Epic 6 (Stories 6.3-6.5)
+
 **Features:**
-- [ ] Onboarding tutorial
-- [ ] Animations and transitions
+- [ ] Onboarding tutorial (Story 6.3)
+- [ ] Animations and transitions (Story 6.5)
 - [ ] Gesture controls
 - [ ] Haptic feedback
 - [ ] Accessibility improvements
+- [ ] Network error handling (Story 6.4)
 
 ### 5.4 Sprint 13: Community Features (1 week)
+**User Stories:** Epic 6 (Story 6.7)
+
 **Features:**
-- [ ] Share playlists
+- [ ] Share playlists (Story 6.7)
 - [ ] Import shared playlists
 - [ ] Rate limiting
 - [ ] Social sharing
@@ -298,9 +324,11 @@
 
 ## 6. Phase 4: Future Roadmap (6+ Months)
 
+**User Stories:** Some features from [Epic 6: Advanced Features](../user_stories/user_stories.md#epic-6-advanced-features)
+
 ### 6.1 Potential Features
 **Priority: High**
-- [ ] Offline mode with audio caching
+- [ ] Offline mode with audio caching (Story 6.6)
 - [ ] Cloud sync (Firebase/Supabase)
 - [ ] Multi-device support
 - [ ] Advanced search and filters
