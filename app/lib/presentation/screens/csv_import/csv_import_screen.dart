@@ -27,7 +27,7 @@ class _CsvImportScreenState extends State<CsvImportScreen> {
       appBar: AppBar(
         title: const Text('Import from CSV'),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -37,8 +37,9 @@ class _CsvImportScreenState extends State<CsvImportScreen> {
             if (_isImporting) _buildLoadingState(),
             if (_importResult != null) _buildResultDisplay(),
             if (_errorMessage != null) _buildErrorDisplay(),
-            const Spacer(),
+            const SizedBox(height: 24),
             _buildSelectFileButton(),
+            const SizedBox(height: 80), // Extra space at bottom
           ],
         ),
       ),
