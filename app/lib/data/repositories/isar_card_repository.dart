@@ -3,34 +3,55 @@ import 'package:isar/isar.dart';
 import '../../domain/entities/flashcard.dart';
 import '../../domain/repositories/card_repository.dart';
 import '../database/isar_database.dart';
+import '../entities/isar_flashcard.dart';
+import '../mappers/flashcard_mapper.dart';
 
+/// Isar implementation of [CardRepository].
+///
+/// Handles the mapping between domain [Flashcard] (with UUID)
+/// and data [IsarFlashcard] (with Isar ID).
 class IsarCardRepository implements CardRepository {
   final Isar _isar;
+  final FlashcardMapper _mapper;
 
-  IsarCardRepository({Isar? isar}) : _isar = isar ?? IsarDatabase.instance;
+  IsarCardRepository({
+    Isar? isar,
+    FlashcardMapper? mapper,
+  })  : _isar = isar ?? IsarDatabase.instance,
+        _mapper = mapper ?? FlashcardMapper();
 
   @override
-  Future<int> countAllCards() => _isar.flashcards.count();
+  Future<int> countAllCards() => _isar.isarFlashcards.count();
 
   @override
   Future<int> countDueCards() {
     final now = DateTime.now();
-    return _isar.flashcards
+    return _isar.isarFlashcards
         .filter()
         .nextReviewDateLessThan(now, include: true)
         .count();
   }
 
   @override
-  Future<void> delete(int id) async {
+  Future<void> deleteByUuid(String uuid) async {
     await _isar.writeTxn(() async {
-      await _isar.flashcards.delete(id);
+      final existing = await _isar.isarFlashcards
+          .filter()
+          .uuidEqualTo(uuid)
+          .findFirst();
+      
+      if (existing != null) {
+        await _isar.isarFlashcards.delete(existing.id);
+      }
     });
   }
 
   @override
   Future<bool> existsByYoutubeId(String youtubeId) async {
-    final match = await _isar.flashcards.filter().youtubeIdEqualTo(youtubeId).findFirst();
+    final match = await _isar.isarFlashcards
+        .filter()
+        .youtubeIdEqualTo(youtubeId)
+        .findFirst();
     return match != null;
   }
 
@@ -39,67 +60,109 @@ class IsarCardRepository implements CardRepository {
     int offset = 0,
     int limit = 50,
     String? searchQuery,
-  }) {
-    final query = _isar.flashcards.where();
+  }) async {
+    final List<IsarFlashcard> results;
 
     if (searchQuery == null || searchQuery.trim().isEmpty) {
-      return query.offset(offset).limit(limit).findAll();
+      results = await _isar.isarFlashcards
+          .where()
+          .offset(offset)
+          .limit(limit)
+          .findAll();
+    } else {
+      final q = searchQuery.trim();
+      results = await _isar.isarFlashcards
+          .filter()
+          .group((qb) => qb
+              .titleContains(q, caseSensitive: false)
+              .or()
+              .artistContains(q, caseSensitive: false))
+          .offset(offset)
+          .limit(limit)
+          .findAll();
     }
 
-    final q = searchQuery.trim();
-    return _isar.flashcards
-        .filter()
-        .group((qb) => qb.titleContains(q, caseSensitive: false).or().artistContains(q, caseSensitive: false))
-        .offset(offset)
-        .limit(limit)
-        .findAll();
+    return _mapper.toDomainList(results);
   }
 
   @override
-  Future<List<Flashcard>> fetchDueCards({int limit = 100}) {
+  Future<List<Flashcard>> fetchDueCards({int limit = 100}) async {
     final now = DateTime.now();
-    return _isar.flashcards
+    final results = await _isar.isarFlashcards
         .filter()
-      .nextReviewDateLessThan(now, include: true)
+        .nextReviewDateLessThan(now, include: true)
         .sortByNextReviewDate()
         .limit(limit)
         .findAll();
+
+    return _mapper.toDomainList(results);
   }
 
   @override
-  Future<Flashcard?> findById(int id) => _isar.flashcards.get(id);
+  Future<Flashcard?> findByUuid(String uuid) async {
+    final result = await _isar.isarFlashcards
+        .filter()
+        .uuidEqualTo(uuid)
+        .findFirst();
+
+    return result != null ? _mapper.toDomain(result) : null;
+  }
 
   @override
   Future<void> save(Flashcard card) async {
-    card.updatedAt = DateTime.now();
-
     await _isar.writeTxn(() async {
-      await _isar.flashcards.put(card);
+      // Check if card already exists by UUID
+      final existing = await _isar.isarFlashcards
+          .filter()
+          .uuidEqualTo(card.uuid)
+          .findFirst();
+
+      // Preserve Isar ID if updating, otherwise use autoIncrement
+      final isarCard = _mapper.toData(
+        card.copyWith(updatedAt: DateTime.now()),
+        isarId: existing?.id,
+      );
+
+      await _isar.isarFlashcards.put(isarCard);
     });
   }
 
   @override
   Future<void> saveAll(List<Flashcard> cards) async {
     final now = DateTime.now();
-    for (final card in cards) {
-      card.updatedAt = now;
-    }
 
     await _isar.writeTxn(() async {
-      await _isar.flashcards.putAll(cards);
+      for (final card in cards) {
+        // Check if card already exists by UUID
+        final existing = await _isar.isarFlashcards
+            .filter()
+            .uuidEqualTo(card.uuid)
+            .findFirst();
+
+        final isarCard = _mapper.toData(
+          card.copyWith(updatedAt: now),
+          isarId: existing?.id,
+        );
+
+        await _isar.isarFlashcards.put(isarCard);
+      }
     });
   }
 
   @override
   Future<void> updateSrsFields({
-    required int cardId,
+    required String cardUuid,
     required DateTime nextReviewDate,
     required double easeFactor,
     required int intervalDays,
     required int repetitions,
   }) async {
     await _isar.writeTxn(() async {
-      final card = await _isar.flashcards.get(cardId);
+      final card = await _isar.isarFlashcards
+          .filter()
+          .uuidEqualTo(cardUuid)
+          .findFirst();
+
       if (card == null) return;
 
       card.nextReviewDate = nextReviewDate;
@@ -108,7 +171,7 @@ class IsarCardRepository implements CardRepository {
       card.repetitions = repetitions;
       card.updatedAt = DateTime.now();
 
-      await _isar.flashcards.put(card);
+      await _isar.isarFlashcards.put(card);
     });
   }
 }

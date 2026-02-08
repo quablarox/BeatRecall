@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'flashcard.dart';
+part of 'isar_flashcard.dart';
 
 // **************************************************************************
 // IsarCollectionGenerator
@@ -9,13 +9,13 @@ part of 'flashcard.dart';
 // coverage:ignore-file
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
-extension GetFlashcardCollection on Isar {
-  IsarCollection<Flashcard> get flashcards => this.collection();
+extension GetIsarFlashcardCollection on Isar {
+  IsarCollection<IsarFlashcard> get isarFlashcards => this.collection();
 }
 
-const FlashcardSchema = CollectionSchema(
-  name: r'Flashcard',
-  id: -5712857134961670327,
+const IsarFlashcardSchema = CollectionSchema(
+  name: r'IsarFlashcard',
+  id: 497145447017686493,
   properties: {
     r'album': PropertySchema(
       id: 0,
@@ -72,28 +72,73 @@ const FlashcardSchema = CollectionSchema(
       name: r'updatedAt',
       type: IsarType.dateTime,
     ),
-    r'youtubeId': PropertySchema(
+    r'uuid': PropertySchema(
       id: 11,
+      name: r'uuid',
+      type: IsarType.string,
+    ),
+    r'youtubeId': PropertySchema(
+      id: 12,
       name: r'youtubeId',
       type: IsarType.string,
     )
   },
-  estimateSize: _flashcardEstimateSize,
-  serialize: _flashcardSerialize,
-  deserialize: _flashcardDeserialize,
-  deserializeProp: _flashcardDeserializeProp,
+  estimateSize: _isarFlashcardEstimateSize,
+  serialize: _isarFlashcardSerialize,
+  deserialize: _isarFlashcardDeserialize,
+  deserializeProp: _isarFlashcardDeserializeProp,
   idName: r'id',
-  indexes: {},
+  indexes: {
+    r'uuid': IndexSchema(
+      id: 2134397340427724972,
+      name: r'uuid',
+      unique: true,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'uuid',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    ),
+    r'youtubeId': IndexSchema(
+      id: -1747439737491472548,
+      name: r'youtubeId',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'youtubeId',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    ),
+    r'nextReviewDate': IndexSchema(
+      id: 4152658090540413903,
+      name: r'nextReviewDate',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'nextReviewDate',
+          type: IndexType.value,
+          caseSensitive: false,
+        )
+      ],
+    )
+  },
   links: {},
   embeddedSchemas: {},
-  getId: _flashcardGetId,
-  getLinks: _flashcardGetLinks,
-  attach: _flashcardAttach,
+  getId: _isarFlashcardGetId,
+  getLinks: _isarFlashcardGetLinks,
+  attach: _isarFlashcardAttach,
   version: '3.1.0+1',
 );
 
-int _flashcardEstimateSize(
-  Flashcard object,
+int _isarFlashcardEstimateSize(
+  IsarFlashcard object,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
@@ -106,12 +151,13 @@ int _flashcardEstimateSize(
   }
   bytesCount += 3 + object.artist.length * 3;
   bytesCount += 3 + object.title.length * 3;
+  bytesCount += 3 + object.uuid.length * 3;
   bytesCount += 3 + object.youtubeId.length * 3;
   return bytesCount;
 }
 
-void _flashcardSerialize(
-  Flashcard object,
+void _isarFlashcardSerialize(
+  IsarFlashcard object,
   IsarWriter writer,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
@@ -127,16 +173,17 @@ void _flashcardSerialize(
   writer.writeLong(offsets[8], object.startAtSecond);
   writer.writeString(offsets[9], object.title);
   writer.writeDateTime(offsets[10], object.updatedAt);
-  writer.writeString(offsets[11], object.youtubeId);
+  writer.writeString(offsets[11], object.uuid);
+  writer.writeString(offsets[12], object.youtubeId);
 }
 
-Flashcard _flashcardDeserialize(
+IsarFlashcard _isarFlashcardDeserialize(
   Id id,
   IsarReader reader,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = Flashcard();
+  final object = IsarFlashcard();
   object.album = reader.readStringOrNull(offsets[0]);
   object.artist = reader.readString(offsets[1]);
   object.createdAt = reader.readDateTime(offsets[2]);
@@ -149,11 +196,12 @@ Flashcard _flashcardDeserialize(
   object.startAtSecond = reader.readLong(offsets[8]);
   object.title = reader.readString(offsets[9]);
   object.updatedAt = reader.readDateTime(offsets[10]);
-  object.youtubeId = reader.readString(offsets[11]);
+  object.uuid = reader.readString(offsets[11]);
+  object.youtubeId = reader.readString(offsets[12]);
   return object;
 }
 
-P _flashcardDeserializeProp<P>(
+P _isarFlashcardDeserializeProp<P>(
   IsarReader reader,
   int propertyId,
   int offset,
@@ -184,35 +232,102 @@ P _flashcardDeserializeProp<P>(
       return (reader.readDateTime(offset)) as P;
     case 11:
       return (reader.readString(offset)) as P;
+    case 12:
+      return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
 }
 
-Id _flashcardGetId(Flashcard object) {
+Id _isarFlashcardGetId(IsarFlashcard object) {
   return object.id;
 }
 
-List<IsarLinkBase<dynamic>> _flashcardGetLinks(Flashcard object) {
+List<IsarLinkBase<dynamic>> _isarFlashcardGetLinks(IsarFlashcard object) {
   return [];
 }
 
-void _flashcardAttach(IsarCollection<dynamic> col, Id id, Flashcard object) {
+void _isarFlashcardAttach(
+    IsarCollection<dynamic> col, Id id, IsarFlashcard object) {
   object.id = id;
 }
 
-extension FlashcardQueryWhereSort
-    on QueryBuilder<Flashcard, Flashcard, QWhere> {
-  QueryBuilder<Flashcard, Flashcard, QAfterWhere> anyId() {
+extension IsarFlashcardByIndex on IsarCollection<IsarFlashcard> {
+  Future<IsarFlashcard?> getByUuid(String uuid) {
+    return getByIndex(r'uuid', [uuid]);
+  }
+
+  IsarFlashcard? getByUuidSync(String uuid) {
+    return getByIndexSync(r'uuid', [uuid]);
+  }
+
+  Future<bool> deleteByUuid(String uuid) {
+    return deleteByIndex(r'uuid', [uuid]);
+  }
+
+  bool deleteByUuidSync(String uuid) {
+    return deleteByIndexSync(r'uuid', [uuid]);
+  }
+
+  Future<List<IsarFlashcard?>> getAllByUuid(List<String> uuidValues) {
+    final values = uuidValues.map((e) => [e]).toList();
+    return getAllByIndex(r'uuid', values);
+  }
+
+  List<IsarFlashcard?> getAllByUuidSync(List<String> uuidValues) {
+    final values = uuidValues.map((e) => [e]).toList();
+    return getAllByIndexSync(r'uuid', values);
+  }
+
+  Future<int> deleteAllByUuid(List<String> uuidValues) {
+    final values = uuidValues.map((e) => [e]).toList();
+    return deleteAllByIndex(r'uuid', values);
+  }
+
+  int deleteAllByUuidSync(List<String> uuidValues) {
+    final values = uuidValues.map((e) => [e]).toList();
+    return deleteAllByIndexSync(r'uuid', values);
+  }
+
+  Future<Id> putByUuid(IsarFlashcard object) {
+    return putByIndex(r'uuid', object);
+  }
+
+  Id putByUuidSync(IsarFlashcard object, {bool saveLinks = true}) {
+    return putByIndexSync(r'uuid', object, saveLinks: saveLinks);
+  }
+
+  Future<List<Id>> putAllByUuid(List<IsarFlashcard> objects) {
+    return putAllByIndex(r'uuid', objects);
+  }
+
+  List<Id> putAllByUuidSync(List<IsarFlashcard> objects,
+      {bool saveLinks = true}) {
+    return putAllByIndexSync(r'uuid', objects, saveLinks: saveLinks);
+  }
+}
+
+extension IsarFlashcardQueryWhereSort
+    on QueryBuilder<IsarFlashcard, IsarFlashcard, QWhere> {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterWhere> anyId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
   }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterWhere> anyNextReviewDate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'nextReviewDate'),
+      );
+    });
+  }
 }
 
-extension FlashcardQueryWhere
-    on QueryBuilder<Flashcard, Flashcard, QWhereClause> {
-  QueryBuilder<Flashcard, Flashcard, QAfterWhereClause> idEqualTo(Id id) {
+extension IsarFlashcardQueryWhere
+    on QueryBuilder<IsarFlashcard, IsarFlashcard, QWhereClause> {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterWhereClause> idEqualTo(
+      Id id) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: id,
@@ -221,7 +336,8 @@ extension FlashcardQueryWhere
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterWhereClause> idNotEqualTo(Id id) {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterWhereClause> idNotEqualTo(
+      Id id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -243,7 +359,8 @@ extension FlashcardQueryWhere
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterWhereClause> idGreaterThan(Id id,
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterWhereClause> idGreaterThan(
+      Id id,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -252,7 +369,8 @@ extension FlashcardQueryWhere
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterWhereClause> idLessThan(Id id,
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterWhereClause> idLessThan(
+      Id id,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -261,7 +379,7 @@ extension FlashcardQueryWhere
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterWhereClause> idBetween(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterWhereClause> idBetween(
     Id lowerId,
     Id upperId, {
     bool includeLower = true,
@@ -276,11 +394,195 @@ extension FlashcardQueryWhere
       ));
     });
   }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterWhereClause> uuidEqualTo(
+      String uuid) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'uuid',
+        value: [uuid],
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterWhereClause> uuidNotEqualTo(
+      String uuid) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uuid',
+              lower: [],
+              upper: [uuid],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uuid',
+              lower: [uuid],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uuid',
+              lower: [uuid],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uuid',
+              lower: [],
+              upper: [uuid],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterWhereClause>
+      youtubeIdEqualTo(String youtubeId) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'youtubeId',
+        value: [youtubeId],
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterWhereClause>
+      youtubeIdNotEqualTo(String youtubeId) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'youtubeId',
+              lower: [],
+              upper: [youtubeId],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'youtubeId',
+              lower: [youtubeId],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'youtubeId',
+              lower: [youtubeId],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'youtubeId',
+              lower: [],
+              upper: [youtubeId],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterWhereClause>
+      nextReviewDateEqualTo(DateTime nextReviewDate) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'nextReviewDate',
+        value: [nextReviewDate],
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterWhereClause>
+      nextReviewDateNotEqualTo(DateTime nextReviewDate) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'nextReviewDate',
+              lower: [],
+              upper: [nextReviewDate],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'nextReviewDate',
+              lower: [nextReviewDate],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'nextReviewDate',
+              lower: [nextReviewDate],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'nextReviewDate',
+              lower: [],
+              upper: [nextReviewDate],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterWhereClause>
+      nextReviewDateGreaterThan(
+    DateTime nextReviewDate, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'nextReviewDate',
+        lower: [nextReviewDate],
+        includeLower: include,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterWhereClause>
+      nextReviewDateLessThan(
+    DateTime nextReviewDate, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'nextReviewDate',
+        lower: [],
+        upper: [nextReviewDate],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterWhereClause>
+      nextReviewDateBetween(
+    DateTime lowerNextReviewDate,
+    DateTime upperNextReviewDate, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'nextReviewDate',
+        lower: [lowerNextReviewDate],
+        includeLower: includeLower,
+        upper: [upperNextReviewDate],
+        includeUpper: includeUpper,
+      ));
+    });
+  }
 }
 
-extension FlashcardQueryFilter
-    on QueryBuilder<Flashcard, Flashcard, QFilterCondition> {
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> albumIsNull() {
+extension IsarFlashcardQueryFilter
+    on QueryBuilder<IsarFlashcard, IsarFlashcard, QFilterCondition> {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      albumIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'album',
@@ -288,7 +590,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> albumIsNotNull() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      albumIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'album',
@@ -296,7 +599,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> albumEqualTo(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      albumEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -309,7 +613,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> albumGreaterThan(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      albumGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -324,7 +629,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> albumLessThan(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      albumLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -339,7 +645,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> albumBetween(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      albumBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -358,7 +665,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> albumStartsWith(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      albumStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -371,7 +679,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> albumEndsWith(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      albumEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -384,9 +693,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> albumContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      albumContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
         property: r'album',
@@ -396,9 +704,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> albumMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      albumMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
         property: r'album',
@@ -408,7 +715,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> albumIsEmpty() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      albumIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'album',
@@ -417,7 +725,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> albumIsNotEmpty() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      albumIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'album',
@@ -426,7 +735,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> artistEqualTo(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      artistEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -439,7 +749,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> artistGreaterThan(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      artistGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -454,7 +765,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> artistLessThan(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      artistLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -469,7 +781,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> artistBetween(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      artistBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -488,7 +801,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> artistStartsWith(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      artistStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -501,7 +815,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> artistEndsWith(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      artistEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -514,9 +829,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> artistContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      artistContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
         property: r'artist',
@@ -526,9 +840,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> artistMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      artistMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
         property: r'artist',
@@ -538,7 +851,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> artistIsEmpty() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      artistIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'artist',
@@ -547,7 +861,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> artistIsNotEmpty() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      artistIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'artist',
@@ -556,8 +871,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> createdAtEqualTo(
-      DateTime value) {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      createdAtEqualTo(DateTime value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'createdAt',
@@ -566,7 +881,7 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition>
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
       createdAtGreaterThan(
     DateTime value, {
     bool include = false,
@@ -580,7 +895,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> createdAtLessThan(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      createdAtLessThan(
     DateTime value, {
     bool include = false,
   }) {
@@ -593,7 +909,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> createdAtBetween(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      createdAtBetween(
     DateTime lower,
     DateTime upper, {
     bool includeLower = true,
@@ -610,7 +927,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> easeFactorEqualTo(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      easeFactorEqualTo(
     double value, {
     double epsilon = Query.epsilon,
   }) {
@@ -623,7 +941,7 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition>
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
       easeFactorGreaterThan(
     double value, {
     bool include = false,
@@ -639,7 +957,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> easeFactorLessThan(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      easeFactorLessThan(
     double value, {
     bool include = false,
     double epsilon = Query.epsilon,
@@ -654,7 +973,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> easeFactorBetween(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      easeFactorBetween(
     double lower,
     double upper, {
     bool includeLower = true,
@@ -673,7 +993,7 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition>
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
       endAtSecondIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -682,7 +1002,7 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition>
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
       endAtSecondIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
@@ -691,8 +1011,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> endAtSecondEqualTo(
-      int? value) {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      endAtSecondEqualTo(int? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'endAtSecond',
@@ -701,7 +1021,7 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition>
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
       endAtSecondGreaterThan(
     int? value, {
     bool include = false,
@@ -715,7 +1035,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> endAtSecondLessThan(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      endAtSecondLessThan(
     int? value, {
     bool include = false,
   }) {
@@ -728,7 +1049,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> endAtSecondBetween(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      endAtSecondBetween(
     int? lower,
     int? upper, {
     bool includeLower = true,
@@ -745,7 +1067,7 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> idEqualTo(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition> idEqualTo(
       Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -755,7 +1077,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> idGreaterThan(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      idGreaterThan(
     Id value, {
     bool include = false,
   }) {
@@ -768,7 +1091,7 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> idLessThan(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition> idLessThan(
     Id value, {
     bool include = false,
   }) {
@@ -781,7 +1104,7 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> idBetween(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition> idBetween(
     Id lower,
     Id upper, {
     bool includeLower = true,
@@ -798,8 +1121,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> intervalDaysEqualTo(
-      int value) {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      intervalDaysEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'intervalDays',
@@ -808,7 +1131,7 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition>
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
       intervalDaysGreaterThan(
     int value, {
     bool include = false,
@@ -822,7 +1145,7 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition>
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
       intervalDaysLessThan(
     int value, {
     bool include = false,
@@ -836,7 +1159,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> intervalDaysBetween(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      intervalDaysBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -853,7 +1177,7 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition>
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
       nextReviewDateEqualTo(DateTime value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -863,7 +1187,7 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition>
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
       nextReviewDateGreaterThan(
     DateTime value, {
     bool include = false,
@@ -877,7 +1201,7 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition>
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
       nextReviewDateLessThan(
     DateTime value, {
     bool include = false,
@@ -891,7 +1215,7 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition>
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
       nextReviewDateBetween(
     DateTime lower,
     DateTime upper, {
@@ -909,8 +1233,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> repetitionsEqualTo(
-      int value) {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      repetitionsEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'repetitions',
@@ -919,7 +1243,7 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition>
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
       repetitionsGreaterThan(
     int value, {
     bool include = false,
@@ -933,7 +1257,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> repetitionsLessThan(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      repetitionsLessThan(
     int value, {
     bool include = false,
   }) {
@@ -946,7 +1271,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> repetitionsBetween(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      repetitionsBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -963,7 +1289,7 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition>
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
       startAtSecondEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -973,7 +1299,7 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition>
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
       startAtSecondGreaterThan(
     int value, {
     bool include = false,
@@ -987,7 +1313,7 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition>
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
       startAtSecondLessThan(
     int value, {
     bool include = false,
@@ -1001,7 +1327,7 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition>
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
       startAtSecondBetween(
     int lower,
     int upper, {
@@ -1019,7 +1345,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> titleEqualTo(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      titleEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1032,7 +1359,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> titleGreaterThan(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      titleGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1047,7 +1375,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> titleLessThan(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      titleLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1062,7 +1391,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> titleBetween(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      titleBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1081,7 +1411,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> titleStartsWith(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      titleStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1094,7 +1425,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> titleEndsWith(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      titleEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1107,9 +1439,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> titleContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      titleContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
         property: r'title',
@@ -1119,9 +1450,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> titleMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      titleMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
         property: r'title',
@@ -1131,7 +1461,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> titleIsEmpty() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      titleIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'title',
@@ -1140,7 +1471,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> titleIsNotEmpty() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      titleIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'title',
@@ -1149,8 +1481,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> updatedAtEqualTo(
-      DateTime value) {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      updatedAtEqualTo(DateTime value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'updatedAt',
@@ -1159,7 +1491,7 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition>
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
       updatedAtGreaterThan(
     DateTime value, {
     bool include = false,
@@ -1173,7 +1505,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> updatedAtLessThan(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      updatedAtLessThan(
     DateTime value, {
     bool include = false,
   }) {
@@ -1186,7 +1519,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> updatedAtBetween(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      updatedAtBetween(
     DateTime lower,
     DateTime upper, {
     bool includeLower = true,
@@ -1203,7 +1537,143 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> youtubeIdEqualTo(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition> uuidEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'uuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      uuidGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'uuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      uuidLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'uuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition> uuidBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'uuid',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      uuidStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'uuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      uuidEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'uuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      uuidContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'uuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition> uuidMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'uuid',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      uuidIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'uuid',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      uuidIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'uuid',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      youtubeIdEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1216,7 +1686,7 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition>
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
       youtubeIdGreaterThan(
     String value, {
     bool include = false,
@@ -1232,7 +1702,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> youtubeIdLessThan(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      youtubeIdLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1247,7 +1718,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> youtubeIdBetween(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      youtubeIdBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1266,7 +1738,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> youtubeIdStartsWith(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      youtubeIdStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1279,7 +1752,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> youtubeIdEndsWith(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      youtubeIdEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1292,9 +1766,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> youtubeIdContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      youtubeIdContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
         property: r'youtubeId',
@@ -1304,9 +1777,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> youtubeIdMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      youtubeIdMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
         property: r'youtubeId',
@@ -1316,7 +1788,8 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition> youtubeIdIsEmpty() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      youtubeIdIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'youtubeId',
@@ -1325,7 +1798,7 @@ extension FlashcardQueryFilter
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterFilterCondition>
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
       youtubeIdIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
@@ -1336,389 +1809,450 @@ extension FlashcardQueryFilter
   }
 }
 
-extension FlashcardQueryObject
-    on QueryBuilder<Flashcard, Flashcard, QFilterCondition> {}
+extension IsarFlashcardQueryObject
+    on QueryBuilder<IsarFlashcard, IsarFlashcard, QFilterCondition> {}
 
-extension FlashcardQueryLinks
-    on QueryBuilder<Flashcard, Flashcard, QFilterCondition> {}
+extension IsarFlashcardQueryLinks
+    on QueryBuilder<IsarFlashcard, IsarFlashcard, QFilterCondition> {}
 
-extension FlashcardQuerySortBy on QueryBuilder<Flashcard, Flashcard, QSortBy> {
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> sortByAlbum() {
+extension IsarFlashcardQuerySortBy
+    on QueryBuilder<IsarFlashcard, IsarFlashcard, QSortBy> {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> sortByAlbum() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'album', Sort.asc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> sortByAlbumDesc() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> sortByAlbumDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'album', Sort.desc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> sortByArtist() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> sortByArtist() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'artist', Sort.asc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> sortByArtistDesc() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> sortByArtistDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'artist', Sort.desc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> sortByCreatedAt() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> sortByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.asc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> sortByCreatedAtDesc() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
+      sortByCreatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.desc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> sortByEaseFactor() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> sortByEaseFactor() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'easeFactor', Sort.asc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> sortByEaseFactorDesc() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
+      sortByEaseFactorDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'easeFactor', Sort.desc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> sortByEndAtSecond() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> sortByEndAtSecond() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'endAtSecond', Sort.asc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> sortByEndAtSecondDesc() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
+      sortByEndAtSecondDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'endAtSecond', Sort.desc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> sortByIntervalDays() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
+      sortByIntervalDays() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'intervalDays', Sort.asc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> sortByIntervalDaysDesc() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
+      sortByIntervalDaysDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'intervalDays', Sort.desc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> sortByNextReviewDate() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
+      sortByNextReviewDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'nextReviewDate', Sort.asc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> sortByNextReviewDateDesc() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
+      sortByNextReviewDateDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'nextReviewDate', Sort.desc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> sortByRepetitions() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> sortByRepetitions() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'repetitions', Sort.asc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> sortByRepetitionsDesc() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
+      sortByRepetitionsDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'repetitions', Sort.desc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> sortByStartAtSecond() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
+      sortByStartAtSecond() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'startAtSecond', Sort.asc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> sortByStartAtSecondDesc() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
+      sortByStartAtSecondDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'startAtSecond', Sort.desc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> sortByTitle() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> sortByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> sortByTitleDesc() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> sortByTitleDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.desc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> sortByUpdatedAt() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> sortByUpdatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'updatedAt', Sort.asc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> sortByUpdatedAtDesc() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
+      sortByUpdatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'updatedAt', Sort.desc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> sortByYoutubeId() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> sortByUuid() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uuid', Sort.asc);
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> sortByUuidDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uuid', Sort.desc);
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> sortByYoutubeId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'youtubeId', Sort.asc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> sortByYoutubeIdDesc() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
+      sortByYoutubeIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'youtubeId', Sort.desc);
     });
   }
 }
 
-extension FlashcardQuerySortThenBy
-    on QueryBuilder<Flashcard, Flashcard, QSortThenBy> {
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> thenByAlbum() {
+extension IsarFlashcardQuerySortThenBy
+    on QueryBuilder<IsarFlashcard, IsarFlashcard, QSortThenBy> {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> thenByAlbum() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'album', Sort.asc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> thenByAlbumDesc() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> thenByAlbumDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'album', Sort.desc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> thenByArtist() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> thenByArtist() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'artist', Sort.asc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> thenByArtistDesc() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> thenByArtistDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'artist', Sort.desc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> thenByCreatedAt() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> thenByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.asc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> thenByCreatedAtDesc() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
+      thenByCreatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.desc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> thenByEaseFactor() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> thenByEaseFactor() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'easeFactor', Sort.asc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> thenByEaseFactorDesc() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
+      thenByEaseFactorDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'easeFactor', Sort.desc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> thenByEndAtSecond() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> thenByEndAtSecond() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'endAtSecond', Sort.asc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> thenByEndAtSecondDesc() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
+      thenByEndAtSecondDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'endAtSecond', Sort.desc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> thenById() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> thenByIdDesc() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> thenByIntervalDays() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
+      thenByIntervalDays() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'intervalDays', Sort.asc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> thenByIntervalDaysDesc() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
+      thenByIntervalDaysDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'intervalDays', Sort.desc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> thenByNextReviewDate() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
+      thenByNextReviewDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'nextReviewDate', Sort.asc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> thenByNextReviewDateDesc() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
+      thenByNextReviewDateDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'nextReviewDate', Sort.desc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> thenByRepetitions() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> thenByRepetitions() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'repetitions', Sort.asc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> thenByRepetitionsDesc() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
+      thenByRepetitionsDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'repetitions', Sort.desc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> thenByStartAtSecond() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
+      thenByStartAtSecond() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'startAtSecond', Sort.asc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> thenByStartAtSecondDesc() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
+      thenByStartAtSecondDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'startAtSecond', Sort.desc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> thenByTitle() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> thenByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> thenByTitleDesc() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> thenByTitleDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.desc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> thenByUpdatedAt() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> thenByUpdatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'updatedAt', Sort.asc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> thenByUpdatedAtDesc() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
+      thenByUpdatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'updatedAt', Sort.desc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> thenByYoutubeId() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> thenByUuid() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uuid', Sort.asc);
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> thenByUuidDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uuid', Sort.desc);
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> thenByYoutubeId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'youtubeId', Sort.asc);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QAfterSortBy> thenByYoutubeIdDesc() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
+      thenByYoutubeIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'youtubeId', Sort.desc);
     });
   }
 }
 
-extension FlashcardQueryWhereDistinct
-    on QueryBuilder<Flashcard, Flashcard, QDistinct> {
-  QueryBuilder<Flashcard, Flashcard, QDistinct> distinctByAlbum(
+extension IsarFlashcardQueryWhereDistinct
+    on QueryBuilder<IsarFlashcard, IsarFlashcard, QDistinct> {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QDistinct> distinctByAlbum(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'album', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QDistinct> distinctByArtist(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QDistinct> distinctByArtist(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'artist', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QDistinct> distinctByCreatedAt() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QDistinct> distinctByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'createdAt');
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QDistinct> distinctByEaseFactor() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QDistinct> distinctByEaseFactor() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'easeFactor');
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QDistinct> distinctByEndAtSecond() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QDistinct>
+      distinctByEndAtSecond() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'endAtSecond');
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QDistinct> distinctByIntervalDays() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QDistinct>
+      distinctByIntervalDays() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'intervalDays');
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QDistinct> distinctByNextReviewDate() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QDistinct>
+      distinctByNextReviewDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'nextReviewDate');
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QDistinct> distinctByRepetitions() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QDistinct>
+      distinctByRepetitions() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'repetitions');
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QDistinct> distinctByStartAtSecond() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QDistinct>
+      distinctByStartAtSecond() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'startAtSecond');
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QDistinct> distinctByTitle(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QDistinct> distinctByTitle(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'title', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QDistinct> distinctByUpdatedAt() {
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QDistinct> distinctByUpdatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'updatedAt');
     });
   }
 
-  QueryBuilder<Flashcard, Flashcard, QDistinct> distinctByYoutubeId(
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QDistinct> distinctByUuid(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'uuid', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QDistinct> distinctByYoutubeId(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'youtubeId', caseSensitive: caseSensitive);
@@ -1726,81 +2260,88 @@ extension FlashcardQueryWhereDistinct
   }
 }
 
-extension FlashcardQueryProperty
-    on QueryBuilder<Flashcard, Flashcard, QQueryProperty> {
-  QueryBuilder<Flashcard, int, QQueryOperations> idProperty() {
+extension IsarFlashcardQueryProperty
+    on QueryBuilder<IsarFlashcard, IsarFlashcard, QQueryProperty> {
+  QueryBuilder<IsarFlashcard, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
     });
   }
 
-  QueryBuilder<Flashcard, String?, QQueryOperations> albumProperty() {
+  QueryBuilder<IsarFlashcard, String?, QQueryOperations> albumProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'album');
     });
   }
 
-  QueryBuilder<Flashcard, String, QQueryOperations> artistProperty() {
+  QueryBuilder<IsarFlashcard, String, QQueryOperations> artistProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'artist');
     });
   }
 
-  QueryBuilder<Flashcard, DateTime, QQueryOperations> createdAtProperty() {
+  QueryBuilder<IsarFlashcard, DateTime, QQueryOperations> createdAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'createdAt');
     });
   }
 
-  QueryBuilder<Flashcard, double, QQueryOperations> easeFactorProperty() {
+  QueryBuilder<IsarFlashcard, double, QQueryOperations> easeFactorProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'easeFactor');
     });
   }
 
-  QueryBuilder<Flashcard, int?, QQueryOperations> endAtSecondProperty() {
+  QueryBuilder<IsarFlashcard, int?, QQueryOperations> endAtSecondProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'endAtSecond');
     });
   }
 
-  QueryBuilder<Flashcard, int, QQueryOperations> intervalDaysProperty() {
+  QueryBuilder<IsarFlashcard, int, QQueryOperations> intervalDaysProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'intervalDays');
     });
   }
 
-  QueryBuilder<Flashcard, DateTime, QQueryOperations> nextReviewDateProperty() {
+  QueryBuilder<IsarFlashcard, DateTime, QQueryOperations>
+      nextReviewDateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'nextReviewDate');
     });
   }
 
-  QueryBuilder<Flashcard, int, QQueryOperations> repetitionsProperty() {
+  QueryBuilder<IsarFlashcard, int, QQueryOperations> repetitionsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'repetitions');
     });
   }
 
-  QueryBuilder<Flashcard, int, QQueryOperations> startAtSecondProperty() {
+  QueryBuilder<IsarFlashcard, int, QQueryOperations> startAtSecondProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'startAtSecond');
     });
   }
 
-  QueryBuilder<Flashcard, String, QQueryOperations> titleProperty() {
+  QueryBuilder<IsarFlashcard, String, QQueryOperations> titleProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'title');
     });
   }
 
-  QueryBuilder<Flashcard, DateTime, QQueryOperations> updatedAtProperty() {
+  QueryBuilder<IsarFlashcard, DateTime, QQueryOperations> updatedAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'updatedAt');
     });
   }
 
-  QueryBuilder<Flashcard, String, QQueryOperations> youtubeIdProperty() {
+  QueryBuilder<IsarFlashcard, String, QQueryOperations> uuidProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'uuid');
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, String, QQueryOperations> youtubeIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'youtubeId');
     });

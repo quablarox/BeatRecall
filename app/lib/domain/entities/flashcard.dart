@@ -1,26 +1,108 @@
-import 'package:isar/isar.dart';
-
-part 'flashcard.g.dart';
-
-@collection
+/// Domain entity representing a music flashcard.
+///
+/// This is a pure Dart class without any database-specific dependencies.
+/// The [uuid] serves as the stable identifier across the application.
 class Flashcard {
-  Id id = Isar.autoIncrement;
+  /// Unique identifier (stable across persistence)
+  final String uuid;
 
-  late String youtubeId;
-  late String title;
-  late String artist;
-  String? album;
+  /// YouTube video ID
+  final String youtubeId;
 
-  // SRS fields
-  int intervalDays = 0;
-  double easeFactor = 2.5;
-  int repetitions = 0;
-  DateTime nextReviewDate = DateTime.now();
+  /// Song title
+  final String title;
 
-  // Playback configuration
-  int startAtSecond = 0;
-  int? endAtSecond;
+  /// Artist name
+  final String artist;
 
-  DateTime createdAt = DateTime.now();
-  DateTime updatedAt = DateTime.now();
+  /// Optional album name
+  final String? album;
+
+  /// SRS: Days until next review (0 = new card)
+  final int intervalDays;
+
+  /// SRS: Ease Factor (default 2.5, min 1.3)
+  final double easeFactor;
+
+  /// SRS: Number of successful repetitions in a row
+  final int repetitions;
+
+  /// SRS: Next scheduled review date
+  final DateTime nextReviewDate;
+
+  /// Playback: Start position in seconds
+  final int startAtSecond;
+
+  /// Playback: Optional end position in seconds
+  final int? endAtSecond;
+
+  /// Timestamp when the card was created
+  final DateTime createdAt;
+
+  /// Timestamp when the card was last modified
+  final DateTime updatedAt;
+
+  const Flashcard({
+    required this.uuid,
+    required this.youtubeId,
+    required this.title,
+    required this.artist,
+    this.album,
+    this.intervalDays = 0,
+    this.easeFactor = 2.5,
+    this.repetitions = 0,
+    required this.nextReviewDate,
+    this.startAtSecond = 0,
+    this.endAtSecond,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  /// Creates a copy with modified fields
+  Flashcard copyWith({
+    String? uuid,
+    String? youtubeId,
+    String? title,
+    String? artist,
+    String? album,
+    int? intervalDays,
+    double? easeFactor,
+    int? repetitions,
+    DateTime? nextReviewDate,
+    int? startAtSecond,
+    int? endAtSecond,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) {
+    return Flashcard(
+      uuid: uuid ?? this.uuid,
+      youtubeId: youtubeId ?? this.youtubeId,
+      title: title ?? this.title,
+      artist: artist ?? this.artist,
+      album: album ?? this.album,
+      intervalDays: intervalDays ?? this.intervalDays,
+      easeFactor: easeFactor ?? this.easeFactor,
+      repetitions: repetitions ?? this.repetitions,
+      nextReviewDate: nextReviewDate ?? this.nextReviewDate,
+      startAtSecond: startAtSecond ?? this.startAtSecond,
+      endAtSecond: endAtSecond ?? this.endAtSecond,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Flashcard &&
+          runtimeType == other.runtimeType &&
+          uuid == other.uuid;
+
+  @override
+  int get hashCode => uuid.hashCode;
+
+  @override
+  String toString() {
+    return 'Flashcard{uuid: $uuid, title: $title, artist: $artist}';
+  }
 }

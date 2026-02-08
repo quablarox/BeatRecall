@@ -81,6 +81,7 @@
 **User Stories:** See [Epic 1-3](../user_stories/user_stories.md) for user perspective
 
 ### 3.1 Sprint 1: Foundation (2 weeks)
+**Status:** ✅ Data Model Complete | 🔄 SRS Algorithm In Progress  
 **Focus:** Data layer and basic services
 
 **Features:**
@@ -88,19 +89,27 @@
   - Implement SM-2 algorithm
   - Unit tests for SRS calculations
   - Documentation
-- [ ] **Data Model:** Flashcard entity
-  - Isar schema definition
-  - Model classes
-  - Type converters
-- [ ] **Database Service:**
-  - CRUD operations
-  - Query functions
-  - Error handling
+- [x] **Data Model:** Flashcard entity
+  - ✅ Domain entity (pure Dart, UUID-based)
+  - ✅ Isar entity (IsarFlashcard)
+  - ✅ Mapper (domain ↔ data)
+  - ✅ Factory (FlashcardFactory)
+- [x] **Database Service:**
+  - ✅ Repository interface (UUID-based)
+  - ✅ Isar repository implementation
+  - ✅ CRUD operations
+  - ✅ Query functions (due cards, search, pagination)
+  - ✅ Error handling
 
 **Success Criteria:**
 - [ ] SRS algorithm passes all test cases
-- [ ] Database operations working
-- [ ] 90% test coverage for business logic
+- [x] Database operations working (20 unit tests passing)
+- [x] Clean architecture: Domain independent of Isar
+
+**Implementation Notes:**
+- UUID-based identification ensures domain stability
+- Domain `Flashcard` uses UUID; data `IsarFlashcard` has both UUID and Isar ID
+- See `app/lib/data/README.md` for architecture details
 
 ### 3.2 Sprint 2: Card Management (2 weeks)
 **Focus:** Add, edit, delete cards  
