@@ -122,6 +122,7 @@ Presentation → Service → Domain → Data
 - Testing: `docs/engineering/testing/testing_strategy.md`
 
 **Commit Messages:** `.github/commit-conventions.md`
+Before commiting, ensure that the tests pass and that the living documents are updated if necessary.
 
 ---
 

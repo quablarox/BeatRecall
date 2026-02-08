@@ -86,6 +86,27 @@ class MockCardRepository implements CardRepository {
       _cardsByYoutubeId[card.youtubeId] = updated;
     }
   }
+
+  @override
+  Future<void> resetAllProgress() async {
+    final now = DateTime.now();
+    final resetCards = _cardsByUuid.values.map((card) {
+      return card.copyWith(
+        nextReviewDate: now,
+        easeFactor: 2.5,
+        intervalDays: 0,
+        repetitions: 0,
+        updatedAt: now,
+      );
+    }).toList();
+    
+    _cardsByUuid.clear();
+    _cardsByYoutubeId.clear();
+    for (final card in resetCards) {
+      _cardsByUuid[card.uuid] = card;
+      _cardsByYoutubeId[card.youtubeId] = card;
+    }
+  }
 }
 
 void main() {

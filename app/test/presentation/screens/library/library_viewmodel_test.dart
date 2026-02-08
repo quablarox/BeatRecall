@@ -553,4 +553,27 @@ class MockCardRepository implements CardRepository {
       );
     }
   }
+
+  @override
+  Future<void> resetAllProgress() async {
+    final now = DateTime.now();
+    for (int i = 0; i < savedCards.length; i++) {
+      savedCards[i] = savedCards[i].copyWith(
+        nextReviewDate: now,
+        easeFactor: 2.5,
+        intervalDays: 0,
+        repetitions: 0,
+        updatedAt: now,
+      );
+    }
+    for (int i = 0; i < cardsToReturn.length; i++) {
+      cardsToReturn[i] = cardsToReturn[i].copyWith(
+        nextReviewDate: now,
+        easeFactor: 2.5,
+        intervalDays: 0,
+        repetitions: 0,
+        updatedAt: now,
+      );
+    }
+  }
 }
