@@ -67,6 +67,22 @@ This directory contains product-focused documentation - **what** we're building 
 
 ---
 
+### 5. [Design System](design/design_system.md)
+**Purpose:** Core design guidelines for consistent UI implementation
+
+**Contents:**
+- Color palette (primary, background, surface, text)
+- Typography (headers, body, captions)
+- Spacing (padding, margins, touch targets)
+- Component styles (buttons, cards, inputs)
+- Design principles (clarity, accessibility, feedback)
+
+**Use this when:** You need design guidelines for implementing UI screens.
+
+**Note:** UI screens are specified in user stories and implemented iteratively without detailed mockups.
+
+---
+
 ## 🚀 Quick Start
 
 ### For Product Managers:
@@ -74,13 +90,20 @@ This directory contains product-focused documentation - **what** we're building 
 2. Review **User Stories** to understand user value
 3. Check **Roadmap** for timeline and priorities
 4. Reference **Functional Requirements** for detailed scope
-5. Use these docs to create sprint backlogs and epics
+5. Use **Design System** for UI consistency guidelines
 
 ### For Stakeholders:
 1. Check **Glossary** for terminology clarification
 2. Read **User Stories** to understand what we're building
 3. Review **Roadmap** for release dates
 4. Check **Functional Requirements** for feature completeness
+
+### For Developers:
+1. Start with **User Stories** to understand features
+2. Follow links to **Functional Requirements** for acceptance criteria
+3. Use **Design System** for UI implementation
+4. Check **Glossary** for domain language (use in code!)
+5. Implement iteratively - refine UI based on feedback
 
 ---
 
@@ -106,6 +129,13 @@ Product Documentation
 - Start with **User Stories** to create sprint backlog
 - Follow links to **Functional Requirements** for acceptance criteria
 - Check **Roadmap** for scheduling and dependencies
+- Reference **Design System** for UI consistency
+
+### During Development:
+- Implement features based on **User Stories** specs
+- Use **Design System** for UI components and styling
+- Create detailed API contracts **on-demand** (extend base architecture as needed)
+- Iterate on UI based on feedback - no need for upfront mockups
 
 ### During Stakeholder Reviews:
 - Present progress using **User Stories** as reference
@@ -120,5 +150,5 @@ For technical implementation details, see [Engineering Documentation](../enginee
 
 ---
 
-*Last updated: 2026-02-07*  
+*Last updated: 2026-02-08*  
 *Maintained by: BeatRecall Product Team*
