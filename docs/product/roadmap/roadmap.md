@@ -112,26 +112,32 @@
 - See `app/lib/data/README.md` for architecture details
 
 ### 3.2 Sprint 2: Card Management (2 weeks)
+**Status:** 🔄 In Progress (40% complete)  
 **Focus:** Add, edit, delete cards  
 **User Stories:** [Epic 1: Card Management](../user_stories/user_stories.md#epic-1-card-management) (Stories 1.1-1.5)
 
 **Features:**
-- [x] **CARDMGMT-001:** CSV Import ⭐ (Story 1.1)
-  - ✅ File picker integration
-  - ✅ CSV parsing and validation
-  - ✅ Duplicate detection
-  - ✅ Import summary UI
+- [x] **CARDMGMT-001:** CSV Import ⭐ (Story 1.1) **COMPLETE**
+  - ✅ File picker integration (file_picker 8.3.7)
+  - ✅ CSV parsing and validation (csv 6.0.0)
+  - ✅ Duplicate detection by YouTube ID
+  - ✅ Import summary UI with error details
   - ✅ Progress indicator
-  - ✅ Error reporting
-- [x] **CARDMGMT-005:** Library Screen (Story 1.3)
-  - ✅ List all cards
+  - ✅ Error reporting per row
+  - ✅ UI Screen implementation
+  - ✅ Test fixtures (4 CSV files)
+  - ✅ 40 unit + integration tests passing
+- [x] **CARDMGMT-005:** Library Screen (Story 1.3) **COMPLETE**
+  - ✅ List all cards with CardListItem widget
   - ✅ Search by title/artist (real-time, case-insensitive)
   - ✅ Filter by status (New/Learning/Review)
   - ✅ Filter by due date (Today/Overdue/This Week/All)
   - ✅ Sort options (A-Z, Z-A, Artist, Due Date, Created)
   - ✅ Result count display
   - ✅ Clear filters button
-  - ✅ Navigation to CSV import
+  - ✅ Navigation to CSV import (named routes)
+  - ✅ LibraryViewModel with 23 tests
+  - ✅ Provider state management
 - [ ] **CARDMGMT-002:** Manual card creation (Story 1.2)
   - Add Card screen UI
   - Form validation
@@ -145,11 +151,18 @@
   - Cascade delete logic
 
 **Success Criteria:**
-- [x] Can import cards from CSV files (primary method)
-- [x] Library displays all cards with search and filters
+- [x] Can import cards from CSV files (primary method) ✅
+- [x] Library displays all cards with search and filters ✅
 - [ ] Can add cards manually with YouTube URLs
 - [ ] Can edit existing cards
 - [ ] Can delete cards with confirmation
+
+**Implementation Notes:**
+- Provider scope restructured: All providers now above MaterialApp for global access
+- Named routes implemented (`/`, `/csv-import`)
+- Bug fix: ProviderNotFoundException resolved (4 new tests in provider_scope_test.dart)
+- Test coverage: 113 tests total (46 SRS + 35 CSV Import + 23 Library + 5 Fixtures + 4 Provider)
+- CSV format: `youtube_url,title,artist,start_at_seconds` (album field not supported)
 
 ### 3.3 Sprint 3: Review System (2 weeks)
 **Focus:** Quiz loop and flashcard player  

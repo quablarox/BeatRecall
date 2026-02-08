@@ -20,12 +20,16 @@ BeatRecall is a mobile application built with **Flutter** designed to help users
 ## 3. Functional Requirements
 
 ### Phase 1: Core MVP (SRS & Quiz Loop)
-| ID | Feature | Description |
-| :--- | :--- | :--- |
-| **SRS-001** | **SRS Logic (SM-2)** | Implementation of the SM-2 algorithm to calculate next review dates (Again, Hard, Good, Easy). |
-| **FLASHSYS-001/002** | **Flashcard Player** | Dual-sided card UI. Front: YouTube audio/video plays. Back: Title & Artist are revealed. |
-| **CARDMGMT-001/002** | **Card Import** | CSV bulk import and manual form to add songs via YouTube URL, Title, and Artist name. |
-| **DUEQUEUE-001/002** | **Due Queue & Sessions** | Logic to fetch cards where `nextReviewDate <= now` and manage review sessions. |
+| ID | Feature | Status | Description |
+| :--- | :--- | :---: | :--- |
+| **SRS-001** | **SRS Logic (SM-2)** | ✅ | Implementation of the SM-2 algorithm to calculate next review dates (Again, Hard, Good, Easy). **46 tests passing** |
+| **CARDMGMT-001** | **CSV Import** | ✅ | CSV bulk import with validation, duplicate detection, error reporting. **40 tests passing** |
+| **CARDMGMT-005** | **Library Screen** | ✅ | List cards with search, filters (status/due date), and sorting. **23 tests passing** |
+| **CARDMGMT-002** | **Manual Card Creation** | ⏳ | Add songs via form with YouTube URL, Title, and Artist name. |
+| **FLASHSYS-001/002** | **Flashcard Player** | ⏳ | Dual-sided card UI. Front: YouTube audio/video plays. Back: Title & Artist are revealed. |
+| **DUEQUEUE-001/002** | **Due Queue & Sessions** | ⏳ | Logic to fetch cards where `nextReviewDate <= now` and manage review sessions. |
+
+**Current Status:** Sprint 2 (40% complete) | **Tests:** 113 passing
 
 ### Phase 2: Enhanced Management & Automation
 | ID | Feature | Description |
@@ -41,7 +45,7 @@ BeatRecall is a mobile application built with **Flutter** designed to help users
 
 ```dart
 class Flashcard {
-  int id;               // Unique identifier
+  String uuid;          // Unique identifier (UUID v4)
   String youtubeId;     // Extracted from URL
   String title;
   String artist;
@@ -54,6 +58,10 @@ class Flashcard {
 
   // Configuration
   int startAtSecond;    // Start Timestamp (seconds)
+  
+  // Metadata
+  DateTime createdAt;
+  DateTime updatedAt;
 }
 ```
 
