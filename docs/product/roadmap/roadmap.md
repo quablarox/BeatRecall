@@ -5,6 +5,15 @@
 - **Last Updated:** 2026-02-07
 - **Status:** Draft
 
+## Table of Contents
+- [1. Project Phases Overview](#1-project-phases-overview)
+- [2. Phase 0: Planning & Setup](#2-phase-0-planning--setup-weeks-1-2)
+- [3. Phase 1: MVP Implementation](#3-phase-1-mvp-implementation-weeks-3-8)
+- [4. Phase 2: Enhancements](#4-phase-2-enhancements-weeks-9-12)
+- [5. Phase 3: Future Features](#5-phase-3-future-features-tbd)
+- [6. Milestones & Release Strategy](#6-milestones--release-strategy)
+- [7. Dependencies & Risks](#7-dependencies--risks)
+
 ---
 
 ## 1. Project Phases Overview

@@ -1,5 +1,7 @@
 # BeatRecall - Product Specification
 
+> **📚 Full Documentation:** See [docs/README.md](docs/README.md) for complete navigation
+
 ## 1. Project Vision
 BeatRecall is a mobile application built with **Flutter** designed to help users train their music recognition skills for Pub Quizzes. It utilizes a **Spaced Repetition System (SRS)**—similar to Anki—to optimize the learning process for song titles and artists using **YouTube** as the primary media source.
 

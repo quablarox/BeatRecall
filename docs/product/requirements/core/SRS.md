@@ -5,6 +5,16 @@
 **Last Updated:** 2026-02-07  
 **Status:** Draft
 
+## Table of Contents
+- [Feature Overview](#feature-overview)
+- [Requirements](#requirements)
+  - [SRS-001: SM-2 Algorithm Implementation](#srs-001-sm-2-algorithm-implementation)
+  - [SRS-002: Review Scheduling](#srs-002-review-scheduling)
+  - [SRS-003: Performance Tracking](#srs-003-performance-tracking)
+- [Future Enhancements](#future-enhancements)
+- [Test References](#test-references)
+- [Related Documents](#related-documents)
+
 ---
 
 ## Feature Overview

@@ -5,6 +5,14 @@
 - **Last Updated:** 2026-02-07
 - **Status:** Draft
 
+## Table of Contents
+- [Purpose](#purpose)
+- [Story 1: Daily Review Session](#story-1-daily-review-session)
+- [Story 2: Import Song Playlist](#story-2-import-song-playlist)
+- [Story 3: Create Manual Flashcard](#story-3-create-manual-flashcard)
+- [Story 4: Track Progress](#story-4-track-progress)
+- [Story 5: Manage Flashcard Library](#story-5-manage-flashcard-library)
+
 ---
 
 ## Purpose

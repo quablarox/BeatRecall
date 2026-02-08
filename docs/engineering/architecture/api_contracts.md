@@ -1,5 +1,26 @@
 # API Contracts & Project Structure
 
+## Table of Contents
+- [Overview](#overview)
+- [Project Structure](#project-structure)
+- [Repository Interfaces](#repository-interfaces)
+  - [CardRepository](#cardrepository)
+  - [ReviewLogRepository](#reviewlogrepository)
+- [Service Interfaces](#service-interfaces)
+  - [SrsService](#srsservice)
+  - [ReviewService](#reviewservice)
+  - [CardService](#cardservice)
+  - [ImportService](#importservice)
+  - [StatisticsService](#statisticsservice)
+  - [YoutubeService](#youtubeservice)
+- [Provider Patterns](#provider-patterns)
+- [Data Models](#data-models)
+- [Dependency Injection Setup](#dependency-injection-setup)
+- [Error Handling](#error-handling)
+- [Testing Contracts](#testing-contracts)
+
+---
+
 ## Overview
 
 This document defines the **API contracts** between layers and the **complete project structure** for BeatRecall. All layers communicate through well-defined interfaces to ensure loose coupling and testability.

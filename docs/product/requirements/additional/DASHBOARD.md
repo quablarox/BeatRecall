@@ -5,6 +5,15 @@
 **Last Updated:** 2026-02-07  
 **Status:** Detailed Spec
 
+## Table of Contents
+- [Feature Overview](#feature-overview)
+- [Requirements](#requirements)
+  - [DASHBOARD-001: Statistics Overview](#dashboard-001-statistics-overview)
+- [User Flow](#user-flow)
+- [Future Enhancements](#future-enhancements)
+- [Test References](#test-references)
+- [Related Documents](#related-documents)
+
 ---
 
 ## Feature Overview

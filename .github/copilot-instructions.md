@@ -29,6 +29,35 @@ BeatRecall: Flutter mobile app for music recognition training using Spaced Repet
 
 ---
 
+## Living Documents
+
+**Some docs must be updated when their referenced sources change:**
+
+📄 **README.md** - Overview document
+- Update when: Core features, tech stack, or data model change
+- References: Requirements, architecture, glossary
+- Keep in sync with: Feature IDs, terminology, entity names
+
+📄 **GETTING_STARTED.md** - Quick start guide
+- Update when: Project structure changes, setup steps change, key links change
+- Keep in sync with: docs/README.md navigation, development setup
+
+📄 **copilot-instructions.md** (this file)
+- Update when: New core principles, architecture changes, new conventions
+- Keep minimal: Only stable, general rules
+
+📄 **docs/product/roadmap/roadmap.md**
+- Update when: Requirements change, priorities shift, sprints complete
+- Keep in sync with: Feature IDs, user stories, requirements
+
+📄 **docs/product/user_stories/user_stories.md**
+- Update when: Requirements change, features added/removed
+- Keep in sync with: Requirements links, feature IDs
+
+**When changing a source document, check if these living documents need updates.**
+
+---
+
 ## Architecture
 
 **4-Layer Architecture:**  

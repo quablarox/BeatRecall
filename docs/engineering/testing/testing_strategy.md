@@ -5,6 +5,17 @@
 - **Last Updated:** 2026-02-07
 - **Status:** Draft
 
+## Table of Contents
+- [1. Testing Overview](#1-testing-overview)
+- [2. Unit Testing](#2-unit-testing)
+- [3. Integration Testing](#3-integration-testing)
+- [4. End-to-End Testing](#4-end-to-end-testing)
+- [5. Feature-Based Test Organization](#5-feature-based-test-organization)
+- [6. Test Coverage Requirements](#6-test-coverage-requirements)
+- [7. Testing Tools & Setup](#7-testing-tools--setup)
+- [8. Continuous Integration](#8-continuous-integration)
+- [9. Test Data Strategy](#9-test-data-strategy)
+
 ---
 
 ## 1. Testing Overview

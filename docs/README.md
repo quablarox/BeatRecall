@@ -1,29 +1,55 @@
 # BeatRecall Documentation
 
-## 📋 Overview
-
-This directory contains all documentation for the BeatRecall mobile application, organized by audience and purpose.
+**Version:** 1.0  
+**Last Updated:** 2026-02-08  
+**Status:** Planning Phase (Week 2)
 
 ---
 
-## 🗂️ Documentation Structure
+## 📖 Quick Start
 
-### 📦 [Product Documentation](product/README.md)
-**WHAT we're building and WHY**
+- [Getting Started](../GETTING_STARTED.md) - Project setup and first steps
+- [Main README](../README.md) - Project vision and overview
 
-For Product Managers, Stakeholders, and Feature Planning:
-- **[Functional Requirements](product/requirements/README.md)** - Detailed feature specifications
-- **[User Stories](product/user_stories/user_stories.md)** - User-centered feature descriptions
-- **[Project Roadmap](product/roadmap/roadmap.md)** - Timeline, milestones, and release strategy
+---
 
-### 🔧 [Engineering Documentation](engineering/README.md)
-**HOW we're building it**
+## 📋 Product Documentation
 
-For Developers, QA Engineers, and Technical Implementation:
-- **[Architecture](engineering/architecture/architecture.md)** - Technical design and patterns
-- **[Development Setup](engineering/setup/development_setup.md)** - Environment configuration
-- **[Testing Strategy](engineering/testing/testing_strategy.md)** - Testing approach and guidelines
-- **[Non-Functional Requirements](engineering/non_functional/non_functional_requirements.md)** - Quality standards
+### Core Documents
+- **[Product Glossary](product/GLOSSARY.md)** - Ubiquitous language and terminology
+- **[User Stories](product/user_stories/user_stories.md)** - Features from user perspective
+- **[Development Roadmap](product/roadmap/roadmap.md)** - Timeline and milestones
+
+### Requirements (Core Features)
+- **[Requirements Overview](product/requirements/core/README.md)** - Feature structure and IDs
+- [SRS - Spaced Repetition System](product/requirements/core/SRS.md) - SM-2 algorithm (SRS-001 to 003)
+- [FLASHSYS - Flashcard System](product/requirements/core/FLASHSYS.md) - Card UI and player (FLASHSYS-001 to 004)
+- [CARDMGMT - Card Management](product/requirements/core/CARDMGMT.md) - CSV import and CRUD (CARDMGMT-001 to 005)
+- [DUEQUEUE - Due Queue Management](product/requirements/core/DUEQUEUE.md) - Review sessions (DUEQUEUE-001 to 002)
+
+### Requirements (Additional Features)
+- [DASHBOARD - Dashboard](product/requirements/additional/DASHBOARD.md) - Statistics overview (DASHBOARD-001)
+
+### Specification Process
+- [Specification Process](product/requirements/README_SPECIFICATION_PROCESS.md) - How to write detailed specs
+- [Detailed Spec Template](product/requirements/TEMPLATE_DETAILED_SPEC.md) - Template for new features
+
+---
+
+## 🏗️ Engineering Documentation
+
+### Architecture
+- **[Architecture Overview](engineering/architecture/architecture.md)** - Layered architecture, principles, priorities
+- **[API Contracts](engineering/architecture/api_contracts.md)** - Complete project structure, interfaces, DI setup
+
+### Development Setup
+- [Development Setup](engineering/setup/development_setup.md) - Environment configuration
+
+### Testing
+- **[Testing Strategy](engineering/testing/testing_strategy.md)** - Unit/Integration/E2E approach
+
+### Non-Functional Requirements
+- **[Non-Functional Requirements](engineering/non_functional/non_functional_requirements.md)** - Performance, security, usability, offline-first
 
 ---
 
@@ -60,7 +86,91 @@ For Developers, QA Engineers, and Technical Implementation:
 
 ---
 
-## 📖 Document Relationships
+## � Development Guidelines
+
+### Coding Standards
+- **[Copilot Instructions](../.github/copilot-instructions.md)** - AI coding guidelines and principles
+- **[Commit Conventions](../.github/commit-conventions.md)** - Commit message format
+
+### Key Principles
+- **Single Source of Truth:** Avoid duplication, reference authoritative sources
+- **Domain Language:** Use exact terms from [GLOSSARY.md](product/GLOSSARY.md) (Flashcard not Card)
+- **SRS Correctness > UI Polish:** Algorithm must be correct above all else
+- **Testing:** 70% Unit, 20% Integration, 10% E2E with feature IDs (@SRS-001)
+
+---
+
+## 📂 Documentation Structure
+
+```
+docs/
+├── README.md (this file)          # Documentation hub
+│
+├── product/                       # WHAT & WHY
+│   ├── GLOSSARY.md                # Domain terminology
+│   ├── requirements/
+│   │   ├── core/                  # MVP features
+│   │   │   ├── SRS.md
+│   │   │   ├── FLASHSYS.md
+│   │   │   ├── CARDMGMT.md
+│   │   │   └── DUEQUEUE.md
+│   │   └── additional/            # Post-MVP features
+│   │       └── DASHBOARD.md
+│   ├── user_stories/
+│   │   └── user_stories.md
+│   └── roadmap/
+│       └── roadmap.md
+│
+└── engineering/                   # HOW
+    ├── architecture/
+    │   ├── architecture.md
+    │   └── api_contracts.md
+    ├── setup/
+    │   └── development_setup.md
+    ├── testing/
+    │   └── testing_strategy.md
+    └── non_functional/
+        └── non_functional_requirements.md
+```
+
+---
+
+## 🔗 External References
+
+- **Flutter Documentation:** https://flutter.dev/docs
+- **Isar Database:** https://isar.dev/
+- **Provider State Management:** https://pub.dev/packages/provider
+- **YouTube Player Flutter:** https://pub.dev/packages/youtube_player_flutter
+- **SM-2 Algorithm:** https://www.supermemo.com/en/archives1990-2015/english/ol/sm2
+
+---
+
+## 📝 Living Documents
+
+These documents must be kept in sync when their sources change:
+
+- **README.md** - Update when features, tech stack, or data model change
+- **copilot-instructions.md** - Update when new principles or architecture changes
+- **roadmap.md** - Update when requirements change or sprints complete
+- **user_stories.md** - Update when requirements change or features added/removed
+
+---
+
+## 🚀 Current Phase: Phase 0 (Week 2)
+
+**Status:** Planning & Setup
+
+**Next Steps:**
+- Finalize UI mockups
+- Set up Flutter project
+- Initialize Git repository
+- Configure CI/CD pipeline
+
+**Sprint Planning:** See [Roadmap](product/roadmap/roadmap.md)
+
+---
+
+## �📖 Document Relationships
 
 ```
 docs/
@@ -96,107 +206,14 @@ docs/
 
 ---
 
-## 🔄 Document Maintenance
+## � Questions or Issues?
 
-### Version Control:
-All documents are versioned and stored in Git. Each document has:
-- **Version number** at the top
-- **Last Updated** date
-- **Status** (Draft, Review, Approved, Deprecated)
-
-### Updates:
-When updating documents:
-1. Update the version number
-2. Update the "Last Updated" date
-3. Add entry to change log (if applicable)
-4. Notify team of significant changes
-
-### Review Cycle:
-- **Monthly:** Review and update as needed
-- **Per Sprint:** Update roadmap and priorities
-- **Per Release:** Update version numbers and status
+- Check the [GLOSSARY](product/GLOSSARY.md) for terminology
+- Review [User Stories](product/user_stories/user_stories.md) for context
+- Consult [Architecture](engineering/architecture/architecture.md) for technical decisions
+- Open an issue on GitHub for bugs or feature requests
 
 ---
 
-## 📧 Contact & Contribution
-
-### Questions?
-- Open an issue on GitHub
-- Check existing documentation first
-- Consult with the development team
-
-### Contributing:
-- Follow the document templates
-- Keep documents up to date with code changes
-- Use clear, concise language
-- Include examples where helpful
-
----
-
-## 🎯 Success Criteria for Documentation
-
-Good documentation should:
-- ✅ Be clear and easy to understand
-- ✅ Be kept up to date with code
-- ✅ Include concrete examples
-- ✅ Be well-organized and navigable
-- ✅ Help developers build the right thing
-
----
-
-## 📅 Document Status
-
-| Document | Version | Status | Last Updated |
-|----------|---------|--------|--------------|
-| Functional Requirements | 1.0 | Draft | 2026-02-07 |
-| User Stories | 1.0 | Draft | 2026-02-07 |
-| Development Setup | 1.0 | Draft | 2026-02-07 |
-| Architecture | 1.0 | Draft | 2026-02-07 |
-| Non-Functional Requirements | 1.0 | Draft | 2026-02-07 |
-| Testing Strategy | 1.0 | Draft | 2026-02-07 |
-| Roadmap | 1.0 | Draft | 2026-02-07 |
-
----
-
-## 🛠️ Tools & Templates
-
-### Recommended Tools:
-- **Markdown Editor:** VS Code, Typora, or any text editor
-- **Diagram Tools:** Draw.io, Lucidchart, Mermaid
-- **Project Management:** GitHub Projects, Jira, Trello
-- **Design:** Figma, Sketch, Adobe XD
-
-### Document Templates:
-All documents follow a standard structure:
-1. Document Information (version, date, status)
-2. Table of Contents (for long documents)
-3. Main Content (organized in sections)
-4. References and Links
-5. Change Log (where applicable)
-
----
-
-## 📌 Key Takeaways
-
-**Organized by Audience:**
-- **Product** folder = WHAT to build (requirements, user stories, roadmap)
-- **Engineering** folder = HOW to build (architecture, setup, testing, quality)
-
-**For Quick Navigation:**
-- Product Managers → Start in `product/`
-- Developers → Start in `engineering/`, reference `product/` for features
-- QA → Use both `product/` for acceptance criteria and `engineering/` for test strategy
-
----
-
-## 🔗 External Resources
-
-- **Flutter Documentation:** https://flutter.dev/docs
-- **Isar Database:** https://isar.dev/
-- **YouTube API:** https://developers.google.com/youtube
-- **SM-2 Algorithm:** https://www.supermemo.com/en/archives1990-2015/english/ol/sm2
-
----
-
-*Last updated: 2026-02-07*  
+*Last updated: 2026-02-08*  
 *Maintained by: BeatRecall Development Team*

@@ -5,6 +5,16 @@
 **Last Updated:** 2026-02-07  
 **Status:** Draft
 
+## Table of Contents
+- [Feature Overview](#feature-overview)
+- [Requirements](#requirements)
+  - [DUEQUEUE-001: Due Cards Retrieval](#duequeue-001-due-cards-retrieval)
+  - [DUEQUEUE-002: Review Session](#duequeue-002-review-session)
+- [User Flow](#user-flow)
+- [Future Enhancements](#future-enhancements)
+- [Test References](#test-references)
+- [Related Documents](#related-documents)
+
 ---
 
 ## Feature Overview

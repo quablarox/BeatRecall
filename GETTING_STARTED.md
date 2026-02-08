@@ -1,206 +1,171 @@
-# BeatRecall - Development Quick Start
+# BeatRecall - Quick Start Guide
 
-Welcome to BeatRecall development! This guide will help you get started quickly.
+> **📚 Complete Documentation:** See [docs/README.md](docs/README.md) for full navigation by role
 
-## 📂 Project Structure
+Welcome to BeatRecall! This is a **5-minute quick start** to get you oriented.
 
-```
-BeatRecall/
-├── README.md                          # Product specification (start here!)
-├── GETTING_STARTED.md                 # This file - quick start guide
-└── docs/                              # All documentation
-    ├── README.md                      # Documentation index
-    ├── product/                       # WHAT we're building & WHY
-    │   ├── requirements/              # Functional requirements (split)
-    │   │   ├── README.md
-    │   │   ├── core/                  # Core MVP features (feature per file)
-    │   │   │   ├── README.md
-    │   │   │   ├── SRS.md             # Spaced repetition system
-    │   │   │   ├── FLASHSYS.md        # Flashcard interface
-    │   │   │   ├── CARDMGMT.md        # Card management
-    │   │   │   └── DUEQUEUE.md        # Review queue
-    │   │   ├── 02_phase2.md
-    │   │   ├── 03_additional.md
-    │   │   ├── 04_future.md
-    │   │   └── 05_cross_cutting.md
-    │   ├── user_stories/
-    │   │   └── user_stories.md
-    │   └── roadmap/
-    │       └── roadmap.md
-    └── engineering/                   # HOW we're building it
-        ├── architecture/
-        │   └── architecture.md
-        ├── setup/
-        │   └── development_setup.md
-        ├── testing/
-        │   └── testing_strategy.md
-        └── non_functional/
-            └── non_functional_requirements.md
-```
+---
 
-### 2. Understand What We're Building (3 minutes)
-Read the [User Stories](docs/product/user_stories/user_stories.md) to see the features from a user's perspective.
+## 🎯 What is BeatRecall?
 
-## 📖 For Different Roles
+Flutter mobile app for **music recognition training** using **Spaced Repetition System (SM-2)** for pub quiz preparation.
 
-### 👨‍💻 **I'm a Developer - I want to start coding**
+**Tech Stack:** Flutter 3.0+ | Dart 3.0+ | Isar DB | YouTube Player | Provider
 
-**Your Path:**
-1. ✅ [Development Setup Guide](docs/engineering/setup/development_setup.md) - Set up your environment
-2. ✅ [Architecture Documentation](docs/engineering/architecture/architecture.md) - Understand the code structure
-3. ✅ [Functional Requirements](docs/product/requirements/README.md) - Know what to implement
-4. ✅ [Testing Strategy](docs/engineering/testing/testing_strategy.md) - Learn how to test
-5. ✅ [Roadmap](docs/product/roadmap/roadmap.md) - See current priorities
+---
 
-**Quick Commands:**
+## 📖 1. Understand the Product (2 min)
+
+### Start Here:
+1. **[README.md](README.md)** - Product vision and overview
+2. **[User Stories](docs/product/user_stories/user_stories.md)** - What users can do
+3. **[Roadmap](docs/product/roadmap/roadmap.md)** - Current phase and priorities
+
+### Key Concepts:
+- **Flashcards** with YouTube audio/video on front, title/artist on back
+- **SM-2 Algorithm** schedules reviews at optimal intervals
+- **4 Rating Buttons:** Again (0), Hard (1), Good (3), Easy (4)
+- **Offline-first:** All core features work without internet
+
+---
+
+## 🚀 2. Choose Your Path (3 min)
+
+> **📚 Detailed paths:** See [docs/README.md](docs/README.md) for complete role-specific guides
+
+### 👨‍💻 **Developer** → Start Coding
+
+**Quick Path:**
+1. [Development Setup](docs/engineering/setup/development_setup.md) - Environment setup
+2. [Architecture](docs/engineering/architecture/architecture.md) - Code structure & naming
+3. [API Contracts](docs/engineering/architecture/api_contracts.md) - Interfaces & DI
+4. [Testing Strategy](docs/engineering/testing/testing_strategy.md) - How to test
+
+**Quick Setup:**
 ```bash
-# Clone the repository
+# 1. Clone repository (when available)
 git clone https://github.com/quablarox/BeatRecall.git
 cd BeatRecall
 
-# Install Flutter (if not already)
-# Follow: https://flutter.dev/docs/get-started/install
+# 2. Install Flutter: https://flutter.dev/docs/get-started/install
 
-# Get dependencies (when project is set up)
+# 3. Get dependencies
 flutter pub get
 
-# Run the app (when implemented)
+# 4. Run app
 flutter run
 
-# Run tests
+# 5. Run tests
 flutter test
 ```
 
----
-
-### 📋 **I'm a Project Manager - I need to plan**
-
-**Your Path:**
-1. ✅ [Roadmap](docs/product/roadmap/roadmap.md) - Timeline and milestones
-2. ✅ [User Stories](docs/product/user_stories/user_stories.md) - Feature backlog
-3. ✅ [Functional Requirements](docs/product/requirements/README.md) - Detailed scope
-4. ✅ [Non-Functional Requirements](docs/engineering/non_functional/non_functional_requirements.md) - Quality gates
-
-**Key Information:**
-- **MVP Timeline:** 8 weeks
-- **Total Features:** 20+ user stories across 6 epics
-- **Phase 1 Deliverables:** Core SRS-based quiz app
-- **Testing Coverage:** 70% minimum, 90% for business logic
+**Key Principles:**
+- **SRS Correctness > UI Polish** - Algorithm must be correct
+- **Domain Language** - Use exact terms from [GLOSSARY](docs/product/GLOSSARY.md)
+- **Test Coverage** - 70% minimum, 90% for business logic
+- **Naming** - See [Architecture](docs/engineering/architecture/architecture.md#3-naming-conventions)
 
 ---
 
-### 🎨 **I'm a Designer - I need to create mockups**
+### 📋 **Product Manager** → Planning
 
-**Your Path:**
-1. ✅ [User Stories](docs/product/user_stories/user_stories.md) - User needs and journeys
-2. ✅ [Functional Requirements](docs/product/requirements/README.md) - UI requirements
-3. ✅ [Non-Functional Requirements](docs/engineering/non_functional/non_functional_requirements.md) - Accessibility & usability
+**Quick Path:**
+1. [Roadmap](docs/product/roadmap/roadmap.md) - Timeline & milestones
+2. [User Stories](docs/product/user_stories/user_stories.md) - Feature backlog
+3. [Requirements](docs/product/requirements/core/README.md) - Detailed scope
 
-**Key Screens to Design:**
-1. Dashboard (due cards count, quick actions)
-2. Quiz Screen (flashcard player, rating buttons)
-3. Library (searchable card list)
-4. Add/Edit Card Form
-5. Settings
-
-**Design Considerations:**
-- Minimalist, clean design
-- Color-coded rating buttons
-- Touch-friendly (44x44 points minimum)
-- Support dark/light themes
-- 60 FPS animations
+**Key Info:** MVP in 8 weeks | 20+ user stories | Phase 0 Week 2 (current)
 
 ---
 
-### 🧪 **I'm a QA Tester - I need to test**
+### 🎨 **Designer** → UI/UX
 
-**Your Path:**
-1. ✅ [Testing Strategy](docs/engineering/testing/testing_strategy.md) - Testing approach
-2. ✅ [Functional Requirements](docs/product/requirements/README.md) - Acceptance criteria
-3. ✅ [User Stories](docs/product/user_stories/user_stories.md) - User scenarios
-4. ✅ [Non-Functional Requirements](docs/engineering/non_functional/non_functional_requirements.md) - Performance metrics
+**Quick Path:**
+1. [User Stories](docs/product/user_stories/user_stories.md) - User needs
+2. [Requirements](docs/product/requirements/core/README.md) - UI specs
+3. [NFRs](docs/engineering/non_functional/non_functional_requirements.md) - Accessibility
 
-**Test Priorities:**
-1. Core SRS loop (add → review → rate → reschedule)
-2. YouTube video playback
-3. Database persistence
-4. Performance (< 3s load time, 60 FPS)
-5. Error handling (network issues)
+**Key Screens:** Dashboard | Quiz | Library | Add/Edit Card
 
 ---
 
-## 🎯 What to Focus On First
+### 🧪 **QA Tester** → Testing
 
-### Phase 0: Setup (Current - Week 2)
-- [x] **Requirements Complete** ✅
-- [ ] **UI Mockups** - Design key screens
-- [ ] **Flutter Project Setup** - Initialize codebase
-- [ ] **CI/CD Pipeline** - GitHub Actions
+**Quick Path:**
+1. [Testing Strategy](docs/engineering/testing/testing_strategy.md) - Approach
+2. [Requirements](docs/product/requirements/core/README.md) - Acceptance criteria
 
-### Phase 1: MVP (Week 3-10)
-Priority features to implement:
-1. **Sprint 1:** SRS algorithm + database
-2. **Sprint 2:** Add/edit/delete cards
-3. **Sprint 3:** Quiz screen + YouTube player
-4. **Sprint 4:** Rating system + dashboard
+**Test Priorities:** SRS algorithm | YouTube playback | Database | Performance
 
-## 📊 Key Metrics & Goals
+---
 
-- **MVP Release:** Week 8
-- **Code Coverage:** 70% minimum
-- **Performance:** < 2s app startup, < 100ms queries
-- **Quality:** < 5 critical bugs in beta
+## 📂 3. Navigation & Resources
 
-## 🔗 Important Links
+### Complete Documentation
+- **[docs/README.md](docs/README.md)** - Central documentation hub with all links
 
-- **Product Spec:** [README.md](README.md)
-- **All Documentation:** [docs/README.md](docs/README.md)
-- **Technical Stack:**
-  - Framework: Flutter
-  - Database: Isar (NoSQL)
-  - Media: YouTube Player Flutter
-  - State Management: Provider/Riverpod
+### Key Documents by Category
 
-## 📚 External Resources
+**Product (WHAT & WHY):**
+- [GLOSSARY](docs/product/GLOSSARY.md) - Terminology
+- [Requirements](docs/product/requirements/core/README.md) - Features
+- [User Stories](docs/product/user_stories/user_stories.md) - User perspective
+- [Roadmap](docs/product/roadmap/roadmap.md) - Timeline
 
-- **Flutter Docs:** https://flutter.dev/docs
-- **Isar Database:** https://isar.dev/
-- **YouTube API:** https://developers.google.com/youtube/v3
-- **SM-2 Algorithm:** https://www.supermemo.com/en/archives1990-2015/english/ol/sm2
+**Engineering (HOW):**
+- [Architecture](docs/engineering/architecture/architecture.md) - Code structure & naming
+- [API Contracts](docs/engineering/architecture/api_contracts.md) - Interfaces
+- [Testing](docs/engineering/testing/testing_strategy.md) - Testing approach
+- [NFRs](docs/engineering/non_functional/non_functional_requirements.md) - Quality standards
 
-## 💡 Tips for Success
+**Development:**
+- [Setup Guide](docs/engineering/setup/development_setup.md) - Environment config
+- [Copilot Instructions](.github/copilot-instructions.md) - AI coding guidelines
+- [Commit Conventions](.github/commit-conventions.md) - Commit format
 
-1. **Start Small:** Focus on MVP features first
-2. **Test Early:** Write tests as you code
-3. **Document:** Update docs when you change behavior
-4. **Ask Questions:** Open GitHub issues if unclear
-5. **Follow Standards:** Use Flutter/Dart best practices
+### External Resources
+- [Flutter Docs](https://flutter.dev/docs)
+- [Isar Database](https://isar.dev/)
+- [YouTube API](https://developers.google.com/youtube/v3)
+- [SM-2 Algorithm](https://www.supermemo.com/en/archives1990-2015/english/ol/sm2)
 
-## 🤝 Contributing
+---
 
-1. Read the [Architecture](docs/engineering/architecture/architecture.md) to understand code structure
-2. Pick a user story from the [backlog](docs/product/user_stories/user_stories.md)
-3. Check [Functional Requirements](docs/product/requirements/README.md) for details
-4. Write tests following [Testing Strategy](docs/engineering/testing/testing_strategy.md)
-5. Submit PR with clear description
+## 🎯 4. Current Status
+
+**Phase 0 - Week 2:** Planning & Setup
+
+**Completed:**
+- ✅ Requirements & User Stories
+- ✅ Architecture & API Contracts
+- ✅ Testing Strategy
+- ✅ Documentation Hub
+
+**Next Steps:**
+- ⏳ UI Mockups
+- ⏳ Flutter Project Setup
+- ⏳ CI/CD Pipeline
+
+**See:** [Roadmap](docs/product/roadmap/roadmap.md) for details
+
+---
+
+## ✅ Quick Checklist
+
+Before coding:
+- [ ] Read [README.md](README.md) - Product vision
+- [ ] Check [Roadmap](docs/product/roadmap/roadmap.md) - Current priorities
+- [ ] Review [Architecture](docs/engineering/architecture/architecture.md) - Code structure
+- [ ] Understand [GLOSSARY](docs/product/GLOSSARY.md) - Domain language
+
+---
 
 ## 📞 Need Help?
 
-- **Documentation Issues:** Check [docs/README.md](docs/README.md)
-- **Technical Questions:** Open a GitHub issue
-- **Setup Problems:** See [Development Setup](docs/engineering/setup/development_setup.md)
-
-## ✅ Checklist: Before You Start Coding
-
-- [ ] I've read the product vision (README.md)
-- [ ] I understand the user stories
-- [ ] I've set up my development environment
-- [ ] I understand the architecture
-- [ ] I know how to run tests
-- [ ] I've checked the current sprint priorities
+- **Documentation:** [docs/README.md](docs/README.md) - Complete navigation
+- **Technical Questions:** Open GitHub issue
+- **Domain Language:** [GLOSSARY](docs/product/GLOSSARY.md)
 
 ---
 
-**Ready to build something awesome? Let's go! 🚀**
-
-*Last updated: 2026-02-07*
+*Last updated: 2026-02-08*
