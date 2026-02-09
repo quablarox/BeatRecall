@@ -102,6 +102,7 @@ class _BeatRecallAppState extends State<BeatRecallApp> {
             ChangeNotifierProvider<DashboardViewModel>(
               create: (context) => DashboardViewModel(
                 cardRepository: context.read<IsarCardRepository>(),
+                settingsService: context.read<SettingsService>(),
               ),
             ),
             ChangeNotifierProvider<QuizViewModel>(

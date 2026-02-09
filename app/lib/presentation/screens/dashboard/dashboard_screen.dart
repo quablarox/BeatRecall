@@ -221,11 +221,11 @@ class _DashboardScreenState extends State<DashboardScreen> with RouteAware {
           children: [
             Expanded(
               child: Tooltip(
-                message: viewModel.dueCards == 0
-                    ? 'No cards due for review'
-                    : 'Begin reviewing due cards',
+                message: !viewModel.hasCardsToReview
+                    ? 'No cards to review'
+                    : 'Start reviewing cards',
                 child: ElevatedButton.icon(
-                  onPressed: viewModel.dueCards == 0
+                  onPressed: !viewModel.hasCardsToReview
                       ? null
                       : () => Navigator.of(context).pushNamed('/quiz'),
                   icon: const Icon(Icons.play_arrow),

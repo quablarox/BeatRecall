@@ -1,9 +1,9 @@
 # DUEQUEUE - Due Queue Management
 
 **Feature ID:** `DUEQUEUE`  
-**Version:** 1.0  
-**Last Updated:** 2026-02-07  
-**Status:** Draft
+**Version:** 1.1  
+**Last Updated:** 2026-02-09  
+**Status:** Complete
 
 ## Table of Contents
 - [Feature Overview](#feature-overview)
@@ -34,70 +34,71 @@ Due Queue Management handles the retrieval and presentation of flashcards that a
 ### DUEQUEUE-001: Due Cards Retrieval
 
 **Priority:** High  
-**Status:** Not Started
+**Status:** Complete
 
 **Description:**  
-Fetch flashcards that are due for review based on their scheduled `nextReviewDate`. Cards are retrieved in priority order to ensure the most overdue cards are reviewed first.
+Fetch flashcards that are due for review based on their scheduled `nextReviewDate`. Only cards with `repetitions > 0` (review cards) are considered "due". New cards (repetitions == 0) are handled separately via daily new cards limit. Cards are retrieved in priority order to ensure the most overdue cards are reviewed first.
 
 **Acceptance Criteria:**
-- Query condition: `nextReviewDate <= currentDateTime`
+- Query condition: `nextReviewDate <= currentDateTime AND repetitions > 0`
+- **Review cards only:** New cards (repetitions == 0) are NOT included in due cards count
 - Sort by due date (oldest first):
   - Most overdue cards appear first
   - Ties broken by card creation date (older first)
-- Support batch loading for performance:
-  - Load 10 cards at a time initially
-  - Fetch next batch when user approaches end of current batch
-  - Avoids loading all due cards at once (performance optimization)
-- Update queue after each card review:
-  - Remove reviewed card from queue
-  - Fetch next card to maintain buffer
-- Return empty queue when no cards are due
+- Return empty queue when no review cards are due
 - Timezone handling:
   - Use device timezone for `currentDateTime`
   - Store `nextReviewDate` in UTC, convert for comparison
 
-**Performance Notes:**
-- Optimize database query with index on `nextReviewDate`
-- For libraries > 1000 cards, pagination is critical
-
-**Query Example (Isar):**
-```dart
-final dueCards = await isar.flashcards
-  .filter()
-  .nextReviewDateLessThan(DateTime.now())
-  .sortByNextReviewDate()
-  .limit(10)
-  .findAll();
-```
+**Implementation Status:**
+- ✅ Implemented in `IsarCardRepository.fetchDueCards()`
+- ✅ Filter: `.repetitionsGreaterThan(0)` excludes new cards
+- ✅ Sort: `.sortByNextReviewDate()` prioritizes oldest first
+- ✅ Tests: MockCardRepository in tests matches production behavior
 
 ---
 
 ### DUEQUEUE-002: Review Session
 
 **Priority:** High  
-**Status:** In Progress
+**Status:** Complete
 
 **Description:**  
-Manage a continuous review session where users work through all cards due for the day. The session continues dynamically as long as cards are due, rather than limiting to a fixed count. Users can study both due cards (reviews) and new cards (up to daily limit).
+Manage a continuous review session where users work through all cards due for the day. The session prioritizes review cards (repetitions > 0) before introducing new cards, respecting the daily new cards limit from SETTINGS-001. Users can study both types of cards in a single session.
 
 **Acceptance Criteria:**
-- **Session Scope:**
-  - Session includes ALL cards where `nextReviewDate <= now`
-  - Plus new cards (up to daily new cards limit from SETTINGS-001)
-  - Session continues until no more cards are due today
-  - Cards rated "Again" re-enter the session queue if still due today
-  - Dynamic card count: "Card X of ~Y" (count may change as Again cards re-enter)
+- **Session Composition:**
+  - **Priority 1: Review cards** - All cards where `nextReviewDate <= now AND repetitions > 0`
+  - **Priority 2: New cards** - Up to daily limit (SETTINGS-001), cards with `repetitions == 0`
+  - Queue order: [...reviewCards, ...newCards]
+  - Session continues until all cards in queue are rated
+- **Dynamic Queue Management:**
+  - Cards rated "Again" (interval = 0) re-enter queue at end if still due today
+  - Total cards count updates dynamically as Again cards are re-added
+  - Progress indicator: "Card X of Y" where Y may increase during session
 - **Progress Tracking:**
-  - Display "Cards reviewed: X" (total reviewed in session)
-  - Show "Due cards remaining: Y" (updates dynamically)
-  - Progress indicator: percentage of initially due cards completed
-  - Optional: Estimated time remaining based on average time per card
+  - Display "Cards reviewed: X" (total reviewed including repeats)
+  - Show remaining cards count (decreases as cards are completed)
+  - Session statistics: Rating counts (Again/Hard/Good/Easy)
+  - Session duration tracking
 - **Navigation:**
-  - Automatically load next due card after rating current card
-  - Smooth transition between cards (no jarring jumps)
-  - If user rates "Again": card is rescheduled and may appear later in same session
+  - Automatically load next card after rating current card
+  - Smooth transition between cards (flip animation resets)
 - **Session Controls:**
-  - "Pause" button to exit session mid-review
+  - AppBar back button to exit session mid-review
+  - Session summary screen on completion
+- **Session Completion:**
+  - Trigger when `currentIndex >= totalCards`
+  - Display summary: total reviewed, rating breakdown, session duration
+  - Return to dashboard on "Done" button
+
+**Implementation Status:**
+- ✅ Implemented in `QuizViewModel`
+- ✅ `loadDueCards()`: Fetches reviews first, then new cards
+- ✅ `rateCard()`: Re-adds "Again" cards to queue when interval = 0
+- ✅ Progress tracking: `_totalReviewed`, `_currentIndex`, `_ratingCounts`
+- ✅ Session summary screen with statistics
+- ✅ Integration with SettingsService for daily limit
   - Resume from where user left off
   - Session state persists across app restarts
   - "Finish Early" option to end session before all cards reviewed

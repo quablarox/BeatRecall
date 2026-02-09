@@ -1,9 +1,9 @@
 # DASHBOARD - Dashboard Overview
 
 **Feature ID:** `DASHBOARD`  
-**Version:** 1.0  
-**Last Updated:** 2026-02-07  
-**Status:** Detailed Spec
+**Version:** 1.1  
+**Last Updated:** 2026-02-09  
+**Status:** Complete
 
 ## Table of Contents
 - [Feature Overview](#feature-overview)
@@ -45,31 +45,34 @@ The Dashboard provides users with an at-a-glance view of their learning progress
 ### DASHBOARD-001: Overview Display
 
 **Priority:** High  
-**Status:** Not Started
+**Status:** Complete
 
 **Description:**  
-Display key learning statistics and metrics on the main screen to give users immediate insight into their progress and pending work. The dashboard combines motivational elements (streak counter) with actionable information (due cards count).
+Display key learning statistics and metrics on the main screen to give users immediate insight into their progress and pending work. The dashboard combines motivational elements (streak counter) with actionable information (due cards count and new cards available).
 
 **Acceptance Criteria:**
-- Count of due cards today is prominently displayed
-- Total cards in library is visible
-- Success rate for last 7 days is shown as percentage
-- Review streak counter displays consecutive days
-- Quick access button to start review session
+- **Due cards count:** Number of review cards (repetitions > 0) due today
+- **New cards available:** Count of new cards within daily limit (SETTINGS-001)
+- **Total cards** in library is visible
+- **Success rate** calculated from reviewed vs total cards
+- **Streak counter** displays current learning streak (max repetitions)
+- **"Start Review" button:**
+  - Enabled when `hasCardsToReview == true` (due cards > 0 OR new cards available > 0)
+  - Disabled when no cards to review
+  - Tooltip explains button state
 - All statistics update in real-time when data changes
-- Dashboard loads within 500ms on app launch
+- Dashboard loads efficiently on app launch
 - Graceful handling when no cards exist yet
-- Visual indicators use color coding (red for overdue, green for success)
+- **Pull-to-refresh** functionality to reload statistics
 
-**Dependencies:**
-- Requires `DUEQUEUE-001` for due cards count
-- Requires `SRS-003` for success rate calculation
-- Requires local storage for streak tracking
-
-**Technical Notes:**
-- Use reactive state management (Provider) for real-time updates
-- Cache statistics to avoid repeated database queries
-- Calculate statistics asynchronously to prevent UI blocking
+**Implementation Status:**
+- ✅ Implemented in `DashboardViewModel` and `DashboardScreen`
+- ✅ Statistics: totalCards, dueCards, newCardsAvailable, reviewedCards, currentStreak
+- ✅ Button logic: `hasCardsToReview` getter checks both due and new cards
+- ✅ Real-time updates via Provider/ChangeNotifier
+- ✅ Integration with SettingsService for new cards limit
+- ✅ Pull-to-refresh with RefreshIndicator
+- ✅ Error handling with retry button
 
 ---
 

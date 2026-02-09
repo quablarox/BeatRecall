@@ -2,16 +2,23 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:beat_recall/domain/entities/flashcard.dart';
 import 'package:beat_recall/domain/repositories/card_repository.dart';
 import 'package:beat_recall/presentation/screens/dashboard/dashboard_viewmodel.dart';
+import 'package:beat_recall/services/settings_service.dart';
+import 'package:beat_recall/domain/value_objects/app_settings.dart';
 
 /// Tests for DashboardViewModel (@DASHBOARD-001)
 void main() {
   group('DashboardViewModel (@DASHBOARD-001)', () {
     late MockCardRepository mockRepository;
+    late MockSettingsService mockSettingsService;
     late DashboardViewModel viewModel;
 
     setUp(() {
       mockRepository = MockCardRepository();
-      viewModel = DashboardViewModel(cardRepository: mockRepository);
+      mockSettingsService = MockSettingsService();
+      viewModel = DashboardViewModel(
+        cardRepository: mockRepository,
+        settingsService: mockSettingsService,
+      );
     });
 
     group('loadSummary()', () {
@@ -136,10 +143,10 @@ void main() {
         final tomorrow = now.add(const Duration(days: 1));
 
         mockRepository.cardsToReturn = [
-          _createCard('Due 1', 'Artist A', nextReviewDate: yesterday),
-          _createCard('Due 2', 'Artist B', nextReviewDate: twoDaysAgo),
-          _createCard('Not due 1', 'Artist C', nextReviewDate: tomorrow),
-          _createCard('Not due 2', 'Artist D', nextReviewDate: now.add(const Duration(days: 5))),
+          _createCard('Due 1', 'Artist A', nextReviewDate: yesterday, repetitions: 1),
+          _createCard('Due 2', 'Artist B', nextReviewDate: twoDaysAgo, repetitions: 2),
+          _createCard('Not due 1', 'Artist C', nextReviewDate: tomorrow, repetitions: 1),
+          _createCard('Not due 2', 'Artist D', nextReviewDate: now.add(const Duration(days: 5)), repetitions: 1),
         ];
 
         // When
@@ -239,8 +246,10 @@ class MockCardRepository implements CardRepository {
     if (shouldThrowError) throw Exception('Mock repository error');
     final now = DateTime.now();
     return cardsToReturn
-        .where((card) => card.nextReviewDate.isBefore(now) || 
-               card.nextReviewDate.isAtSameMomentAs(now))
+        .where((card) => 
+               (card.nextReviewDate.isBefore(now) || 
+                card.nextReviewDate.isAtSameMomentAs(now)) &&
+               card.repetitions > 0) // Only count review cards, not new cards
         .length;
   }
 
@@ -277,8 +286,10 @@ class MockCardRepository implements CardRepository {
     if (shouldThrowError) throw Exception('Mock repository error');
     final now = DateTime.now();
     return cardsToReturn
-        .where((card) => card.nextReviewDate.isBefore(now) || 
-               card.nextReviewDate.isAtSameMomentAs(now))
+        .where((card) => 
+               (card.nextReviewDate.isBefore(now) || 
+                card.nextReviewDate.isAtSameMomentAs(now)) &&
+               card.repetitions > 0) // Only review cards, not new cards
         .toList();
   }
 
@@ -354,5 +365,37 @@ class MockCardRepository implements CardRepository {
         updatedAt: now,
       );
     }
+  }
+}
+
+/// Mock SettingsService for testing
+class MockSettingsService extends SettingsService {
+  int _newCardsStudiedToday = 0;
+  AppSettings _testSettings = const AppSettings(newCardsPerDay: 20);
+
+  @override
+  AppSettings get settings => _testSettings;
+
+  @override
+  int getNewCardsStudiedToday() => _newCardsStudiedToday;
+
+  @override
+  int getRemainingNewCardsToday() {
+    final studied = _newCardsStudiedToday;
+    final limit = _testSettings.newCardsPerDay;
+    return (limit - studied).clamp(0, limit);
+  }
+
+  @override
+  Future<void> incrementNewCardsStudied() async {
+    _newCardsStudiedToday++;
+  }
+
+  void setNewCardsStudiedToday(int count) {
+    _newCardsStudiedToday = count;
+  }
+
+  void setTestSettings(AppSettings settings) {
+    _testSettings = settings;
   }
 }
