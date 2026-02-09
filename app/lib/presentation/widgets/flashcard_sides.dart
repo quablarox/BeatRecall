@@ -14,6 +14,7 @@ class FlashcardFront extends StatefulWidget {
   final int startAtSecond;
   final VoidCallback onShowAnswer;
   final bool enablePlayer;
+  final Function(int newOffset)? onUpdateOffset;
 
   const FlashcardFront({
     super.key,
@@ -21,6 +22,7 @@ class FlashcardFront extends StatefulWidget {
     required this.startAtSecond,
     required this.onShowAnswer,
     this.enablePlayer = true,
+    this.onUpdateOffset,
   });
 
   @override
@@ -303,20 +305,110 @@ class _FlashcardFrontState extends State<FlashcardFront> {
       return const SizedBox.shrink();
     }
 
-    return AspectRatio(
-      aspectRatio: 16 / 9,
-      child: _hasError
-          ? _buildErrorState(context)
-          : _useIframePlayer
-              ? _buildIframePlayer(context)
-              : _controller == null
-                  ? const SizedBox.shrink()
-                  : YoutubePlayer(
-                      controller: _controller!,
-                      showVideoProgressIndicator: true,
-                      progressIndicatorColor: Theme.of(context).primaryColor,
-                    ),
+    return Column(
+      children: [
+        AspectRatio(
+          aspectRatio: 16 / 9,
+          child: _hasError
+              ? _buildErrorState(context)
+              : _useIframePlayer
+                  ? _buildIframePlayer(context)
+                  : _controller == null
+                      ? const SizedBox.shrink()
+                      : YoutubePlayer(
+                          controller: _controller!,
+                          showVideoProgressIndicator: true,
+                          progressIndicatorColor: Theme.of(context).primaryColor,
+                        ),
+        ),
+        if (!_hasError && (_controller != null || _iframeController != null))
+          _buildPlayerControls(context),
+      ],
     );
+  }
+
+  Widget _buildPlayerControls(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          IconButton(
+            onPressed: () => _skipSeconds(-10),
+            icon: const Icon(Icons.replay_10),
+            tooltip: 'Back 10 seconds',
+          ),
+          const SizedBox(width: 8),
+          IconButton(
+            onPressed: () => _skipSeconds(10),
+            icon: const Icon(Icons.forward_10),
+            tooltip: 'Forward 10 seconds',
+          ),
+          const SizedBox(width: 16),
+          if (widget.onUpdateOffset != null)
+            Tooltip(
+              message: 'Use current position as start time',
+              child: OutlinedButton.icon(
+                onPressed: _setCurrentTimeAsOffset,
+                icon: const Icon(Icons.bookmark_add, size: 18),
+                label: const Text('Set Start'),
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  void _skipSeconds(int seconds) {
+    if (_useIframePlayer && _iframeController != null) {
+      _iframeController!.seekTo(
+        seconds: _iframeController!.value.currentTime + seconds.toDouble(),
+      );
+    } else if (_controller != null) {
+      final currentPos = _controller!.value.position.inSeconds;
+      _controller!.seekTo(Duration(seconds: currentPos + seconds));
+    }
+  }
+
+  void _setCurrentTimeAsOffset() async {
+    if (widget.onUpdateOffset == null) return;
+
+    int currentSeconds = 0;
+    if (_useIframePlayer && _iframeController != null) {
+      currentSeconds = _iframeController!.value.currentTime.round();
+    } else if (_controller != null) {
+      currentSeconds = _controller!.value.position.inSeconds;
+    }
+
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Set Start Time'),
+        content: Text(
+          'Set start time to $currentSeconds seconds?\n\nThis will update the card to always start at this position.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Confirm'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true && mounted) {
+      widget.onUpdateOffset!(currentSeconds);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Start time set to $currentSeconds seconds')),
+      );
+    }
   }
 
   /// Builds a compact audio-only bar when video is hidden.

@@ -221,4 +221,28 @@ class QuizViewModel extends ChangeNotifier {
     _newCardsStudiedInSession = 0;
     notifyListeners();
   }
+
+  /// Update the start offset (startAtSecond) for the current card
+  Future<void> updateCardOffset(int newOffset) async {
+    if (currentCard == null) return;
+
+    try {
+      // Update the card's start time in local state
+      final updatedCard = currentCard!.copyWith(
+        startAtSecond: newOffset,
+        updatedAt: DateTime.now(),
+      );
+
+      // Update in database via repository
+      await _cardRepository.save(updatedCard);
+
+      // Update the card in the current session
+      _dueCards[_displayedCardIndex] = updatedCard;
+      notifyListeners();
+    } catch (e) {
+      _error = 'Failed to update card offset: ${e.toString()}';
+      debugPrint(_error);
+      notifyListeners();
+    }
+  }
 }

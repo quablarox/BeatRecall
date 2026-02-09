@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'quiz_viewmodel.dart';
 import '../../widgets/flashcard_widget.dart';
 import '../../widgets/flashcard_sides.dart';
+import '../card_edit/edit_card_screen.dart';
 
 /// Quiz/Review Screen - Main screen for reviewing due flashcards.
 /// 
@@ -70,17 +71,28 @@ class _QuizScreenState extends State<QuizScreen> {
               return const SizedBox.shrink();
             }
 
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Center(
-                child: Text(
-                  'Card ${viewModel.currentIndex + 1} of ${viewModel.totalCards}',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
+            return Row(
+              children: [
+                // Edit button for current card
+                IconButton(
+                  onPressed: () => _navigateToEditCard(context, viewModel),
+                  icon: const Icon(Icons.edit),
+                  tooltip: 'Edit card',
+                ),
+                // Card counter
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Center(
+                    child: Text(
+                      'Card ${viewModel.currentIndex + 1} of ${viewModel.totalCards}',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
                 ),
-              ),
+              ],
             );
           },
         ),
@@ -237,6 +249,7 @@ class _QuizScreenState extends State<QuizScreen> {
                     youtubeId: card.youtubeId,
                     startAtSecond: card.startAtSecond,
                     onShowAnswer: viewModel.flipCard,
+                    onUpdateOffset: (newOffset) => viewModel.updateCardOffset(newOffset),
                   ),
                   back: FlashcardBack(
                     title: card.title,
@@ -353,5 +366,22 @@ class _QuizScreenState extends State<QuizScreen> {
         ],
       ),
     );
+  }
+
+  Future<void> _navigateToEditCard(BuildContext context, QuizViewModel viewModel) async {
+    final currentCard = viewModel.currentCard;
+    if (currentCard == null) return;
+
+    final result = await Navigator.push<bool>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditCardScreen(card: currentCard),
+      ),
+    );
+
+    // Reload due cards if card was updated or deleted
+    if (result == true && context.mounted) {
+      await viewModel.loadDueCards();
+    }
   }
 }
