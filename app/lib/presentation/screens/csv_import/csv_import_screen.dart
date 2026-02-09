@@ -68,7 +68,12 @@ class _CsvImportScreenState extends State<CsvImportScreen> {
             const SizedBox(height: 12),
             const Text(
               'Your CSV file should have the following columns:',
-              style: TextStyle(fontWeight: FontWeight.w500),
+              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
+            ),
+            const SizedBox(height: 6),
+            const Text(
+              'Default delimiter: | (pipe). Also supported: comma (,), semicolon (;), tab.',
+              style: TextStyle(fontSize: 12, color: Colors.black87),
             ),
             const SizedBox(height: 8),
             _buildRequirement('youtube_url (or url)', 'YouTube video URL or ID', true),
@@ -78,8 +83,8 @@ class _CsvImportScreenState extends State<CsvImportScreen> {
             _buildRequirement('start_at_seconds (or start_time)', 'Start time in seconds', false),
             const SizedBox(height: 12),
             const Text(
-              'Example:',
-              style: TextStyle(fontWeight: FontWeight.w500),
+              'Example (pipe-delimited):',
+              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
             ),
             const SizedBox(height: 4),
             Container(
@@ -89,9 +94,9 @@ class _CsvImportScreenState extends State<CsvImportScreen> {
                 borderRadius: BorderRadius.circular(4),
               ),
               child: const Text(
-                'youtube_url,title,artist,album,start_at_seconds\n'
-                'dQw4w9WgXcQ,Never Gonna Give You Up,Rick Astley,,30',
-                style: TextStyle(fontFamily: 'monospace', fontSize: 12),
+                'youtube_url|title|artist|album|start_at_seconds\n'
+                'dQw4w9WgXcQ|Never Gonna Give You Up|Rick Astley||30',
+                style: TextStyle(fontFamily: 'monospace', fontSize: 11, height: 1.2),
               ),
             ),
           ],
@@ -115,11 +120,17 @@ class _CsvImportScreenState extends State<CsvImportScreen> {
           Expanded(
             child: RichText(
               text: TextSpan(
-                style: DefaultTextStyle.of(context).style,
+                style: DefaultTextStyle.of(context).style.copyWith(
+                      fontSize: 12,
+                      height: 1.2,
+                    ),
                 children: [
                   TextSpan(
                     text: field,
-                    style: const TextStyle(fontFamily: 'monospace', fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                      fontFamily: 'monospace',
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const TextSpan(text: ': '),
                   TextSpan(text: description),

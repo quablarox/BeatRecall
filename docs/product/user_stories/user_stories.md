@@ -108,6 +108,7 @@ Epics are organized by **implementation phase** to align with the [Development R
 
 **Priority:** Medium | **Story Points:** 3  
 **Sprint:** Sprint 2 (Week 3-4)
+**Status:** ✅ Complete
 
 **Acceptance:**
 - Can open edit screen from library
@@ -127,6 +128,7 @@ Epics are organized by **implementation phase** to align with the [Development R
 
 **Priority:** Medium | **Story Points:** 2  
 **Sprint:** Sprint 2 (Week 3-4)
+**Status:** ✅ Complete
 
 **Acceptance:**
 - Can delete from library or detail screen

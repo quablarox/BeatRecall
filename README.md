@@ -23,15 +23,17 @@ BeatRecall is a mobile application built with **Flutter** designed to help users
 | ID | Feature | Status | Description |
 | :--- | :--- | :---: | :--- |
 | **SRS-001** | **SRS Logic (SM-2)** | ✅ | Implementation of the SM-2 algorithm to calculate next review dates (Again, Hard, Good, Easy). **59 tests passing** |
-| **CARDMGMT-001** | **CSV Import** | ✅ | CSV bulk import with validation, duplicate detection, error reporting. **40 tests passing** |
+| **CARDMGMT-001** | **CSV Import** | ✅ | CSV bulk import with validation, duplicate detection, error reporting, and common delimiters support. **40 tests passing** |
 | **CARDMGMT-005** | **Library Screen** | ✅ | List cards with search, filters (status/due date), and sorting. **23 tests passing** |
+| **CARDMGMT-003** | **Card Editing** | ✅ | Edit card details with pre-filled form and update operations. |
+| **CARDMGMT-004** | **Card Deletion** | ✅ | Delete cards with confirmation dialog and repository cleanup. |
 | **CARDMGMT-002** | **Manual Card Creation** | ⏳ | Add songs via form with YouTube URL, Title, and Artist name. |
 | **FLASHSYS-001/002/005** | **Flashcard Player** | ✅ | Dual-sided card UI. Front: YouTube audio/video plays with audio-only mode. Back: Title & Artist are revealed. Enhanced interval display. Keyboard shortcuts for rating. **13 tests passing** |
 | **DUEQUEUE-001/002/003** | **Due Queue & Sessions** | ✅ | Logic to fetch cards with continuous session mode until no more due. Daily new cards limit integration. **11 tests passing** |
 | **DASHBOARD-001** | **Dashboard** | ✅ | Overview with stats (total/due cards, success rate, streak), quick actions, refresh. **11 tests passing** |
 | **SETTINGS-001/002/003** | **Settings System** | ✅ | Daily new cards limit (0-999), audio-only mode, theme switching, auto-play toggle. **34 tests passing** |
 
-**Current Status:** Sprint 4.5 Complete | **Tests:** 191 passing (185 core + 6 infrastructure)
+**Current Status:** Sprint 4.5 Complete | **Tests:** 209 passing
 
 ### Phase 2: Enhanced Management & Automation
 | ID | Feature | Description |

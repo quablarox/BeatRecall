@@ -13,12 +13,14 @@ class FlashcardFront extends StatefulWidget {
   final String youtubeId;
   final int startAtSecond;
   final VoidCallback onShowAnswer;
+  final bool enablePlayer;
 
   const FlashcardFront({
     super.key,
     required this.youtubeId,
     required this.startAtSecond,
     required this.onShowAnswer,
+    this.enablePlayer = true,
   });
 
   @override
@@ -36,6 +38,7 @@ class _FlashcardFrontState extends State<FlashcardFront> {
   @override
   void initState() {
     super.initState();
+    if (!widget.enablePlayer) return;
     if (_useIframePlayer) {
       _initializeIframePlayer();
     } else {
@@ -46,6 +49,7 @@ class _FlashcardFrontState extends State<FlashcardFront> {
   @override
   void didUpdateWidget(covariant FlashcardFront oldWidget) {
     super.didUpdateWidget(oldWidget);
+    if (!widget.enablePlayer) return;
     if (oldWidget.youtubeId != widget.youtubeId ||
         oldWidget.startAtSecond != widget.startAtSecond) {
       if (!mounted) return;
@@ -295,6 +299,10 @@ class _FlashcardFrontState extends State<FlashcardFront> {
   }
 
   Widget _buildPlayerWidget(BuildContext context) {
+    if (!widget.enablePlayer) {
+      return const SizedBox.shrink();
+    }
+
     return AspectRatio(
       aspectRatio: 16 / 9,
       child: _hasError

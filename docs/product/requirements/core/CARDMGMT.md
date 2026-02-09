@@ -2,7 +2,7 @@
 
 **Feature ID:** `CARDMGMT`  
 **Version:** 1.0  
-**Last Updated:** 2026-02-07  
+**Last Updated:** 2026-02-09  
 **Status:** Draft
 
 ## Table of Contents
@@ -50,6 +50,11 @@ Load flashcards in bulk from a CSV file. This is the primary method for quickly 
   - `title` (required): Song title
   - `artist` (required): Artist name
   - `start_at_seconds` (optional): Start timestamp in seconds, defaults to 0
+- CSV parsing supports common delimiters:
+  - Comma (`,`) 
+  - Semicolon (`;`)
+  - Tab (`\t`)
+  - Pipe (`|`)
 - Each row is validated before import:
   - `youtube_url` must be a valid YouTube URL format
   - `title` and `artist` must be non-empty strings

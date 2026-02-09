@@ -87,6 +87,11 @@ class SettingsScreen extends StatelessWidget {
                 title: const Text('Open Source'),
                 subtitle: const Text('Built with Flutter & ❤️'),
               ),
+              ListTile(
+                leading: const Icon(Icons.person),
+                title: const Text('Author'),
+                subtitle: const Text('Hongy Rox'),
+              ),
             ],
           );
         },

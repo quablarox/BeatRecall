@@ -154,6 +154,49 @@ dQw4w9WgXcQ,Never Gonna Give You Up,Rick Astley
         expect(result.failedCount, 0);
       });
 
+      test('imports CSV with semicolon delimiter', () async {
+        const csvContent = '''
+youtube_url;title;artist;start_at_seconds
+dQw4w9WgXcQ;Never Gonna Give You Up;Rick Astley;5
+''';
+
+        final result = await importService.importFromCsvString(csvContent);
+
+        expect(result.totalRows, 1);
+        expect(result.successCount, 1);
+        expect(result.failedCount, 0);
+        final count = await mockRepository.countAllCards();
+        expect(count, 1);
+      });
+
+      test('imports CSV with tab delimiter', () async {
+        const csvContent = 'youtube_url\ttitle\tartist\tstart_at_seconds\n'
+            'dQw4w9WgXcQ\tNever Gonna Give You Up\tRick Astley\t12\n';
+
+        final result = await importService.importFromCsvString(csvContent);
+
+        expect(result.totalRows, 1);
+        expect(result.successCount, 1);
+        expect(result.failedCount, 0);
+        final count = await mockRepository.countAllCards();
+        expect(count, 1);
+      });
+
+      test('imports CSV with pipe delimiter', () async {
+        const csvContent = '''
+youtube_url|title|artist|start_at_seconds
+dQw4w9WgXcQ|Never Gonna Give You Up|Rick Astley|20
+''';
+
+        final result = await importService.importFromCsvString(csvContent);
+
+        expect(result.totalRows, 1);
+        expect(result.successCount, 1);
+        expect(result.failedCount, 0);
+        final count = await mockRepository.countAllCards();
+        expect(count, 1);
+      });
+
       test('skips duplicate YouTube IDs', () async {
         // Pre-populate with existing card
         const youtubeId = 'dQw4w9WgXcQ';

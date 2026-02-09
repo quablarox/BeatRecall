@@ -34,6 +34,7 @@ void main() {
             youtubeId: 'dQw4w9WgXcQ',
             startAtSecond: 30,
             onShowAnswer: () {},
+            enablePlayer: false,
           ),
         ),
       ),

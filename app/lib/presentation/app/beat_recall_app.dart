@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../data/database/isar_database.dart';
 import '../../data/repositories/isar_card_repository.dart';
 import '../../services/csv_import_service.dart';
+import '../../domain/repositories/card_repository.dart';
 import '../../services/settings_service.dart';
 import '../../services/srs_service.dart';
 import '../screens/csv_import/csv_import_screen.dart';
@@ -14,6 +15,7 @@ import '../screens/library/library_viewmodel.dart';
 import '../screens/quiz/quiz_screen.dart';
 import '../screens/quiz/quiz_viewmodel.dart';
 import '../screens/settings/settings_screen.dart';
+import 'route_observer.dart';
 
 class BeatRecallApp extends StatefulWidget {
   const BeatRecallApp({super.key});
@@ -79,6 +81,9 @@ class _BeatRecallAppState extends State<BeatRecallApp> {
             Provider<IsarCardRepository>(
               create: (context) => IsarCardRepository(),
             ),
+            Provider<CardRepository>(
+              create: (context) => context.read<IsarCardRepository>(),
+            ),
             // Services
             Provider<SrsService>(
               create: (context) => SrsService(),
@@ -119,6 +124,7 @@ class _BeatRecallAppState extends State<BeatRecallApp> {
                 ),
                 darkTheme: ThemeData.dark(useMaterial3: true),
                 themeMode: themeMode,
+                navigatorObservers: [routeObserver],
                 routes: {
                   '/': (context) => const DashboardScreen(),
                   '/library': (context) => const LibraryScreen(),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'library_viewmodel.dart';
+import '../card_edit/edit_card_screen.dart';
 import 'widgets/card_list_item.dart';
 
 /// Library Screen - Display and manage flashcard collection.
@@ -308,10 +309,17 @@ class _LibraryScreenState extends State<LibraryScreen> {
             return CardListItem(
               card: card,
               onTap: () {
-                // TODO: Navigate to card details
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Tapped: ${card.title}')),
-                );
+                Navigator.of(context)
+                    .push<bool>(
+                      MaterialPageRoute(
+                        builder: (context) => EditCardScreen(card: card),
+                      ),
+                    )
+                    .then((updated) {
+                  if (updated == true) {
+                    viewModel.loadCards();
+                  }
+                });
               },
             );
           },

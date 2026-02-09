@@ -62,11 +62,8 @@ class CsvImportService {
       // Trim whitespace to handle various string formatting
       final trimmedCsv = csvContent.trim();
 
-      // Parse CSV
-      final List<List<dynamic>> rows = const CsvToListConverter(
-        shouldParseNumbers: false, // Keep all as strings for validation
-        eol: '\n', // Explicitly set end-of-line to handle various formats
-      ).convert(trimmedCsv);
+      // Parse CSV (auto-detect common delimiters)
+      final List<List<dynamic>> rows = _parseCsvRows(trimmedCsv);
 
       if (rows.isEmpty) {
         return ImportResult(
@@ -282,5 +279,41 @@ class CsvImportService {
     if (index < 0 || index >= row.length) return null;
     final value = row[index]?.toString().trim();
     return value?.isEmpty == true ? null : value;
+  }
+
+  List<List<dynamic>> _parseCsvRows(String csvContent) {
+    const delimiters = [',', ';', '\t', '|'];
+
+    for (final delimiter in delimiters) {
+      final rows = _parseCsvRowsWithDelimiter(csvContent, delimiter);
+      if (rows.isEmpty) continue;
+
+      final header =
+          rows.first.map((cell) => cell.toString().trim().toLowerCase()).toList();
+      final hasUrl = _findColumnIndex(header, ['youtube_url', 'url']) != null;
+      final hasTitle = _findColumnIndex(header, ['title']) != null;
+      final hasArtist = _findColumnIndex(header, ['artist']) != null;
+
+      if (hasUrl && hasTitle && hasArtist) {
+        return rows;
+      }
+    }
+
+    return _parseCsvRowsWithDelimiter(csvContent, ',');
+  }
+
+  List<List<dynamic>> _parseCsvRowsWithDelimiter(
+    String csvContent,
+    String delimiter,
+  ) {
+    try {
+      return CsvToListConverter(
+        shouldParseNumbers: false, // Keep all as strings for validation
+        eol: '\n', // Explicitly set end-of-line to handle various formats
+        fieldDelimiter: delimiter,
+      ).convert(csvContent);
+    } catch (_) {
+      return [];
+    }
   }
 }

@@ -77,7 +77,7 @@ flutter test
 2. [User Stories](docs/product/user_stories/user_stories.md) - Feature backlog
 3. [Requirements](docs/product/requirements/core/README.md) - Detailed scope
 
-**Key Info:** MVP in 8 weeks | 20+ user stories | Phase 1 Sprint 4 Complete | 124 tests passing
+**Key Info:** MVP in 8 weeks | 20+ user stories | Phase 1 Sprint 4.5 Complete | 209 tests passing
 
 ---
 
@@ -144,7 +144,7 @@ flutter test
 - ✅ Enhanced interval display on rating buttons
 - ✅ Audio-only mode (collapse video, save bandwidth)
 - ✅ Settings screen with theme switching
-- ✅ **Test Suite:** 191 passing tests (108 services + 58 presentation + 25 domain)
+- ✅ **Test Suite:** 209 passing tests
 
 **Previous Milestones:**
 - ✅ Sprint 4: Dashboard, branding, UI polish (124 tests)
@@ -156,8 +156,6 @@ flutter test
 - ⏳ Manual card creation UI
 - ⏳ Audio trimming (custom start timestamp)
 - ⏳ CI/CD Pipeline
-- ⏳ Implement SRS-001 (SM-2) + unit tests
-- ⏳ Implement CARDMGMT flows (CSV import + manual add/edit)
 
 **See:** [Roadmap](docs/product/roadmap/roadmap.md) for details
 

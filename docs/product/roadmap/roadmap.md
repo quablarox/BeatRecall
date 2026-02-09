@@ -120,6 +120,7 @@
 - [x] **CARDMGMT-001:** CSV Import ⭐ (Story 1.1) **COMPLETE**
   - ✅ File picker integration (file_picker 8.3.7)
   - ✅ CSV parsing and validation (csv 6.0.0)
+  - ✅ Common delimiters supported (comma, semicolon, tab, pipe)
   - ✅ Duplicate detection by YouTube ID
   - ✅ Import summary UI with error details
   - ✅ Progress indicator
@@ -144,26 +145,26 @@
   - Form validation
   - YouTube URL parsing
   - Save to database
-- [ ] **CARDMGMT-003:** Card editing (Story 1.4)
-  - Edit Card screen
-  - Update operations
-- [ ] **CARDMGMT-004:** Card deletion (Story 1.5)
-  - Delete confirmation dialog
-  - Cascade delete logic
+- [x] **CARDMGMT-003:** Card editing (Story 1.4) **COMPLETE**
+  - ✅ Edit Card screen
+  - ✅ Update operations
+- [x] **CARDMGMT-004:** Card deletion (Story 1.5) **COMPLETE**
+  - ✅ Delete confirmation dialog
+  - ✅ Cascade delete logic
 
 **Success Criteria:**
 - [x] Can import cards from CSV files (primary method) ✅
 - [x] Library displays all cards with search and filters ✅
 - [ ] Can add cards manually with YouTube URLs
-- [ ] Can edit existing cards
-- [ ] Can delete cards with confirmation
+- [x] Can edit existing cards
+- [x] Can delete cards with confirmation
 
 **Implementation Notes:**
 - Provider scope restructured: All providers now above MaterialApp for global access
 - Named routes implemented (`/`, `/csv-import`)
 - Bug fix: ProviderNotFoundException resolved (4 new tests in provider_scope_test.dart)
 - Debug tooling: Reset progress button with confirmation dialog for testing
-- Test coverage: 113 tests total (46 SRS + 35 CSV Import + 23 Library + 5 Fixtures + 4 Provider)
+- Test coverage: 209 tests total
 - CSV format: `youtube_url,title,artist,start_at_seconds` (album field not supported)
 - Git commits: 8ad7890 (card display fixes), d99c56c (test fixes)
 
