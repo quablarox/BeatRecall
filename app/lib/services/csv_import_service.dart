@@ -59,11 +59,11 @@ class CsvImportService {
     int failedCount = 0;
 
     try {
-      // Trim whitespace to handle various string formatting
-      final trimmedCsv = csvContent.trim();
+      // Normalize content to handle BOMs and inconsistent line endings
+      final normalizedCsv = _normalizeCsvContent(csvContent);
 
       // Parse CSV (auto-detect common delimiters)
-      final List<List<dynamic>> rows = _parseCsvRows(trimmedCsv);
+      final List<List<dynamic>> rows = _parseCsvRows(normalizedCsv);
 
       if (rows.isEmpty) {
         return ImportResult(
@@ -279,6 +279,12 @@ class CsvImportService {
     if (index < 0 || index >= row.length) return null;
     final value = row[index]?.toString().trim();
     return value?.isEmpty == true ? null : value;
+  }
+
+  String _normalizeCsvContent(String csvContent) {
+    var normalized = csvContent.replaceFirst(RegExp(r'^\uFEFF'), '');
+    normalized = normalized.replaceAll('\r\n', '\n');
+    return normalized.trim();
   }
 
   List<List<dynamic>> _parseCsvRows(String csvContent) {

@@ -89,6 +89,25 @@ void main() {
       expect(youtubeIds.length, 2, reason: 'No duplicate IDs in saved cards');
     });
 
+    test('imports pipe-delimited CSV from test_cards_pipe.csv', () async {
+      // Given
+      final csvFile = File('test/fixtures/test_cards_pipe.csv');
+
+      // When
+      final result = await importService.importFromFile(csvFile);
+
+      // Then
+      expect(result.totalRows, 3);
+      expect(result.successCount, 3);
+      expect(result.failedCount, 0);
+      expect(mockRepository.savedCards.length, 3);
+
+      final savedIds = mockRepository.savedCards.map((c) => c.youtubeId).toSet();
+      expect(savedIds.contains('dQw4w9WgXcQ'), true);
+      expect(savedIds.contains('9bZkp7q19f0'), true);
+      expect(savedIds.contains('kJQP7kiw5Fk'), true);
+    });
+
     test('handles minimal CSV format from test_cards_minimal.csv', () async {
       // Given
       final csvFile = File('test/fixtures/test_cards_minimal.csv');

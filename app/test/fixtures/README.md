@@ -42,6 +42,12 @@ Contains duplicate YouTube IDs to test duplicate detection:
 - Second entry has same YouTube ID (should be skipped)
 - Third entry is valid
 
+### test_cards_pipe.csv
+Pipe-delimited CSV that mimics the default example shared with users:
+- Includes a UTF-8 BOM prefix to mirror exports from spreadsheet tools
+- Uses `|` as the delimiter with standard headers
+- Validates our delimiter auto-detection end-to-end via `importFromFile`
+
 ### test_cards_minimal.csv
 Contains minimal required fields only (no album, no start_at_seconds):
 - Tests default value handling
