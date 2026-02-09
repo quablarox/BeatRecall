@@ -29,6 +29,8 @@ class IsarCardRepository implements CardRepository {
     return _isar.isarFlashcards
         .filter()
         .nextReviewDateLessThan(now, include: true)
+        .and()
+        .repetitionsGreaterThan(0) // Only count review cards, not new cards
         .count();
   }
 
@@ -101,6 +103,8 @@ class IsarCardRepository implements CardRepository {
     final results = await _isar.isarFlashcards
         .filter()
         .nextReviewDateLessThan(now, include: true)
+        .and()
+        .repetitionsGreaterThan(0) // Only review cards, exclude new cards (repetitions == 0)
         .sortByNextReviewDate()
         .limit(limit)
         .findAll();

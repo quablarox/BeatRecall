@@ -69,13 +69,15 @@ class QuizViewModel extends ChangeNotifier {
   }
 
   /// Load due cards and optionally new cards, then start a new session
+  /// 
+  /// Priority order: Review cards (repetitions > 0) come first, then new cards
   Future<void> loadDueCards() async {
     _isLoading = true;
     _error = null;
     notifyListeners();
 
     try {
-      // Fetch all due cards (reviews)
+      // Fetch all due review cards (cards with repetitions > 0 and nextReviewDate <= now)
       final dueReviews = await _cardRepository.fetchDueCards();
       
       // Fetch new cards up to daily limit
@@ -91,7 +93,7 @@ class QuizViewModel extends ChangeNotifier {
             .toList();
       }
 
-      // Combine due reviews + new cards
+      // Combine: reviews first (priority), then new cards
       _dueCards = [...dueReviews, ...newCards];
       _currentIndex = 0;
       _displayedCardIndex = 0;
