@@ -1,9 +1,9 @@
 # FLASHSYS - Flashcard System
 
 **Feature ID:** `FLASHSYS`  
-**Version:** 1.0  
-**Last Updated:** 2026-02-07  
-**Status:** Draft
+**Version:** 1.1  
+**Last Updated:** 2026-02-09  
+**Status:** In Progress
 
 ## Table of Contents
 - [Feature Overview](#feature-overview)
@@ -12,6 +12,9 @@
   - [FLASHSYS-002: YouTube Media Player](#flashsys-002-youtube-media-player)
   - [FLASHSYS-003: Answer Rating](#flashsys-003-answer-rating)
   - [FLASHSYS-004: Answer Input (Optional)](#flashsys-004-answer-input-optional)
+  - [FLASHSYS-006: Player Skip Controls](#flashsys-006-player-skip-controls)
+  - [FLASHSYS-007: Dynamic Offset Adjustment](#flashsys-007-dynamic-offset-adjustment)
+  - [FLASHSYS-008: Quick Edit Access](#flashsys-008-quick-edit-access)
 - [User Flow](#user-flow)
 - [Future Enhancements](#future-enhancements)
 - [Test References](#test-references)
@@ -62,7 +65,7 @@ Display flashcard with front (question) and back (answer) sides. The front side 
 ### FLASHSYS-002: YouTube Media Player
 
 **Priority:** High  
-**Status:** Not Started
+**Status:** Complete
 
 **Description:**  
 Integrate YouTube player for audio/video playback using the `youtube_player_flutter` package.
@@ -93,7 +96,7 @@ Integrate YouTube player for audio/video playback using the `youtube_player_flut
 ### FLASHSYS-003: Answer Rating
 
 **Priority:** High  
-**Status:** Not Started
+**Status:** Complete
 
 **Description:**  
 Allow users to rate their recall performance with four options: Again, Hard, Good, Easy. Each rating triggers SM-2 algorithm calculation for next review interval.
@@ -163,6 +166,129 @@ Allow users to type their answer (title and artist) before revealing the correct
 **Notes:**
 - Deferred to Phase 2 if time constraints exist
 - Fuzzy matching enhances user experience (e.g., "Beatles" vs "The Beatles")
+
+---
+
+### FLASHSYS-006: Player Skip Controls
+
+**Priority:** Medium  
+**Status:** Complete
+
+**Description:**  
+Provide skip forward/backward buttons to quickly navigate within the YouTube video during review sessions.
+
+**Acceptance Criteria:**
+- Display two skip buttons overlaid on YouTube player:
+  - **Skip Back (-10s):** Rewinds video by 10 seconds
+  - **Skip Forward (+10s):** Advances video by 10 seconds
+- Buttons positioned below player, clearly visible
+- Icons: `Icons.replay_10` (back) and `Icons.forward_10` (forward)
+- Works with both native player (`youtube_player_flutter`) and iframe player (Windows)
+- Seekable operation:
+  - Native player: Uses `controller.seekTo(Duration(seconds: currentPos + offset))`
+  - Iframe player: Uses `controller.seekTo(seconds: currentTime + offset)` with async `currentTime` getter
+- Tooltips display keyboard shortcuts (if implemented)
+- Touch-friendly button size (minimum 48x48dp)
+
+**Use Cases:**
+- User wants to replay a difficult section of the song
+- User accidentally skips past the key musical phrase
+- User wants to hear a specific part multiple times before answering
+
+**Technical Notes:**
+- Async implementation for iframe controller: `await _iframeController.currentTime`
+- Null safety: Check controller exists before seeking
+- Mounted check: Ensure widget is still mounted before setState
+
+**Implementation Status:**
+- ✅ Implemented in `flashcard_sides.dart`
+- ✅ Method: `_skipSeconds(int seconds)` with platform-specific logic
+- ✅ UI: Row of IconButtons in `_buildPlayerControls()`
+
+---
+
+### FLASHSYS-007: Dynamic Offset Adjustment
+
+**Priority:** Medium  
+**Status:** Complete
+
+**Description:**  
+Allow users to update a card's start timestamp (offset) directly from the quiz screen based on the current playback position. This enables users to refine timing without leaving the review session.
+
+**Acceptance Criteria:**
+- **"Set Start" button** displayed below YouTube player
+- Button gets current playback position (in seconds)
+- Shows **confirmation dialog** before saving:
+  - Title: "Set Start Time"
+  - Message: "Set start time to X seconds? This will update the card to always start at this position."
+  - Actions: "Cancel" and "Confirm"
+- On confirmation:
+  - Updates card's `startAtSecond` field in database
+  - Updates in-memory card list
+  - Shows SnackBar: "Start time updated to X seconds"
+  - Next time card is reviewed, video starts at new timestamp
+- Persists change immediately (no need to finish session)
+- Works with both native and iframe YouTube players
+- Icon: `Icons.bookmark_add` to indicate "saving current position"
+
+**Use Cases:**
+- User realizes optimal start time is different from initial import
+- Song has long intro that should be skipped
+- User wants to focus on specific chorus or bridge section
+
+**Technical Notes:**
+- Async implementation: `await _iframeController.currentTime` for iframe player
+- Uses `QuizViewModel.updateCardOffset(int newOffset)` to persist change
+- Database update via `CardRepository.save(updatedCard)`
+- Card updated with `card.copyWith(startAtSecond: newOffset, lastModified: DateTime.now())`
+
+**Implementation Status:**
+- ✅ Implemented in `flashcard_sides.dart`: `_setCurrentTimeAsOffset()` method
+- ✅ Implemented in `quiz_viewmodel.dart`: `updateCardOffset()` method
+- ✅ Callback integration: `onUpdateOffset` parameter in FlashcardFront widget
+- ✅ UI: OutlinedButton with bookmark icon in player controls
+
+---
+
+### FLASHSYS-008: Quick Edit Access
+
+**Priority:** Medium  
+**Status:** Complete
+
+**Description:**  
+Provide quick access to card editing functionality directly from the quiz screen, allowing users to fix errors or update metadata without interrupting their review flow.
+
+**Acceptance Criteria:**
+- **Edit button** displayed in quiz screen AppBar
+- Icon: `Icons.edit` to indicate edit action
+- On tap:
+  - Navigates to `EditCardScreen` with current flashcard
+  - User can edit all card fields (title, artist, YouTube URL, start time)
+  - User can delete card with confirmation dialog
+  - On return to quiz:
+    - Reloads due cards to reflect changes
+    - Continues session from next card if edit completed
+    - Updates UI if card metadata changed
+- No data loss if user navigates back without saving
+- Changes persist immediately in database
+
+**Use Cases:**
+- User notices typo in title or artist during review
+- User wants to delete a duplicate or incorrect card
+- User realizes card has wrong YouTube URL
+- User needs to adjust start time more precisely than skip controls allow
+
+**Technical Notes:**
+- Uses `Navigator.push` with `EditCardScreen.routeName`
+- Passes current card via route arguments
+- Returns `true` if changes were made (triggers reload)
+- Reload method: `viewModel.loadDueCards()` to refresh queue
+
+**Implementation Status:**
+- ✅ Implemented in `quiz_screen.dart`: Edit IconButton in AppBar
+- ✅ Navigation method: `_navigateToEditCard()`
+- ✅ Reload logic: `await viewModel.loadDueCards()` on return
+- ✅ Delete functionality: Already existed in `EditCardScreen` with confirmation dialog
 
 ---
 

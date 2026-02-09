@@ -29,11 +29,14 @@ BeatRecall is a mobile application built with **Flutter** designed to help users
 | **CARDMGMT-004** | **Card Deletion** | ✅ | Delete cards with confirmation dialog and repository cleanup. |
 | **CARDMGMT-002** | **Manual Card Creation** | ⏳ | Add songs via form with YouTube URL, Title, and Artist name. |
 | **FLASHSYS-001/002/005** | **Flashcard Player** | ✅ | Dual-sided card UI. Front: YouTube audio/video plays with audio-only mode. Back: Title & Artist are revealed. Enhanced interval display. Keyboard shortcuts for rating. **13 tests passing** |
+| **FLASHSYS-006** | **Player Skip Controls** | ✅ | Skip backward/forward buttons (-10s/+10s) for precise playback navigation during review. |
+| **FLASHSYS-007** | **Dynamic Offset Adjustment** | ✅ | "Set Start" button to update card start timestamp from current playback position with confirmation dialog. |
+| **FLASHSYS-008** | **Quick Edit Access** | ✅ | Edit button in quiz screen AppBar for quick access to card editing without leaving review session. |
 | **DUEQUEUE-001/002/003** | **Due Queue & Sessions** | ✅ | Logic to fetch cards with continuous session mode until no more due. Daily new cards limit integration. **11 tests passing** |
 | **DASHBOARD-001** | **Dashboard** | ✅ | Overview with stats (total/due cards, success rate, streak), quick actions, refresh. **11 tests passing** |
 | **SETTINGS-001/002/003** | **Settings System** | ✅ | Daily new cards limit (0-999), audio-only mode, theme switching, auto-play toggle. **34 tests passing** |
 
-**Current Status:** Sprint 4.5 Complete | **Tests:** 209 passing
+**Current Status:** Sprint 4.6 Complete | **Tests:** 205 passing
 
 ### Phase 2: Enhanced Management & Automation
 | ID | Feature | Description |

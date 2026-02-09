@@ -1,9 +1,9 @@
 # Project Roadmap - BeatRecall
 
 ## Document Information
-- **Version:** 2.0
-- **Last Updated:** 2026-02-08
-- **Status:** Draft
+- **Version:** 2.1
+- **Last Updated:** 2026-02-09
+- **Status:** Active
 
 ## Table of Contents
 - [1. Project Phases Overview](#1-project-phases-overview)
@@ -312,6 +312,63 @@
 - BeatRecallApp updated for theme switching
 - AppSettings value object created for immutable settings model
 - All UI text follows proper capitalization (e.g., "Audio-Only Mode", "New Cards Per Day")
+
+### 3.6 Sprint 4.6: Player Control Enhancements (1 week)
+**Status:** ✅ Complete  
+**Focus:** Advanced playback controls for precise timing adjustments  
+**Priority:** High (improves core review experience)
+
+**Features:**
+- [x] **FLASHSYS-006:** Player skip controls **COMPLETE**
+  - ✅ Skip backward button (-10 seconds)
+  - ✅ Skip forward button (+10 seconds)
+  - ✅ Works with both native and iframe YouTube players
+  - ✅ Async implementation for iframe player (`await currentTime`)
+  - ✅ Touch-friendly IconButtons with clear icons
+  - ✅ Method: `_skipSeconds(int seconds)` in flashcard_sides.dart
+- [x] **FLASHSYS-007:** Dynamic offset adjustment **COMPLETE**
+  - ✅ "Set Start" button below player controls
+  - ✅ Gets current playback position (seconds)
+  - ✅ Confirmation dialog before saving
+  - ✅ Updates `startAtSecond` field in database
+  - ✅ Persists change immediately
+  - ✅ SnackBar feedback: "Start time updated to X seconds"
+  - ✅ Method: `_setCurrentTimeAsOffset()` in flashcard_sides.dart
+  - ✅ ViewModel: `updateCardOffset(int newOffset)` in quiz_viewmodel.dart
+- [x] **FLASHSYS-008:** Quick edit access **COMPLETE**
+  - ✅ Edit icon button in quiz screen AppBar
+  - ✅ Navigates to EditCardScreen with current card
+  - ✅ Reloads due cards on return
+  - ✅ Delete functionality with confirmation (already existed)
+  - ✅ Method: `_navigateToEditCard()` in quiz_screen.dart
+
+**Success Criteria:**
+- [x] Users can replay difficult sections without restarting video ✅
+- [x] Users can fine-tune start timestamps during review ✅
+- [x] Users can quickly fix card errors without leaving quiz ✅
+- [x] All changes persist immediately to database ✅
+- [x] Works on both Android (native player) and Windows (iframe player) ✅
+
+**Implementation Notes:**
+- Player control UI: Row of 3 IconButtons (Skip Back, Skip Forward, Set Start)
+- Tooltips: "Rewind 10s", "Forward 10s", "Use current position as start time"
+- Async handling for iframe player: Fixed `currentTime` access (method vs property)
+- Callback integration: `onUpdateOffset` parameter in FlashcardFront widget
+- Database persistence: Uses existing CardRepository.save() infrastructure
+- Git commits: 1e41f92 (initial implementation), follow-up fix for iframe async
+- Test coverage: 205 passing tests (all previous tests maintained)
+
+**User Benefits:**
+- **Skip Controls:** Quickly replay specific musical phrases or sections
+- **Offset Setter:** Perfect timing for songs with intros or fade-ins
+- **Quick Edit:** Fix typos or errors without breaking review flow
+- **Immediate Persistence:** Changes save instantly, no risk of data loss
+
+**Technical Achievements:**
+- Cross-platform player control abstraction (native + iframe)
+- Async/await handling for iframe controller
+- State management: QuizViewModel updated with offset persistence
+- UX polish: Confirmation dialogs, SnackBar feedback, clear icons
 
 ---
 

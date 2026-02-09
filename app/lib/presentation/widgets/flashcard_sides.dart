@@ -362,10 +362,11 @@ class _FlashcardFrontState extends State<FlashcardFront> {
     );
   }
 
-  void _skipSeconds(int seconds) {
+  Future<void> _skipSeconds(int seconds) async {
     if (_useIframePlayer && _iframeController != null) {
+      final currentTime = await _iframeController!.currentTime;
       _iframeController!.seekTo(
-        seconds: _iframeController!.value.currentTime + seconds.toDouble(),
+        seconds: (currentTime ?? 0) + seconds.toDouble(),
       );
     } else if (_controller != null) {
       final currentPos = _controller!.value.position.inSeconds;
@@ -378,7 +379,8 @@ class _FlashcardFrontState extends State<FlashcardFront> {
 
     int currentSeconds = 0;
     if (_useIframePlayer && _iframeController != null) {
-      currentSeconds = _iframeController!.value.currentTime.round();
+      final currentTime = await _iframeController!.currentTime;
+      currentSeconds = (currentTime ?? 0).round();
     } else if (_controller != null) {
       currentSeconds = _controller!.value.position.inSeconds;
     }
