@@ -139,6 +139,53 @@ void main() {
       expect(result.failedCount, 0);
       expect(mockRepository.savedCards.length, 10);
     });
+
+    test('imports cards with metadata from pipe-delimited CSV', () async {
+      // Given
+      final csvFile = File('test/fixtures/test_cards_with_metadata.csv');
+
+      // When
+      final result = await importService.importFromFile(csvFile);
+
+      // Then - Verify import summary
+      expect(result.successCount, 6);
+      expect(result.failedCount, 0);
+      expect(mockRepository.savedCards.length, 6);
+
+      // Verify first card with full metadata
+      final despacito = mockRepository.savedCards.firstWhere(
+        (card) => card.youtubeId == 'kJQP7kiw5Fk',
+      );
+      expect(despacito.title, 'Despacito');
+      expect(despacito.artist, 'Daddy Yankee');
+      expect(despacito.album, isNull); // Empty in CSV
+      expect(despacito.year, 2017);
+      expect(despacito.genre, 'Pop');
+      expect(despacito.youtubeViewCount, 8933544322);
+
+      // Verify second card with all metadata filled
+      final rickroll = mockRepository.savedCards.firstWhere(
+        (card) => card.youtubeId == 'dQw4w9WgXcQ',
+      );
+      expect(rickroll.title, 'Never Gonna Give You Up');
+      expect(rickroll.artist, 'Rick Astley');
+      expect(rickroll.album, 'Whenever You Need Somebody');
+      expect(rickroll.year, 1987);
+      expect(rickroll.genre, 'Pop');
+      expect(rickroll.youtubeViewCount, 1500000000);
+      expect(rickroll.startAtSecond, 30);
+
+      // Verify card with missing metadata fields
+      final bohemian = mockRepository.savedCards.firstWhere(
+        (card) => card.youtubeId == 'fJ9rUzIMcZQ',
+      );
+      expect(bohemian.title, 'Bohemian Rhapsody');
+      expect(bohemian.artist, 'Queen');
+      expect(bohemian.album, 'A Night at the Opera');
+      expect(bohemian.year, 1975);
+      expect(bohemian.genre, 'Rock');
+      expect(bohemian.youtubeViewCount, 1800000000);
+    });
   });
 }
 

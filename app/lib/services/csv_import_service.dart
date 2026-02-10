@@ -18,9 +18,11 @@ class CsvImportService {
   ///
   /// Expected CSV format (with header row):
   /// ```csv
-  /// youtube_url,title,artist,start_at_seconds
-  /// https://www.youtube.com/watch?v=dQw4w9WgXcQ,Never Gonna Give You Up,Rick Astley,0
+  /// youtube_url,title,artist,album,year,genre,youtube_view_count,start_at_seconds
+  /// https://www.youtube.com/watch?v=dQw4w9WgXcQ,Never Gonna Give You Up,Rick Astley,Whenever You Need Somebody,1987,Pop,1500000000,0
   /// ```
+  ///
+  /// Supported delimiters: comma (,), semicolon (;), tab (\t), pipe (|)
   ///
   /// Required columns:
   /// - youtube_url: YouTube URL or video ID
@@ -28,6 +30,10 @@ class CsvImportService {
   /// - artist: Artist name
   ///
   /// Optional columns:
+  /// - album: Album name
+  /// - year: Release year (4-digit integer)
+  /// - genre: Music genre
+  /// - youtube_view_count: View count (integer)
   /// - start_at_seconds: Start time in seconds (defaults to 0)
   ///
   /// Returns [ImportResult] with statistics and error details.
@@ -89,6 +95,10 @@ class CsvImportService {
       final int? urlIndex = _findColumnIndex(header, ['youtube_url', 'url']);
       final int? titleIndex = _findColumnIndex(header, ['title']);
       final int? artistIndex = _findColumnIndex(header, ['artist']);
+      final int? albumIndex = _findColumnIndex(header, ['album']);
+      final int? yearIndex = _findColumnIndex(header, ['year']);
+      final int? genreIndex = _findColumnIndex(header, ['genre']);
+      final int? viewCountIndex = _findColumnIndex(header, ['youtube_view_count', 'view_count', 'views']);
       final int? startTimeIndex =
           _findColumnIndex(header, ['start_at_seconds', 'start_time']);
 
@@ -147,6 +157,10 @@ class CsvImportService {
         final String? youtubeUrl = _getCellValue(row, urlIndex);
         final String? title = _getCellValue(row, titleIndex);
         final String? artist = _getCellValue(row, artistIndex);
+        final String? album = albumIndex != null ? _getCellValue(row, albumIndex) : null;
+        final String? yearStr = yearIndex != null ? _getCellValue(row, yearIndex) : null;
+        final String? genre = genreIndex != null ? _getCellValue(row, genreIndex) : null;
+        final String? viewCountStr = viewCountIndex != null ? _getCellValue(row, viewCountIndex) : null;
         final String? startTimeStr =
             startTimeIndex != null ? _getCellValue(row, startTimeIndex) : null;
 
@@ -207,6 +221,38 @@ class CsvImportService {
           startAtSecond = parsed;
         }
 
+        // Parse and validate year
+        int? year;
+        if (yearStr != null && yearStr.isNotEmpty) {
+          final parsed = int.tryParse(yearStr);
+          if (parsed == null || parsed < 1000 || parsed > 9999) {
+            errors.add(ImportError(
+              rowNumber: rowNumber,
+              reason: 'Invalid year: must be a 4-digit year (1000-9999)',
+              fieldValue: yearStr,
+            ));
+            failedCount++;
+            continue;
+          }
+          year = parsed;
+        }
+
+        // Parse and validate view count
+        int? viewCount;
+        if (viewCountStr != null && viewCountStr.isNotEmpty) {
+          final parsed = int.tryParse(viewCountStr);
+          if (parsed == null || parsed < 0) {
+            errors.add(ImportError(
+              rowNumber: rowNumber,
+              reason: 'Invalid youtube_view_count: must be non-negative integer',
+              fieldValue: viewCountStr,
+            ));
+            failedCount++;
+            continue;
+          }
+          viewCount = parsed;
+        }
+
         // Check for duplicates
         final existingCard = await _cardRepository.findByYoutubeId(youtubeId);
         if (existingCard != null) {
@@ -225,6 +271,10 @@ class CsvImportService {
             youtubeId: youtubeId,
             title: title,
             artist: artist,
+            album: album,
+            year: year,
+            genre: genre,
+            youtubeViewCount: viewCount,
             startAtSecond: startAtSecond,
           );
 
