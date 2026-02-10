@@ -54,7 +54,7 @@ Epics are organized by **implementation phase** to align with the [Development R
 
 **Acceptance:**
 - Can select CSV file from device
-- CSV format validated (youtube_url, start_at_seconds)
+- CSV format validated (youtube_url, title, artist, album, year, genre, youtube_view_count, start_at_seconds)
 - Duplicate detection and handling
 - Import summary shows success/failures
 - All valid cards added to library
@@ -113,7 +113,7 @@ Epics are organized by **implementation phase** to align with the [Development R
 **Acceptance:**
 - Can open edit screen from library
 - Form pre-filled with current values
-- Can update title, artist, YouTube URL
+- Can update title, artist, YouTube URL, and optional metadata (album, year, genre)
 - Changes saved to database
 - Success confirmation shown
 
@@ -157,7 +157,7 @@ Epics are organized by **implementation phase** to align with the [Development R
 - YouTube video plays on card front
 - Can play/pause video
 - Can reveal answer (flip to back)
-- Back shows title and artist
+- Back shows title, artist, and optional metadata (album, year, genre, view count)
 - Smooth transition between front/back
 
 ---

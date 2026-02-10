@@ -368,26 +368,39 @@ void main() {
 // test/fixtures/test_data.dart
 class TestData {
   static Flashcard createTestFlashcard({
-    int id = 1,
+    String uuid = 'test-uuid-123',
     String youtubeId = 'dQw4w9WgXcQ',
     String title = 'Test Song',
     String artist = 'Test Artist',
-    int intervalDays = 0,
+    String? album,
+    int? year,
+    String? genre,
+    int? youtubeViewCount,
+    int intervalMinutes = 0,
     double easeFactor = 2.5,
     int repetitions = 0,
     DateTime? nextReviewDate,
     int startAtSecond = 0,
+    DateTime? createdAt,
+    DateTime? updatedAt,
   }) {
+    final now = DateTime.now();
     return Flashcard(
-      id: id,
+      uuid: uuid,
       youtubeId: youtubeId,
       title: title,
       artist: artist,
-      intervalDays: intervalDays,
+      album: album,
+      year: year,
+      genre: genre,
+      youtubeViewCount: youtubeViewCount,
+      intervalMinutes: intervalMinutes,
       easeFactor: easeFactor,
       repetitions: repetitions,
-      nextReviewDate: nextReviewDate ?? DateTime.now(),
+      nextReviewDate: nextReviewDate ?? now,
       startAtSecond: startAtSecond,
+      createdAt: createdAt ?? now,
+      updatedAt: updatedAt ?? now,
     );
   }
   

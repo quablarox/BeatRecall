@@ -47,6 +47,11 @@ Display flashcard with front (question) and back (answer) sides. The front side 
 **Acceptance Criteria:**
 - Front side plays YouTube audio/video automatically or on user action
 - Back side reveals title and artist information
+- Back side displays optional metadata when available:
+  - Album name (if present)
+  - Release year (if present)
+  - Genre (if present)
+  - YouTube view count (if present, formatted: 1.5M, 125K, etc.)
 - Smooth transition between sides (flip animation or fade)
 - Visual indicator of card state (front/back)
 - Support for keyboard shortcuts:
@@ -59,6 +64,7 @@ Display flashcard with front (question) and back (answer) sides. The front side 
 - Consider card flip animation (3D rotation effect)
 - Front side should have clear "Show Answer" button
 - Back side should clearly display metadata
+- Metadata displayed as compact chips with icons for visual clarity
 
 ---
 

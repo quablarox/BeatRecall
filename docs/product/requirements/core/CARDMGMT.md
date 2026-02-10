@@ -49,6 +49,10 @@ Load flashcards in bulk from a CSV file. This is the primary method for quickly 
   - `youtube_url` (required): Full YouTube URL or video ID
   - `title` (required): Song title
   - `artist` (required): Artist name
+  - `album` (optional): Album name
+  - `year` (optional): Release year
+  - `genre` (optional): Genre
+  - `youtube_view_count` (optional): YouTube view count
   - `start_at_seconds` (optional): Start timestamp in seconds, defaults to 0
 - CSV parsing supports common delimiters:
   - Comma (`,`) 
@@ -87,10 +91,10 @@ Load flashcards in bulk from a CSV file. This is the primary method for quickly 
 
 **Example CSV:**
 ```csv
-youtube_url,title,artist,start_at_seconds
-https://www.youtube.com/watch?v=dQw4w9WgXcQ,Never Gonna Give You Up,Rick Astley,0
-https://youtu.be/9bZkp7q19f0,Gangnam Style,PSY,30
-kJQP7kiw5Fk,Despacito,Luis Fonsi,15
+youtube_url,title,artist,album,year,genre,youtube_view_count,start_at_seconds
+https://www.youtube.com/watch?v=dQw4w9WgXcQ,Never Gonna Give You Up,Rick Astley,Whenever You Need Somebody,1987,Pop,1400000000,0
+https://youtu.be/9bZkp7q19f0,Gangnam Style,PSY,,2012,K-Pop,5000000000,30
+kJQP7kiw5Fk,Despacito,Luis Fonsi,,,Reggaeton,,15
 ```
 
 ---
@@ -108,6 +112,10 @@ Create individual flashcards manually via a form. Useful for adding single cards
   - YouTube URL (text input, required)
   - Title (text input, required)
   - Artist (text input, required)
+  - Album (text input, optional)
+  - Year (number input, optional)
+  - Genre (text input, optional)
+  - YouTube View Count (number input, optional)
   - Start Time (number input, optional, default: 0)
 - URL validation:
   - Must be valid YouTube URL format
@@ -147,6 +155,10 @@ Edit existing flashcard properties. Users can correct mistakes, update metadata,
   - YouTube URL
   - Title
   - Artist
+  - Album
+  - Year
+  - Genre
+  - YouTube View Count
   - Start time (in seconds)
 - Preserve SRS data during edit:
   - `nextReviewDate`

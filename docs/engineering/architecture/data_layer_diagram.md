@@ -2,21 +2,12 @@
 
 ## Component Overview
 
+# Data Layer Architecture Diagram
+
+## Component Overview
+
 ```mermaid
 classDiagram
-<<<<<<< HEAD
-    class Domain_Flashcard {
-        <<Entity>>
-        +String uuid
-        +String youtubeId
-        +String title
-        +String artist
-        +int intervalDays
-        +double easeFactor
-        +int repetitions
-        +DateTime nextReviewDate
-    }
-=======
     namespace DomainLayer {
         class Flashcard {
             <<Entity>>
@@ -24,10 +15,17 @@ classDiagram
             +String youtubeId
             +String title
             +String artist
-            +int intervalDays
+            +String? album
+            +int? year
+            +String? genre
+            +int? youtubeViewCount
+            +int intervalMinutes
             +double easeFactor
             +int repetitions
             +DateTime nextReviewDate
+            +int startAtSecond
+            +DateTime createdAt
+            +DateTime updatedAt
         }
         
         class FlashcardFactory {
@@ -72,10 +70,17 @@ classDiagram
             +String youtubeId
             +String title
             +String artist
-            +int intervalDays
+            +String? album
+            +int? year
+            +String? genre
+            +int? youtubeViewCount
+            +int intervalMinutes
             +double easeFactor
             +int repetitions
             +DateTime nextReviewDate
+            +int startAtSecond
+            +DateTime createdAt
+            +DateTime updatedAt
         }
     }
     
@@ -89,66 +94,6 @@ classDiagram
     
     note for Flashcard "Pure Dart\nNo database coupling"
     note for IsarFlashcard "uuid: @Index(unique)\nyoutubeId: @Index()\nnextReviewDate: @Index()"
->>>>>>> ae36b5984e69ec77c6f9d69665b72b9c489edc51
-
-    class Domain_FlashcardFactory {
-        <<Factory>>
-        +create() Flashcard
-        +createDueCard() Flashcard
-        +createFutureCard() Flashcard
-    }
-
-    class Domain_CardRepository {
-        <<Interface>>
-        +findByUuid(String) Flashcard?
-        +save(Flashcard) Future<void>
-        +deleteByUuid(String) Future<void>
-        +fetchDueCards() Future<List<Flashcard>>
-        +fetchAllCards() Future<List<Flashcard>>
-    }
-
-    class Data_IsarCardRepository {
-        <<Implementation>>
-        -Isar _isar
-        -FlashcardMapper _mapper
-        +findByUuid(String) Flashcard?
-        +save(Flashcard) Future<void>
-        +deleteByUuid(String) Future<void>
-        +fetchDueCards() Future<List<Flashcard>>
-        +fetchAllCards() Future<List<Flashcard>>
-    }
-
-    class Data_FlashcardMapper {
-        <<Mapper>>
-        +toDomain(IsarFlashcard) Flashcard
-        +toData(Flashcard, Id?) IsarFlashcard
-        +toDomainList(List<IsarFlashcard>) List<Flashcard>
-        +toDataList(List<Flashcard>) List<IsarFlashcard>
-    }
-
-    class Data_IsarFlashcard {
-        <<@collection>>
-        +Id id
-        +String uuid
-        +String youtubeId
-        +String title
-        +String artist
-        +int intervalDays
-        +double easeFactor
-        +int repetitions
-        +DateTime nextReviewDate
-    }
-
-    Domain_FlashcardFactory --> Domain_Flashcard : creates
-    Domain_CardRepository ..> Domain_Flashcard : uses
-    Data_IsarCardRepository ..|> Domain_CardRepository : implements
-    Data_IsarCardRepository --> Data_FlashcardMapper : uses
-    Data_IsarCardRepository --> Data_IsarFlashcard : persists
-    Data_FlashcardMapper ..> Domain_Flashcard : toDomain()
-    Data_FlashcardMapper ..> Data_IsarFlashcard : toData()
-
-    note for Domain_Flashcard "Pure Dart\nNo database coupling"
-    note for Data_IsarFlashcard "uuid: @Index(unique)\nyoutubeId: @Index()\nnextReviewDate: @Index()"
 ```
 ## Data Flow: Save Operation
 
@@ -179,11 +124,7 @@ sequenceDiagram
     Note over DB: Isar updates/inserts<br/>based on ID
     DB-->>Repo: Success
     Repo-->>UI: Complete
-<<<<<<< HEAD
 ```
-=======
-
->>>>>>> ae36b5984e69ec77c6f9d69665b72b9c489edc51
 ## Data Flow: Find Operation
 
 ```mermaid
@@ -208,11 +149,7 @@ sequenceDiagram
     else Not found
         Repo-->>UI: null
     end
-<<<<<<< HEAD
 ```
-=======
-
->>>>>>> ae36b5984e69ec77c6f9d69665b72b9c489edc51
 ## Index Strategy
 
 ### IsarFlashcard Indexes

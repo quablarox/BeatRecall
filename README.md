@@ -58,6 +58,10 @@ class Flashcard {
   String youtubeId;     // Extracted from URL
   String title;
   String artist;
+  String? album;        // Optional album name
+  int? year;            // Optional release year
+  String? genre;        // Optional genre
+  int? youtubeViewCount; // Optional YouTube view count
 
   // SRS Data
   int intervalMinutes;  // Interval in minutes (1440 = 1 day)

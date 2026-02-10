@@ -165,7 +165,7 @@
 - Bug fix: ProviderNotFoundException resolved (4 new tests in provider_scope_test.dart)
 - Debug tooling: Reset progress button with confirmation dialog for testing
 - Test coverage: 209 tests total
-- CSV format: `youtube_url,title,artist,start_at_seconds` (album field not supported)
+- CSV format: `youtube_url,title,artist,album,year,genre,youtube_view_count,start_at_seconds` (optional fields: album, year, genre, youtube_view_count)
 - Git commits: 8ad7890 (card display fixes), d99c56c (test fixes)
 
 ### 3.3 Sprint 3: Review System (2 weeks)

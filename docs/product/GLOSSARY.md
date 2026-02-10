@@ -15,7 +15,7 @@ This glossary defines the **Ubiquitous Language** used throughout BeatRecall doc
 ## Domain Terms
 
 ### Flashcard
-A learning unit consisting of a question (YouTube audio/video clip) and an answer (song title + artist). Each flashcard tracks its own learning progress through the spaced repetition system.
+A learning unit consisting of a question (YouTube audio/video clip) and an answer (song title + artist), with optional metadata (album, year, genre, YouTube view count). Each flashcard tracks its own learning progress through the spaced repetition system.
 
 **Related Terms:** Review, Due Card, New Card
 
@@ -183,7 +183,7 @@ A recap displayed at the end of a review session showing total cards reviewed, r
 ---
 
 ### CSV Import
-The process of bulk loading flashcards from a Comma-Separated Values (CSV) file containing YouTube URLs, titles, artists, and optional start timestamps.
+The process of bulk loading flashcards from a Comma-Separated Values (CSV) file containing YouTube URLs, titles, artists, and optional metadata (album, year, genre, view count, start timestamps).
 
 **File Format:** CSV with header row  
 **Related Terms:** Bulk Import, Card Management

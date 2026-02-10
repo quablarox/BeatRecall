@@ -225,13 +225,17 @@ lib/domain/
 **Entity Example:**
 ```dart
 class Flashcard {
-  final int id;
+  final String uuid;
   final String youtubeId;
   final String title;
   final String artist;
+  final String? album;
+  final int? year;
+  final String? genre;
+  final int? youtubeViewCount;
   
   // SRS data
-  final int intervalDays;
+  final int intervalMinutes;
   final double easeFactor;
   final int repetitions;
   final DateTime nextReviewDate;
@@ -239,16 +243,26 @@ class Flashcard {
   // Configuration
   final int startAtSecond;
   
+  // Timestamps
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  
   const Flashcard({
-    required this.id,
+    required this.uuid,
     required this.youtubeId,
     required this.title,
     required this.artist,
-    this.intervalDays = 0,
+    this.album,
+    this.year,
+    this.genre,
+    this.youtubeViewCount,
+    this.intervalMinutes = 0,
     this.easeFactor = 2.5,
     this.repetitions = 0,
     required this.nextReviewDate,
     this.startAtSecond = 0,
+    required this.createdAt,
+    required this.updatedAt,
   });
 }
 ```
@@ -265,14 +279,14 @@ class ReviewCardUseCase {
     final card = await repository.getCardById(cardId);
     
     final result = srsService.calculateNextReview(
-      currentInterval: card.intervalDays,
+      currentInterval: card.intervalMinutes,
       currentEaseFactor: card.easeFactor,
       currentRepetitions: card.repetitions,
       rating: rating,
     );
     
     final updatedCard = card.copyWith(
-      intervalDays: result.nextInterval,
+      intervalMinutes: result.nextInterval,
       easeFactor: result.nextEaseFactor,
       repetitions: result.nextRepetitions,
       nextReviewDate: result.nextReviewDate,
@@ -318,13 +332,19 @@ class FlashcardModel {
   late String youtubeId;
   late String title;
   late String artist;
+  String? album;
+  int? year;
+  String? genre;
+  int? youtubeViewCount;
   
-  late int intervalDays;
+  late int intervalMinutes;
   late double easeFactor;
   late int repetitions;
   late DateTime nextReviewDate;
   
   late int startAtSecond;
+  late DateTime createdAt;
+  late DateTime updatedAt;
 }
 ```
 

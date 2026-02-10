@@ -226,8 +226,8 @@ class SrsService {
     required Rating rating,
   });
   
-  /// Calculate next review date from interval
-  DateTime calculateNextReviewDate(int intervalDays);
+  /// Calculate next review date from interval in minutes
+  DateTime calculateNextReviewDate(int intervalMinutes);
   
   /// Determine card status based on repetitions
   CardStatus determineCardStatus(int repetitions);
