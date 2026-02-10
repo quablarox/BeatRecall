@@ -100,6 +100,54 @@ void main() {
       // After initialization on a new day, counter should be reset
       expect(service.getNewCardsStudiedToday(), 0);
     });
+
+    test('Given 5 cards studied and limit increased from 10 to 20, When checked, Then remaining is 15', () async {
+      await service.setNewCardsPerDay(10);
+      
+      // Study 5 cards
+      for (var i = 0; i < 5; i++) {
+        service.incrementNewCardsStudied();
+      }
+      
+      expect(service.getRemainingNewCardsToday(), 5); // 10 - 5 = 5
+      
+      // Increase limit mid-day
+      await service.setNewCardsPerDay(20);
+      
+      expect(service.getRemainingNewCardsToday(), 15); // 20 - 5 = 15
+    });
+
+    test('Given 15 cards studied and limit decreased from 20 to 10, When checked, Then remaining is 0', () async {
+      await service.setNewCardsPerDay(20);
+      
+      // Study 15 cards
+      for (var i = 0; i < 15; i++) {
+        service.incrementNewCardsStudied();
+      }
+      
+      expect(service.getRemainingNewCardsToday(), 5); // 20 - 15 = 5
+      
+      // Decrease limit mid-day
+      await service.setNewCardsPerDay(10);
+      
+      expect(service.getRemainingNewCardsToday(), 0); // 10 - 15 = -5, clamped to 0
+    });
+
+    test('Given 10 cards studied and limit increased from 10 to 15, When checked, Then remaining is 5', () async {
+      await service.setNewCardsPerDay(10);
+      
+      // Study 10 cards (reach limit)
+      for (var i = 0; i < 10; i++) {
+        service.incrementNewCardsStudied();
+      }
+      
+      expect(service.getRemainingNewCardsToday(), 0); // 10 - 10 = 0
+      
+      // Increase limit mid-day
+      await service.setNewCardsPerDay(15);
+      
+      expect(service.getRemainingNewCardsToday(), 5); // 15 - 10 = 5
+    });
   });
 
   group('@SETTINGS-002 Audio-Only Mode', () {

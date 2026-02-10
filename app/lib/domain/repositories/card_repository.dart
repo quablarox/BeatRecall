@@ -63,7 +63,7 @@ abstract class CardRepository {
     required String cardUuid,
     required DateTime nextReviewDate,
     required double easeFactor,
-    required int intervalDays,
+    required int intervalMinutes,
     required int repetitions,
   });
 
@@ -72,7 +72,7 @@ abstract class CardRepository {
   /// Sets all cards to default SRS values:
   /// - nextReviewDate = now (all cards become due)
   /// - easeFactor = 2.5
-  /// - intervalDays = 0
+  /// - intervalMinutes = 0
   /// - repetitions = 0
   Future<void> resetAllProgress();
 }

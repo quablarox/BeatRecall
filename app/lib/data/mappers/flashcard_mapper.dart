@@ -19,7 +19,7 @@ class FlashcardMapper {
       ..title = domain.title
       ..artist = domain.artist
       ..album = domain.album
-      ..intervalDays = domain.intervalDays
+      ..intervalMinutes = domain.intervalMinutes
       ..easeFactor = domain.easeFactor
       ..repetitions = domain.repetitions
       ..nextReviewDate = domain.nextReviewDate
@@ -39,7 +39,7 @@ class FlashcardMapper {
       title: data.title,
       artist: data.artist,
       album: data.album,
-      intervalDays: data.intervalDays,
+      intervalMinutes: data.intervalMinutes,
       easeFactor: data.easeFactor,
       repetitions: data.repetitions,
       nextReviewDate: data.nextReviewDate,

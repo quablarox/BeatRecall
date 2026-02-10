@@ -168,7 +168,7 @@ class IsarCardRepository implements CardRepository {
     required String cardUuid,
     required DateTime nextReviewDate,
     required double easeFactor,
-    required int intervalDays,
+    required int intervalMinutes,
     required int repetitions,
   }) async {
     await _isar.writeTxn(() async {
@@ -181,7 +181,7 @@ class IsarCardRepository implements CardRepository {
 
       card.nextReviewDate = nextReviewDate;
       card.easeFactor = easeFactor;
-      card.intervalDays = intervalDays;
+      card.intervalMinutes = intervalMinutes;
       card.repetitions = repetitions;
       card.updatedAt = DateTime.now();
 
@@ -199,7 +199,7 @@ class IsarCardRepository implements CardRepository {
       for (final card in allCards) {
         card.nextReviewDate = now;
         card.easeFactor = 2.5;
-        card.intervalDays = 0;
+        card.intervalMinutes = 0;
         card.repetitions = 0;
         card.updatedAt = now;
       }

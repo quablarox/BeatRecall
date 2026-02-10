@@ -28,8 +28,8 @@ class IsarFlashcard {
   /// Optional album name
   String? album;
 
-  /// SRS: Days until next review (0 = new card)
-  int intervalDays = 0;
+  /// SRS: Minutes until next review (0 = learning card, <1440 = learning, >=1440 = graduated)
+  int intervalMinutes = 0;
 
   /// SRS: Ease Factor (default 2.5, min 1.3)
   double easeFactor = 2.5;

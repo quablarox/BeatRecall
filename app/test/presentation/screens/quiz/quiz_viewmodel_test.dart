@@ -83,7 +83,7 @@ class MockCardRepository implements CardRepository {
     required String cardUuid,
     required DateTime nextReviewDate,
     required double easeFactor,
-    required int intervalDays,
+    required int intervalMinutes,
     required int repetitions,
   }) async {
     final card = _cardsByUuid[cardUuid];
@@ -92,7 +92,7 @@ class MockCardRepository implements CardRepository {
     final updated = card.copyWith(
       nextReviewDate: nextReviewDate,
       easeFactor: easeFactor,
-      intervalDays: intervalDays,
+      intervalMinutes: intervalMinutes,
       repetitions: repetitions,
       updatedAt: DateTime.now(),
     );
@@ -107,7 +107,7 @@ class MockCardRepository implements CardRepository {
       return card.copyWith(
         nextReviewDate: now,
         easeFactor: 2.5,
-        intervalDays: 0,
+        intervalMinutes: 0,
         repetitions: 0,
         updatedAt: now,
       );
@@ -184,7 +184,7 @@ void main() {
           title: 'Song $i',
           artist: 'Artist $i',
           nextReviewDate: now.subtract(const Duration(days: 1)),
-          intervalDays: 10,
+          intervalMinutes: 14400,
           easeFactor: 2.5,
           repetitions: 2,
           createdAt: now,
@@ -207,7 +207,7 @@ void main() {
         title: 'Test Song',
         artist: 'Test Artist',
         nextReviewDate: now.subtract(const Duration(days: 1)),
-        intervalDays: 5,
+        intervalMinutes: 7200,
         easeFactor: 2.5,
         repetitions: 1,
         createdAt: now,
@@ -236,7 +236,7 @@ void main() {
           title: 'Song $i',
           artist: 'Artist $i',
           nextReviewDate: now.subtract(const Duration(days: 1)),
-          intervalDays: 10,
+          intervalMinutes: 14400,
           easeFactor: 2.5,
           repetitions: 2,
           createdAt: now,
@@ -265,7 +265,7 @@ void main() {
           title: 'Song $i',
           artist: 'Artist $i',
           nextReviewDate: now.subtract(const Duration(days: 1)),
-          intervalDays: 10,
+          intervalMinutes: 14400,
           easeFactor: 2.5,
           repetitions: 2,
           createdAt: now,
@@ -384,7 +384,7 @@ void main() {
           title: 'Due Song $i',
           artist: 'Artist $i',
           nextReviewDate: now.subtract(const Duration(days: 1)),
-          intervalDays: 10,
+          intervalMinutes: 14400,
           easeFactor: 2.5,
           repetitions: 2,
           createdAt: now,
@@ -433,7 +433,7 @@ void main() {
         title: 'Existing Song',
         artist: 'Artist',
         nextReviewDate: now.subtract(const Duration(days: 1)),
-        intervalDays: 10,
+        intervalMinutes: 14400,
         easeFactor: 2.5,
         repetitions: 3, // Not a new card
         createdAt: now,
@@ -462,7 +462,7 @@ void main() {
         title: 'Test Song',
         artist: 'Test Artist',
         nextReviewDate: now.subtract(const Duration(days: 1)),
-        intervalDays: 5,
+        intervalMinutes: 7200,
         easeFactor: 2.5,
         repetitions: 2,
         createdAt: now,
@@ -481,11 +481,11 @@ void main() {
       expect(intervals[4], isNotNull);
       
       // Formats should match enhanced display patterns
-      // Examples: "<1m", "3d", "2w", "1mo"
-      expect(intervals[0], matches(r'^(<1m|\d+d|\d+w|\d+mo|\w{3} \d{1,2}, \d{4})$'));
+      // Examples: "1m", "10m", "1h", "1d", "3d", "2w", "1mo"
+      expect(intervals[0], matches(r'^(\d+m|\d+h|\d+d|\d+w|\d+mo|\w{3} \d{1,2}, \d{4})$'));
     });
 
-    test('Given card rated Again with 0 interval, When formatted, Then shows "<1m"', () async {
+    test('Given card rated Again, When formatted, Then shows "1m" (Anki learning step 1)', () async {
       final now = DateTime.now();
       await repository.save(Flashcard(
         uuid: 'test-uuid',
@@ -493,7 +493,7 @@ void main() {
         title: 'Test Song',
         artist: 'Test Artist',
         nextReviewDate: now.subtract(const Duration(days: 1)),
-        intervalDays: 5,
+        intervalMinutes: 7200,
         easeFactor: 2.5,
         repetitions: 2,
         createdAt: now,
@@ -504,8 +504,8 @@ void main() {
       
       final intervals = viewModel.getNextIntervals();
       
-      // "Again" should always show "<1m" (0 days)
-      expect(intervals[0], '<1m');
+      // "Again" returns 1 minute (Anki learning step 1)
+      expect(intervals[0], '1m');
     });
   });
 
@@ -522,7 +522,7 @@ void main() {
         title: 'First Song',
         artist: 'Artist',
         nextReviewDate: now.subtract(const Duration(days: 1)),
-        intervalDays: 5,
+        intervalMinutes: 7200,
         easeFactor: 2.5,
         repetitions: 1,
         createdAt: now,
@@ -543,7 +543,7 @@ void main() {
         title: 'First Song',
         artist: 'Artist 1',
         nextReviewDate: now.subtract(const Duration(days: 1)),
-        intervalDays: 5,
+        intervalMinutes: 7200,
         easeFactor: 2.5,
         repetitions: 1,
         createdAt: now,
@@ -556,7 +556,7 @@ void main() {
         title: 'Second Song',
         artist: 'Artist 2',
         nextReviewDate: now.subtract(const Duration(days: 1)),
-        intervalDays: 5,
+        intervalMinutes: 7200,
         easeFactor: 2.5,
         repetitions: 1,
         createdAt: now,

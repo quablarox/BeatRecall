@@ -1,8 +1,8 @@
 # Project Roadmap - BeatRecall
 
 ## Document Information
-- **Version:** 2.1
-- **Last Updated:** 2026-02-09
+- **Version:** 2.2
+- **Last Updated:** 2026-02-10
 - **Status:** Active
 
 ## Table of Contents
@@ -369,6 +369,63 @@
 - Async/await handling for iframe controller
 - State management: QuizViewModel updated with offset persistence
 - UX polish: Confirmation dialogs, SnackBar feedback, clear icons
+
+### 3.7 Sprint 4.7: Minute-Based Intervals & Queue Management (1 week)
+**Status:** ✅ Complete  
+**Focus:** Anki-style time precision and intelligent card scheduling  
+**Priority:** High (improves SRS accuracy and user experience)
+
+**Features:**
+- [x] **SRS-002:** Minute-level time resolution **COMPLETE**
+  - ✅ Changed from day-based to minute-based intervals throughout system
+  - ✅ All storage now uses `intervalMinutes` (1440 = 1 day)
+  - ✅ Updated domain entities, database schema, SRS service
+  - ✅ Updated all viewmodels, mappers, and tests
+  - ✅ `formatInterval()` displays: 1m, 10m, 1h, 1d, 3d, 1w, 1mo, or dates
+- [x] **SRS-003:** Anki-style learning progression **COMPLETE**
+  - ✅ Learning steps: Again=1m, Hard=10m, Good=1d→3d, Easy=4d→7d
+  - ✅ Good rating better than Hard at beginning (1d vs 10m)
+  - ✅ Smooth progression with ease factor application
+  - ✅ Constants: `learningStep1Minutes=1`, `learningStep2Minutes=10`, `graduatingIntervalMinutes=1440`
+- [x] **DUEQUEUE-004:** Dynamic queue management **COMPLETE**
+  - ✅ Cards sorted by nextReviewDate + UUID for deterministic ordering
+  - ✅ Cards shown only when actually due (respects 10-minute intervals)
+  - ✅ New cards in separate pool (`_availableNewCards`)
+  - ✅ New cards inserted on-demand when no due cards available
+  - ✅ Cards re-inserted in sorted order when rated with <24h interval
+  - ✅ Session state preserved when navigating away and returning
+  - ✅ `_advanceToNextDueCard()` logic: skips future-due cards, inserts new cards
+
+**Success Criteria:**
+- [x] System uses minute-level precision matching Anki behavior ✅
+- [x] Learning progression intuitive (Good > Hard for new cards) ✅
+- [x] Cards appear exactly when due, not all at once ✅
+- [x] Session ordering deterministic and reproducible ✅
+- [x] New cards intelligently interleaved with due cards ✅
+- [x] **Test Coverage:** 224 passing tests (all previous tests maintained)
+
+**Implementation Notes:**
+- **Major refactor:** All `intervalDays` → `intervalMinutes` (domain, data, services, UI)
+- **Database migration:** Isar schema updated, regenerated with build_runner
+- **SRS algorithm:** Modified to return minutes, uses `Duration(minutes:)` calculations
+- **Queue management:** Two-list system (_sessionCards + _availableNewCards)
+- **Display logic:** `formatInterval()` handles minutes/hours/days/weeks/months/dates
+- **Test updates:** All 224 tests converted to use minute values (×1440 for days)
+- **Git commits:** Full refactor spanning multiple commits
+
+**User Benefits:**
+- **Anki-like precision:** Cards appear at exact intervals (1m, 10m, 1h, etc.)
+- **Better learning:** Good rating now meaningfully better than Hard from start
+- **Smarter scheduling:** New cards appear when you have time, not all at once
+- **Consistent sessions:** Same card order when re-entering review session
+- **True SRS:** Cards won't reappear until actually due (respects time)
+
+**Technical Achievements:**
+- Complete system refactor maintaining 100% test pass rate
+- Minute-based storage with seamless day/week/month display
+- Dynamic queue with sorted insertion and deterministic ordering
+- Anki-style learning steps with smooth progression curve
+- Session state management with new card pool system
 
 ---
 

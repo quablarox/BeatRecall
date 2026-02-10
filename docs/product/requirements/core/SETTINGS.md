@@ -57,11 +57,17 @@ Allow users to specify the maximum number of new (never-reviewed) cards they wan
   - Value of 0 = no new cards (review only mode)
   - Empty/invalid input = use default value
   - Daily count resets properly across timezones
+  - Limit increased mid-day: Remaining = new limit - cards studied today
+  - Limit decreased mid-day: May result in 0 remaining if decrease is below cards already studied
 
 **Business Rules:**
-- New card: `repetitions == 0` (never studied before)
-- Due card: `nextReviewDate <= now` and `repetitions > 0`
-- Daily count tracks cards that transition from new to learning state
+- **New card:** `repetitions == 0` (never studied before)
+- **Due card:** `nextReviewDate <= now AND repetitions > 0` (already in review cycle)
+- **Daily count:** Tracks cards that transition from new to learning state (when first rated)
+- **Due cards are NOT counted** toward the new cards limit
+- **Dynamic limit adjustment:** If the daily limit is increased mid-day, remaining new cards = new limit - cards already studied today
+  - Example: If 5 new cards studied today and limit increased from 10 to 20, then 15 new cards remain available (20 - 5 = 15)
+  - Example: If 15 new cards studied today and limit decreased from 20 to 10, then 0 new cards remain available (10 - 15 = 0)
 
 **Implementation Notes:**
 ```dart

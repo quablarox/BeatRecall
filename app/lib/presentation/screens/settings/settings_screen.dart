@@ -32,17 +32,20 @@ class SettingsScreen extends StatelessWidget {
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () => _showNewCardsDialog(context, settingsService),
               ),
-              ListTile(
-                leading: const Icon(Icons.info_outline),
-                title: const Text('New Cards Remaining Today'),
-                subtitle: Text(
-                  '${settingsService.getRemainingNewCardsToday()} cards remaining',
-                  style: TextStyle(
-                    color: settingsService.getRemainingNewCardsToday() == 0
-                        ? Colors.orange
-                        : null,
-                  ),
-                ),
+              Consumer<SettingsService>(
+                builder: (context, service, child) {
+                  final remaining = service.getRemainingNewCardsToday();
+                  return ListTile(
+                    leading: const Icon(Icons.info_outline),
+                    title: const Text('New Cards Remaining Today'),
+                    subtitle: Text(
+                      '$remaining cards remaining',
+                      style: TextStyle(
+                        color: remaining == 0 ? Colors.orange : null,
+                      ),
+                    ),
+                  );
+                },
               ),
               const Divider(),
 

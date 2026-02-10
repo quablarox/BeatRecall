@@ -52,7 +52,7 @@ class MockCardRepository implements CardRepository {
     required String cardUuid,
     required DateTime nextReviewDate,
     required double easeFactor,
-    required int intervalDays,
+    required int intervalMinutes,
     required int repetitions,
   }) async {}
 
@@ -73,7 +73,7 @@ void main() {
       title: 'Original Title',
       artist: 'Original Artist',
       album: 'Original Album',
-      intervalDays: 5,
+      intervalMinutes: 7200,
       easeFactor: 2.5,
       repetitions: 2,
       nextReviewDate: now,

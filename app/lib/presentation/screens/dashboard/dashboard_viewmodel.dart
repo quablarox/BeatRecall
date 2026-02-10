@@ -14,7 +14,10 @@ class DashboardViewModel extends ChangeNotifier {
     required CardRepository cardRepository,
     required SettingsService settingsService,
   })  : _cardRepository = cardRepository,
-        _settingsService = settingsService;
+        _settingsService = settingsService {
+    // Listen to settings changes to update new cards available
+    _settingsService.addListener(_onSettingsChanged);
+  }
 
   bool _isLoading = false;
   String? _errorMessage;
@@ -90,5 +93,32 @@ class DashboardViewModel extends ChangeNotifier {
       }
     }
     return maxRepetitions;
+  }
+
+  /// Called when settings change to recalculate new cards available
+  void _onSettingsChanged() {
+    // Only recalculate new cards available without full reload
+    // This keeps the dashboard responsive when limit changes
+    if (_totalCards > 0) {
+      // Fetch all cards to recalculate new cards available
+      _cardRepository.fetchAllCards(offset: 0, limit: _totalCards).then((allCards) {
+        final remainingNewCards = _settingsService.getRemainingNewCardsToday();
+        final newCards = allCards.where((card) => card.repetitions == 0).length;
+        _newCardsAvailable = newCards < remainingNewCards ? newCards : remainingNewCards;
+        notifyListeners();
+      }).catchError((error) {
+        // Silently fail, next manual refresh will fix it
+        debugPrint('Error updating new cards available: $error');
+      });
+    } else {
+      // If dashboard not loaded yet, just trigger a full reload
+      loadSummary();
+    }
+  }
+
+  @override
+  void dispose() {
+    _settingsService.removeListener(_onSettingsChanged);
+    super.dispose();
   }
 }

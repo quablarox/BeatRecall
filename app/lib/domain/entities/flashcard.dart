@@ -18,8 +18,8 @@ class Flashcard {
   /// Optional album name
   final String? album;
 
-  /// SRS: Days until next review (0 = new card)
-  final int intervalDays;
+  /// SRS: Minutes until next review (0 = learning card, <1440 = learning, >=1440 = graduated)
+  final int intervalMinutes;
 
   /// SRS: Ease Factor (default 2.5, min 1.3)
   final double easeFactor;
@@ -48,7 +48,7 @@ class Flashcard {
     required this.title,
     required this.artist,
     this.album,
-    this.intervalDays = 0,
+    this.intervalMinutes = 0,
     this.easeFactor = 2.5,
     this.repetitions = 0,
     required this.nextReviewDate,
@@ -65,7 +65,7 @@ class Flashcard {
     String? title,
     String? artist,
     String? album,
-    int? intervalDays,
+    int? intervalMinutes,
     double? easeFactor,
     int? repetitions,
     DateTime? nextReviewDate,
@@ -80,7 +80,7 @@ class Flashcard {
       title: title ?? this.title,
       artist: artist ?? this.artist,
       album: album ?? this.album,
-      intervalDays: intervalDays ?? this.intervalDays,
+      intervalMinutes: intervalMinutes ?? this.intervalMinutes,
       easeFactor: easeFactor ?? this.easeFactor,
       repetitions: repetitions ?? this.repetitions,
       nextReviewDate: nextReviewDate ?? this.nextReviewDate,

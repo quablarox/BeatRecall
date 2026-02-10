@@ -70,7 +70,7 @@ class MockCardRepository implements CardRepository {
     required String cardUuid,
     required DateTime nextReviewDate,
     required double easeFactor,
-    required int intervalDays,
+    required int intervalMinutes,
     required int repetitions,
   }) async {
     final card = _cardsByUuid[cardUuid];
@@ -78,7 +78,7 @@ class MockCardRepository implements CardRepository {
       final updated = card.copyWith(
         nextReviewDate: nextReviewDate,
         easeFactor: easeFactor,
-        intervalDays: intervalDays,
+        intervalMinutes: intervalMinutes,
         repetitions: repetitions,
         updatedAt: DateTime.now(),
       );
@@ -94,7 +94,7 @@ class MockCardRepository implements CardRepository {
       return card.copyWith(
         nextReviewDate: now,
         easeFactor: 2.5,
-        intervalDays: 0,
+        intervalMinutes: 0,
         repetitions: 0,
         updatedAt: now,
       );
@@ -206,7 +206,7 @@ dQw4w9WgXcQ|Never Gonna Give You Up|Rick Astley|20
             youtubeId: youtubeId,
             title: 'Existing',
             artist: 'Artist',
-            intervalDays: 0,
+            intervalMinutes: 0,
             easeFactor: 2.5,
             repetitions: 0,
             nextReviewDate: DateTime.now(),

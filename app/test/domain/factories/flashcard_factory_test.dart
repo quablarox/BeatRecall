@@ -58,7 +58,7 @@ void main() {
       );
 
       // Then: Defaults are applied
-      expect(card.intervalDays, 0);
+      expect(card.intervalMinutes, 0);
       expect(card.easeFactor, 2.5);
       expect(card.repetitions, 0);
       expect(card.startAtSecond, 0);
@@ -70,7 +70,7 @@ void main() {
         youtubeId: 'xyz',
         title: 'Test',
         artist: 'Artist',
-        intervalDays: 7,
+        intervalMinutes: 10080,
         easeFactor: 2.8,
         repetitions: 3,
         startAtSecond: 30,
@@ -78,7 +78,7 @@ void main() {
       );
 
       // Then: Custom values are used
-      expect(card.intervalDays, 7);
+      expect(card.intervalMinutes, 10080);
       expect(card.easeFactor, 2.8);
       expect(card.repetitions, 3);
       expect(card.startAtSecond, 30);
@@ -130,7 +130,7 @@ void main() {
       );
 
       // Then: SRS values are defaults for new card
-      expect(card.intervalDays, 0);
+      expect(card.intervalMinutes, 0);
       expect(card.easeFactor, 2.5);
       expect(card.repetitions, 0);
     });
@@ -161,7 +161,7 @@ void main() {
       );
 
       // Then: SRS values are defaults for new card
-      expect(card.intervalDays, 0);
+      expect(card.intervalMinutes, 0);
       expect(card.easeFactor, 2.5);
       expect(card.repetitions, 0);
     });

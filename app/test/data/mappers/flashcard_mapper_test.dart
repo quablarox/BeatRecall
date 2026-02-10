@@ -23,7 +23,7 @@ void main() {
         title: 'Never Gonna Give You Up',
         artist: 'Rick Astley',
         album: 'Whenever You Need Somebody',
-        intervalDays: 7,
+        intervalMinutes: 10080,
         easeFactor: 2.6,
         repetitions: 3,
         nextReviewDate: DateTime(2026, 3, 1),
@@ -42,7 +42,7 @@ void main() {
       expect(data.title, 'Never Gonna Give You Up');
       expect(data.artist, 'Rick Astley');
       expect(data.album, 'Whenever You Need Somebody');
-      expect(data.intervalDays, 7);
+      expect(data.intervalMinutes, 10080);
       expect(data.easeFactor, 2.6);
       expect(data.repetitions, 3);
       expect(data.nextReviewDate, DateTime(2026, 3, 1));
@@ -104,7 +104,7 @@ void main() {
         ..title = 'Test Song'
         ..artist = 'Test Artist'
         ..album = 'Test Album'
-        ..intervalDays = 14
+        ..intervalMinutes = 20160
         ..easeFactor = 2.8
         ..repetitions = 5
         ..nextReviewDate = DateTime(2026, 4, 1)
@@ -122,7 +122,7 @@ void main() {
       expect(domain.title, 'Test Song');
       expect(domain.artist, 'Test Artist');
       expect(domain.album, 'Test Album');
-      expect(domain.intervalDays, 14);
+      expect(domain.intervalMinutes, 20160);
       expect(domain.easeFactor, 2.8);
       expect(domain.repetitions, 5);
       expect(domain.nextReviewDate, DateTime(2026, 4, 1));
@@ -162,7 +162,7 @@ void main() {
         title: 'Round Trip Song',
         artist: 'Round Artist',
         album: 'Round Album',
-        intervalDays: 21,
+        intervalMinutes: 30240,
         easeFactor: 2.9,
         repetitions: 7,
         nextReviewDate: DateTime(2026, 5, 1),
@@ -182,7 +182,7 @@ void main() {
       expect(backToDomain.title, original.title);
       expect(backToDomain.artist, original.artist);
       expect(backToDomain.album, original.album);
-      expect(backToDomain.intervalDays, original.intervalDays);
+      expect(backToDomain.intervalMinutes, original.intervalMinutes);
       expect(backToDomain.easeFactor, original.easeFactor);
       expect(backToDomain.repetitions, original.repetitions);
       expect(backToDomain.nextReviewDate, original.nextReviewDate);

@@ -202,6 +202,86 @@ void main() {
         expect(viewModel.currentStreak, 0);
       });
     });
+
+    group('Settings integration', () {
+      test('updates newCardsAvailable when daily limit changes', () async {
+        // Given: Initial state with 10 new cards, limit of 5
+        mockSettingsService.setRemainingNewCards(5);
+        mockRepository.cardsToReturn = [
+          _createCard('New 1', 'Artist A', repetitions: 0),
+          _createCard('New 2', 'Artist B', repetitions: 0),
+          _createCard('New 3', 'Artist C', repetitions: 0),
+          _createCard('New 4', 'Artist D', repetitions: 0),
+          _createCard('New 5', 'Artist E', repetitions: 0),
+          _createCard('New 6', 'Artist F', repetitions: 0),
+          _createCard('New 7', 'Artist G', repetitions: 0),
+          _createCard('New 8', 'Artist H', repetitions: 0),
+          _createCard('New 9', 'Artist I', repetitions: 0),
+          _createCard('New 10', 'Artist J', repetitions: 0),
+        ];
+
+        await viewModel.loadSummary();
+        expect(viewModel.newCardsAvailable, 5); // Limited by settings
+
+        // When: Increase limit to 15
+        mockSettingsService.setRemainingNewCards(15);
+        mockSettingsService.notifyListenersManually();
+        
+        // Give the async operation time to complete
+        await Future.delayed(const Duration(milliseconds: 100));
+
+        // Then: newCardsAvailable should update to 10 (all available cards)
+        expect(viewModel.newCardsAvailable, 10);
+      });
+
+      test('updates newCardsAvailable when limit decreased', () async {
+        // Given: Initial state with 10 new cards, limit of 20
+        mockSettingsService.setRemainingNewCards(20);
+        mockRepository.cardsToReturn = [
+          _createCard('New 1', 'Artist A', repetitions: 0),
+          _createCard('New 2', 'Artist B', repetitions: 0),
+          _createCard('New 3', 'Artist C', repetitions: 0),
+          _createCard('Due 1', 'Artist D', repetitions: 3),
+        ];
+
+        await viewModel.loadSummary();
+        expect(viewModel.newCardsAvailable, 3); // 3 new cards available
+
+        // When: Decrease limit to 2
+        mockSettingsService.setRemainingNewCards(2);
+        mockSettingsService.notifyListenersManually();
+        
+        // Give the async operation time to complete
+        await Future.delayed(const Duration(milliseconds: 100));
+
+        // Then: newCardsAvailable should update to 2
+        expect(viewModel.newCardsAvailable, 2);
+      });
+
+      test('hasCardsToReview becomes true when limit increased', () async {
+        // Given: No due cards, 5 new cards, limit of 0
+        mockSettingsService.setRemainingNewCards(0);
+        mockRepository.cardsToReturn = [
+          _createCard('New 1', 'Artist A', repetitions: 0),
+          _createCard('New 2', 'Artist B', repetitions: 0),
+          _createCard('New 3', 'Artist C', repetitions: 0),
+        ];
+
+        await viewModel.loadSummary();
+        expect(viewModel.hasCardsToReview, false); // No cards available
+
+        // When: Increase limit to 10
+        mockSettingsService.setRemainingNewCards(10);
+        mockSettingsService.notifyListenersManually();
+        
+        // Give the async operation time to complete
+        await Future.delayed(const Duration(milliseconds: 100));
+
+        // Then: hasCardsToReview should become true
+        expect(viewModel.hasCardsToReview, true);
+        expect(viewModel.newCardsAvailable, 3);
+      });
+    });
   });
 }
 
@@ -212,7 +292,7 @@ Flashcard _createCard(
   DateTime? nextReviewDate,
   int repetitions = 0,
   double easeFactor = 2.5,
-  int intervalDays = 0,
+  int intervalMinutes = 0,
 }) {
   final now = DateTime.now();
   return Flashcard(
@@ -223,7 +303,7 @@ Flashcard _createCard(
     nextReviewDate: nextReviewDate ?? now,
     repetitions: repetitions,
     easeFactor: easeFactor,
-    intervalDays: intervalDays,
+    intervalMinutes: intervalMinutes,
     createdAt: now,
     updatedAt: now,
   );
@@ -330,7 +410,7 @@ class MockCardRepository implements CardRepository {
     required String cardUuid,
     required DateTime nextReviewDate,
     required double easeFactor,
-    required int intervalDays,
+    required int intervalMinutes,
     required int repetitions,
   }) async {
     final index = savedCards.indexWhere((c) => c.uuid == cardUuid);
@@ -338,7 +418,7 @@ class MockCardRepository implements CardRepository {
       savedCards[index] = savedCards[index].copyWith(
         nextReviewDate: nextReviewDate,
         easeFactor: easeFactor,
-        intervalDays: intervalDays,
+        intervalMinutes: intervalMinutes,
         repetitions: repetitions,
       );
     }
@@ -351,7 +431,7 @@ class MockCardRepository implements CardRepository {
       savedCards[i] = savedCards[i].copyWith(
         nextReviewDate: now,
         easeFactor: 2.5,
-        intervalDays: 0,
+        intervalMinutes: 0,
         repetitions: 0,
         updatedAt: now,
       );
@@ -360,7 +440,7 @@ class MockCardRepository implements CardRepository {
       cardsToReturn[i] = cardsToReturn[i].copyWith(
         nextReviewDate: now,
         easeFactor: 2.5,
-        intervalDays: 0,
+        intervalMinutes: 0,
         repetitions: 0,
         updatedAt: now,
       );
@@ -372,6 +452,7 @@ class MockCardRepository implements CardRepository {
 class MockSettingsService extends SettingsService {
   int _newCardsStudiedToday = 0;
   AppSettings _testSettings = const AppSettings(newCardsPerDay: 20);
+  int _remainingNewCards = 20;
 
   @override
   AppSettings get settings => _testSettings;
@@ -381,21 +462,34 @@ class MockSettingsService extends SettingsService {
 
   @override
   int getRemainingNewCardsToday() {
-    final studied = _newCardsStudiedToday;
-    final limit = _testSettings.newCardsPerDay;
-    return (limit - studied).clamp(0, limit);
+    return _remainingNewCards;
   }
 
   @override
   Future<void> incrementNewCardsStudied() async {
     _newCardsStudiedToday++;
+    _remainingNewCards = (_testSettings.newCardsPerDay - _newCardsStudiedToday).clamp(0, _testSettings.newCardsPerDay);
   }
 
   void setNewCardsStudiedToday(int count) {
     _newCardsStudiedToday = count;
+    _remainingNewCards = (_testSettings.newCardsPerDay - _newCardsStudiedToday).clamp(0, _testSettings.newCardsPerDay);
   }
 
   void setTestSettings(AppSettings settings) {
     _testSettings = settings;
+    _remainingNewCards = (_testSettings.newCardsPerDay - _newCardsStudiedToday).clamp(0, _testSettings.newCardsPerDay);
+  }
+
+  /// Manually set remaining new cards (for testing limit changes)
+  void setRemainingNewCards(int remaining) {
+    _remainingNewCards = remaining;
+  }
+
+  /// Manually trigger notifyListeners (for testing)
+  void notifyListenersManually() {
+    // Call the protected notifyListeners method
+    // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+    notifyListeners();
   }
 }

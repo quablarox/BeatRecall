@@ -12,7 +12,7 @@ class FlashcardFactory {
   /// Creates a new flashcard with a generated UUID.
   ///
   /// All required fields must be provided. Optional fields have defaults:
-  /// - [intervalDays]: 0 (new card)
+  /// - [intervalMinutes]: 0 (new card, no interval yet)
   /// - [easeFactor]: 2.5 (default difficulty)
   /// - [repetitions]: 0 (not reviewed yet)
   /// - [nextReviewDate]: now (due immediately)
@@ -25,7 +25,7 @@ class FlashcardFactory {
     required String title,
     required String artist,
     String? album,
-    int? intervalDays,
+    int? intervalMinutes,
     double? easeFactor,
     int? repetitions,
     DateTime? nextReviewDate,
@@ -41,7 +41,7 @@ class FlashcardFactory {
       title: title,
       artist: artist,
       album: album,
-      intervalDays: intervalDays ?? 0,
+      intervalMinutes: intervalMinutes ?? 0,
       easeFactor: easeFactor ?? 2.5,
       repetitions: repetitions ?? 0,
       nextReviewDate: nextReviewDate ?? now,

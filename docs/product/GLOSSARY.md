@@ -17,7 +17,7 @@ This glossary defines the **Ubiquitous Language** used throughout BeatRecall doc
 ### Flashcard
 A learning unit consisting of a question (YouTube audio/video clip) and an answer (song title + artist). Each flashcard tracks its own learning progress through the spaced repetition system.
 
-**Related Terms:** Review, Due Card
+**Related Terms:** Review, Due Card, New Card
 
 ---
 
@@ -37,16 +37,38 @@ The SuperMemo-2 algorithm for calculating optimal review intervals based on user
 ---
 
 ### Review Session
-A continuous period where users work through due cards, rating their recall performance for each card.
+A continuous period where users work through review cards (both due cards and new cards), rating their recall performance for each card.
 
-**Related Terms:** Session Summary, Progress Tracking
+**Related Terms:** Review Cards, Session Summary, Progress Tracking
 
 ---
 
 ### Due Card
-A flashcard whose `nextReviewDate` has passed and is ready for review.
+A flashcard that is scheduled for review today. A card is due when `nextReviewDate <= currentDateTime AND repetitions > 0`. Due cards have been studied at least once before and are in the review cycle. Due cards are prioritized over new cards in review sessions.
 
-**Related Terms:** Review Queue, Overdue Card
+**Important:** New cards (repetitions == 0) are NOT considered "due cards" even if their `nextReviewDate` has passed.
+
+**Related Terms:** Review Queue, Overdue Card, New Card
+
+---
+
+### New Card
+A flashcard that has never been studied before (`repetitions == 0`). New cards are introduced gradually into review sessions based on the daily new cards limit configured in settings. Once a new card is rated for the first time, it enters the learning phase and is no longer considered "new."
+
+**Business Rule:** New cards count = `repetitions == 0`  
+**Related Terms:** Daily New Cards Limit, Card Status, Learning Phase
+
+---
+
+### Review Cards
+The complete set of flashcards presented in a review session, consisting of:
+1. **Due cards** (priority): All cards with `nextReviewDate <= now AND repetitions > 0`
+2. **New cards**: Up to the remaining daily limit of cards with `repetitions == 0`
+
+The session queue is ordered as `[...dueCards, ...newCards]`, ensuring review cards are studied before introducing new material.
+
+**Synonyms:** Session Cards, Study Queue  
+**Related Terms:** Due Card, New Card, Review Session, Daily New Cards Limit
 
 ---
 
@@ -81,9 +103,10 @@ A multiplier (1.3 to 4.0) that adjusts review intervals based on card difficulty
 ---
 
 ### Interval
-The number of days between reviews. Intervals increase with successful reviews and reset with failed reviews.
+The time duration between reviews. Intervals increase with successful reviews and reset with failed reviews.
 
-**Unit:** Days  
+**Units:** Minutes, hours, days, weeks, or months (displayed as 1m, 10m, 1h, 1d, 3d, 1w, 1mo)  
+**Storage:** Minute-based internally (e.g., 1440 minutes = 1 day)  
 **Related Terms:** Next Review Date, Scheduling
 
 ---
@@ -115,6 +138,15 @@ The ordered list of cards currently due for review, sorted by due date (oldest f
 
 **Synonyms:** Due Queue  
 **Related Terms:** Due Card, Review Session
+
+---
+
+### Daily New Cards Limit
+A user-configurable setting that controls the maximum number of new cards (repetitions == 0) that can be studied per day. This prevents overwhelming the learner and allows control over learning pace. The limit resets at midnight (device timezone).
+
+**Default:** 20 cards per day  
+**Range:** 0-999  
+**Related Terms:** New Card, Review Session, Settings
 
 ---
 
@@ -167,7 +199,7 @@ The complete collection of all flashcards created by the user, including new, le
 ---
 
 ### Overdue Card
-A card whose `nextReviewDate` is in the past. Overdue cards are prioritized in the review queue to maintain learning effectiveness.
+A due card whose `nextReviewDate` is in the past. Overdue cards are prioritized in the review queue to maintain learning effectiveness. Only cards with `repetitions > 0` can be overdue; new cards are never considered overdue.
 
 **Related Terms:** Due Card, Review Queue
 

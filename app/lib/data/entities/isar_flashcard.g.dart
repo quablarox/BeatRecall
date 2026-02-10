@@ -42,9 +42,9 @@ const IsarFlashcardSchema = CollectionSchema(
       name: r'endAtSecond',
       type: IsarType.long,
     ),
-    r'intervalDays': PropertySchema(
+    r'intervalMinutes': PropertySchema(
       id: 5,
-      name: r'intervalDays',
+      name: r'intervalMinutes',
       type: IsarType.long,
     ),
     r'nextReviewDate': PropertySchema(
@@ -167,7 +167,7 @@ void _isarFlashcardSerialize(
   writer.writeDateTime(offsets[2], object.createdAt);
   writer.writeDouble(offsets[3], object.easeFactor);
   writer.writeLong(offsets[4], object.endAtSecond);
-  writer.writeLong(offsets[5], object.intervalDays);
+  writer.writeLong(offsets[5], object.intervalMinutes);
   writer.writeDateTime(offsets[6], object.nextReviewDate);
   writer.writeLong(offsets[7], object.repetitions);
   writer.writeLong(offsets[8], object.startAtSecond);
@@ -190,7 +190,7 @@ IsarFlashcard _isarFlashcardDeserialize(
   object.easeFactor = reader.readDouble(offsets[3]);
   object.endAtSecond = reader.readLongOrNull(offsets[4]);
   object.id = id;
-  object.intervalDays = reader.readLong(offsets[5]);
+  object.intervalMinutes = reader.readLong(offsets[5]);
   object.nextReviewDate = reader.readDateTime(offsets[6]);
   object.repetitions = reader.readLong(offsets[7]);
   object.startAtSecond = reader.readLong(offsets[8]);
@@ -1122,45 +1122,45 @@ extension IsarFlashcardQueryFilter
   }
 
   QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
-      intervalDaysEqualTo(int value) {
+      intervalMinutesEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'intervalDays',
+        property: r'intervalMinutes',
         value: value,
       ));
     });
   }
 
   QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
-      intervalDaysGreaterThan(
+      intervalMinutesGreaterThan(
     int value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'intervalDays',
+        property: r'intervalMinutes',
         value: value,
       ));
     });
   }
 
   QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
-      intervalDaysLessThan(
+      intervalMinutesLessThan(
     int value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'intervalDays',
+        property: r'intervalMinutes',
         value: value,
       ));
     });
   }
 
   QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
-      intervalDaysBetween(
+      intervalMinutesBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -1168,7 +1168,7 @@ extension IsarFlashcardQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'intervalDays',
+        property: r'intervalMinutes',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1881,16 +1881,16 @@ extension IsarFlashcardQuerySortBy
   }
 
   QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
-      sortByIntervalDays() {
+      sortByIntervalMinutes() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'intervalDays', Sort.asc);
+      return query.addSortBy(r'intervalMinutes', Sort.asc);
     });
   }
 
   QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
-      sortByIntervalDaysDesc() {
+      sortByIntervalMinutesDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'intervalDays', Sort.desc);
+      return query.addSortBy(r'intervalMinutes', Sort.desc);
     });
   }
 
@@ -2064,16 +2064,16 @@ extension IsarFlashcardQuerySortThenBy
   }
 
   QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
-      thenByIntervalDays() {
+      thenByIntervalMinutes() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'intervalDays', Sort.asc);
+      return query.addSortBy(r'intervalMinutes', Sort.asc);
     });
   }
 
   QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
-      thenByIntervalDaysDesc() {
+      thenByIntervalMinutesDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'intervalDays', Sort.desc);
+      return query.addSortBy(r'intervalMinutes', Sort.desc);
     });
   }
 
@@ -2205,9 +2205,9 @@ extension IsarFlashcardQueryWhereDistinct
   }
 
   QueryBuilder<IsarFlashcard, IsarFlashcard, QDistinct>
-      distinctByIntervalDays() {
+      distinctByIntervalMinutes() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'intervalDays');
+      return query.addDistinctBy(r'intervalMinutes');
     });
   }
 
@@ -2298,9 +2298,9 @@ extension IsarFlashcardQueryProperty
     });
   }
 
-  QueryBuilder<IsarFlashcard, int, QQueryOperations> intervalDaysProperty() {
+  QueryBuilder<IsarFlashcard, int, QQueryOperations> intervalMinutesProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'intervalDays');
+      return query.addPropertyName(r'intervalMinutes');
     });
   }
 

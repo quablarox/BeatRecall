@@ -201,7 +201,7 @@ class MockCardRepository implements CardRepository {
     required String cardUuid,
     required DateTime nextReviewDate,
     required double easeFactor,
-    required int intervalDays,
+    required int intervalMinutes,
     required int repetitions,
   }) async {}
 
@@ -212,7 +212,7 @@ class MockCardRepository implements CardRepository {
       savedCards[i] = savedCards[i].copyWith(
         nextReviewDate: now,
         easeFactor: 2.5,
-        intervalDays: 0,
+        intervalMinutes: 0,
         repetitions: 0,
         updatedAt: now,
       );

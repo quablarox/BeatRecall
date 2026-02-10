@@ -33,10 +33,12 @@ BeatRecall is a mobile application built with **Flutter** designed to help users
 | **FLASHSYS-007** | **Dynamic Offset Adjustment** | ✅ | "Set Start" button to update card start timestamp from current playback position with confirmation dialog. |
 | **FLASHSYS-008** | **Quick Edit Access** | ✅ | Edit button in quiz screen AppBar for quick access to card editing without leaving review session. |
 | **DUEQUEUE-001/002/003** | **Due Queue & Sessions** | ✅ | Logic to fetch cards with continuous session mode until no more due. Daily new cards limit integration. **11 tests passing** |
-| **DASHBOARD-001** | **Dashboard** | ✅ | Overview with stats (total/due cards, success rate, streak), quick actions, refresh. **11 tests passing** |
-| **SETTINGS-001/002/003** | **Settings System** | ✅ | Daily new cards limit (0-999), audio-only mode, theme switching, auto-play toggle. **34 tests passing** |
+| **DASHBOARD-001** | **Dashboard** | ✅ | Overview with stats (total/due cards, success rate, streak), quick actions, refresh. Reactive to settings changes. **14 tests passing** |
+| **SETTINGS-001/002/003** | **Settings System** | ✅ | Daily new cards limit (0-999), audio-only mode, theme switching, auto-play toggle. Reactive display in UI. **37 tests passing** |
+| **SRS-001** | **Granular Intervals (Anki-like)** | ✅ | Modified SM-2 with minute-level precision: Again=1m, Hard=10m, Good=1d→3d, Easy=4d→7d. Anki-style learning steps with dynamic queue management. **49 tests passing** |
+| **DUEQUEUE-004** | **Dynamic Queue Management** | ✅ | Cards respect actual due times, new cards inserted on-demand, deterministic ordering (nextReviewDate+UUID), session state preserved. **16 tests passing** |
 
-**Current Status:** Sprint 4.6 Complete | **Tests:** 205 passing
+**Current Status:** Sprint 4.7 Complete | **Tests:** 224 passing
 
 ### Phase 2: Enhanced Management & Automation
 | ID | Feature | Description |
@@ -58,7 +60,7 @@ class Flashcard {
   String artist;
 
   // SRS Data
-  int intervalDays;     // In days
+  int intervalMinutes;  // Interval in minutes (1440 = 1 day)
   double easeFactor;    // Default: 2.5
   int repetitions;      // Successive correct answers
   DateTime nextReviewDate;  // Timestamp for next review

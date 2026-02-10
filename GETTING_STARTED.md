@@ -77,7 +77,7 @@ flutter test
 2. [User Stories](docs/product/user_stories/user_stories.md) - Feature backlog
 3. [Requirements](docs/product/requirements/core/README.md) - Detailed scope
 
-**Key Info:** MVP in 8 weeks | 20+ user stories | Phase 1 Sprint 4.5 Complete | 209 tests passing
+**Key Info:** MVP in 8 weeks | 20+ user stories | Phase 1 Sprint 4.7 Complete | 224 tests passing
 
 ---
 
@@ -136,26 +136,32 @@ flutter test
 
 ## 🎯 4. Current Status
 
-**Phase 1 - Sprint 4.5:** Enhanced Sessions & Settings (Complete)
+**Phase 1 - Sprint 4.7:** Minute-Based Intervals & Queue Management (Complete)
 
-**Sprint 4.5 Deliverables:**
-- ✅ Continuous session mode (review until no more due cards)
-- ✅ Daily new cards limit (0-999 configurable)
+**Sprint 4.7 Deliverables:**
+- ✅ Minute-level time resolution (1m, 10m, 1h, 1d, 3d, 1w, 1mo)
+- ✅ Anki-style learning steps (Again=1m, Hard=10m, Good=1d→3d, Easy=4d)
+- ✅ Dynamic queue management (cards shown only when due)
+- ✅ Deterministic ordering (nextReviewDate + UUID)
+- ✅ New cards inserted on-demand between due cards
+- ✅ **Test Suite:** 224 passing tests
+
+**Previous Sprint (4.5-4.6):**
+- ✅ Continuous session mode & daily new cards limit
 - ✅ Enhanced interval display on rating buttons
-- ✅ Audio-only mode (collapse video, save bandwidth)
-- ✅ Settings screen with theme switching
-- ✅ **Test Suite:** 209 passing tests
+- ✅ Audio-only mode & settings screen
+- ✅ Player controls (skip ±10s, set start time)
 
 **Previous Milestones:**
-- ✅ Sprint 4: Dashboard, branding, UI polish (124 tests)
+- ✅ Sprint 4-4.6: Dashboard, player controls, settings (205 tests)
 - ✅ Sprint 3: Quiz loop & flashcard playback
 - ✅ Sprint 2: Library screen, filters, search
 - ✅ Sprint 1: Core SRS (SM-2), CSV import, Isar integration
 
 **Next Steps:**
 - ⏳ Manual card creation UI
-- ⏳ Audio trimming (custom start timestamp)
 - ⏳ CI/CD Pipeline
+- ⏳ Auto-metadata fetching
 
 **See:** [Roadmap](docs/product/roadmap/roadmap.md) for details
 
@@ -179,4 +185,4 @@ Before coding:
 
 ---
 
-*Last updated: 2026-02-08*
+*Last updated: 2026-02-10*
