@@ -66,12 +66,18 @@ class FlashcardFactory {
     required String title,
     required String artist,
     String? album,
+    int? year,
+    String? genre,
+    int? youtubeViewCount,
   }) {
     return create(
       youtubeId: youtubeId,
       title: title,
       artist: artist,
       album: album,
+      year: year,
+      genre: genre,
+      youtubeViewCount: youtubeViewCount,
       nextReviewDate: DateTime.now().subtract(const Duration(days: 1)),
     );
   }
@@ -84,12 +90,18 @@ class FlashcardFactory {
     required String title,
     required String artist,
     String? album,
+    int? year,
+    String? genre,
+    int? youtubeViewCount,
   }) {
     return create(
       youtubeId: youtubeId,
       title: title,
       artist: artist,
       album: album,
+      year: year,
+      genre: genre,
+      youtubeViewCount: youtubeViewCount,
       nextReviewDate: DateTime.now().add(const Duration(days: 1)),
     );
   }

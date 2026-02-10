@@ -196,4 +196,100 @@ void main() {
       expect(future.nextReviewDate.isAfter(normal.nextReviewDate), isTrue);
     });
   });
+
+  group('FlashcardFactory - Optional Metadata Fields', () {
+    test('creates Flashcard without optional metadata fields', () {
+      // When: Creating without optional fields
+      final card = FlashcardFactory.create(
+        youtubeId: 'dQw4w9WgXcQ',
+        title: 'Test Song',
+        artist: 'Test Artist',
+      );
+
+      // Then: Optional fields are null
+      expect(card.album, isNull);
+      expect(card.year, isNull);
+      expect(card.genre, isNull);
+      expect(card.youtubeViewCount, isNull);
+    });
+
+    test('creates Flashcard with all optional metadata fields', () {
+      // When: Creating with all optional fields
+      final card = FlashcardFactory.create(
+        youtubeId: 'dQw4w9WgXcQ',
+        title: 'Never Gonna Give You Up',
+        artist: 'Rick Astley',
+        album: 'Whenever You Need Somebody',
+        year: 1987,
+        genre: 'Pop',
+        youtubeViewCount: 1500000000,
+      );
+
+      // Then: All metadata fields are set
+      expect(card.album, 'Whenever You Need Somebody');
+      expect(card.year, 1987);
+      expect(card.genre, 'Pop');
+      expect(card.youtubeViewCount, 1500000000);
+      
+      // And: Core fields are still correct
+      expect(card.title, 'Never Gonna Give You Up');
+      expect(card.artist, 'Rick Astley');
+      expect(card.youtubeId, 'dQw4w9WgXcQ');
+    });
+
+    test('creates Flashcard with partial metadata fields', () {
+      // When: Creating with some optional fields
+      final card = FlashcardFactory.create(
+        youtubeId: 'xyz123',
+        title: 'Modern Song',
+        artist: 'New Artist',
+        year: 2024,
+        genre: 'Electronic',
+        // album and youtubeViewCount omitted
+      );
+
+      // Then: Provided fields are set, others are null
+      expect(card.year, 2024);
+      expect(card.genre, 'Electronic');
+      expect(card.album, isNull);
+      expect(card.youtubeViewCount, isNull);
+    });
+
+    test('metadata fields persist through factory methods', () {
+      // When: Creating due card with metadata
+      final dueCard = FlashcardFactory.createDueCard(
+        youtubeId: 'abc',
+        title: 'Classic Hit',
+        artist: 'Legend',
+        album: 'Greatest Hits',
+        year: 1975,
+        genre: 'Rock',
+        youtubeViewCount: 50000000,
+      );
+
+      // Then: Metadata is preserved
+      expect(dueCard.album, 'Greatest Hits');
+      expect(dueCard.year, 1975);
+      expect(dueCard.genre, 'Rock');
+      expect(dueCard.youtubeViewCount, 50000000);
+      
+      // And: Factory-specific behavior still works
+      expect(dueCard.nextReviewDate.isBefore(DateTime.now()), isTrue);
+    });
+
+    test('handles extreme metadata values', () {
+      // When: Creating with extreme values
+      final card = FlashcardFactory.create(
+        youtubeId: 'test',
+        title: 'Test',
+        artist: 'Test',
+        year: 1800, // Very old
+        youtubeViewCount: 999999999999, // Very high view count
+      );
+
+      // Then: Values are accepted
+      expect(card.year, 1800);
+      expect(card.youtubeViewCount, 999999999999);
+    });
+  });
 }
