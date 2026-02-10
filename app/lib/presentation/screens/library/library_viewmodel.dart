@@ -43,7 +43,12 @@ class LibraryViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      _allCards = await _cardRepository.fetchAllCards();
+      // Get total count first to fetch all cards (not just default 50)
+      final totalCount = await _cardRepository.countAllCards();
+      _allCards = await _cardRepository.fetchAllCards(
+        offset: 0,
+        limit: totalCount > 0 ? totalCount : 1, // Use count as limit
+      );
       _applyFiltersAndSort();
     } catch (e) {
       _errorMessage = 'Failed to load cards: $e';
