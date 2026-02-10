@@ -136,6 +136,10 @@ void main() {
         'Updated Artist',
       );
 
+      // Scroll down to make Save button visible
+      await tester.ensureVisible(find.text('Save Changes'));
+      await tester.pumpAndSettle();
+
       await tester.tap(find.text('Save Changes'));
       await tester.pumpAndSettle();
 

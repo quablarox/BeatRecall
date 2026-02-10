@@ -27,6 +27,9 @@ class _EditCardScreenState extends State<EditCardScreen> {
   late final TextEditingController _artistController;
   late final TextEditingController _youtubeIdController;
   late final TextEditingController _albumController;
+  late final TextEditingController _yearController;
+  late final TextEditingController _genreController;
+  late final TextEditingController _viewCountController;
   late final TextEditingController _startAtController;
   late final TextEditingController _endAtController;
 
@@ -39,6 +42,9 @@ class _EditCardScreenState extends State<EditCardScreen> {
     _artistController = TextEditingController(text: widget.card.artist);
     _youtubeIdController = TextEditingController(text: widget.card.youtubeId);
     _albumController = TextEditingController(text: widget.card.album ?? '');
+    _yearController = TextEditingController(text: widget.card.year?.toString() ?? '');
+    _genreController = TextEditingController(text: widget.card.genre ?? '');
+    _viewCountController = TextEditingController(text: widget.card.youtubeViewCount?.toString() ?? '');
     _startAtController = TextEditingController(
       text: widget.card.startAtSecond.toString(),
     );
@@ -53,6 +59,9 @@ class _EditCardScreenState extends State<EditCardScreen> {
     _artistController.dispose();
     _youtubeIdController.dispose();
     _albumController.dispose();
+    _yearController.dispose();
+    _genreController.dispose();
+    _viewCountController.dispose();
     _startAtController.dispose();
     _endAtController.dispose();
     super.dispose();
@@ -102,6 +111,36 @@ class _EditCardScreenState extends State<EditCardScreen> {
               key: const Key('edit-card-album'),
               controller: _albumController,
               labelText: 'Album (optional)',
+            ),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                Expanded(
+                  child: _buildTextField(
+                    key: const Key('edit-card-year'),
+                    controller: _yearController,
+                    labelText: 'Year (optional)',
+                    keyboardType: TextInputType.number,
+                    validator: _optionalYear('Year'),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _buildTextField(
+                    key: const Key('edit-card-genre'),
+                    controller: _genreController,
+                    labelText: 'Genre (optional)',
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            _buildTextField(
+              key: const Key('edit-card-view-count'),
+              controller: _viewCountController,
+              labelText: 'YouTube View Count (optional)',
+              keyboardType: TextInputType.number,
+              validator: _optionalNonNegativeNumber('View count'),
             ),
             const SizedBox(height: 12),
             Row(
@@ -201,6 +240,22 @@ class _EditCardScreenState extends State<EditCardScreen> {
     };
   }
 
+  String? Function(String?) _optionalYear(String label) {
+    return (value) {
+      if (value == null || value.trim().isEmpty) {
+        return null;
+      }
+      final parsed = int.tryParse(value.trim());
+      if (parsed == null) {
+        return '$label must be a valid year';
+      }
+      if (parsed < 1000 || parsed > 9999) {
+        return '$label must be between 1000 and 9999';
+      }
+      return null;
+    };
+  }
+
   Future<void> _saveChanges() async {
     final form = _formKey.currentState;
     if (form == null || !form.validate()) return;
@@ -208,6 +263,15 @@ class _EditCardScreenState extends State<EditCardScreen> {
     final startAt = int.parse(_startAtController.text.trim());
     final endAtText = _endAtController.text.trim();
     final endAt = endAtText.isEmpty ? null : int.parse(endAtText);
+
+    final yearText = _yearController.text.trim();
+    final year = yearText.isEmpty ? null : int.parse(yearText);
+
+    final genreText = _genreController.text.trim();
+    final genre = genreText.isEmpty ? null : genreText;
+
+    final viewCountText = _viewCountController.text.trim();
+    final viewCount = viewCountText.isEmpty ? null : int.parse(viewCountText);
 
     if (endAt != null && endAt < startAt) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -230,6 +294,9 @@ class _EditCardScreenState extends State<EditCardScreen> {
       album: _albumController.text.trim().isEmpty
           ? null
           : _albumController.text.trim(),
+      year: year,
+      genre: genre,
+      youtubeViewCount: viewCount,
       startAtSecond: startAt,
       endAtSecond: endAt,
       updatedAt: DateTime.now(),
