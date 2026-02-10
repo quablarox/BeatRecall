@@ -19,6 +19,9 @@ class FlashcardMapper {
       ..title = domain.title
       ..artist = domain.artist
       ..album = domain.album
+      ..year = domain.year
+      ..genre = domain.genre
+      ..youtubeViewCount = domain.youtubeViewCount
       ..intervalMinutes = domain.intervalMinutes
       ..easeFactor = domain.easeFactor
       ..repetitions = domain.repetitions
@@ -39,6 +42,9 @@ class FlashcardMapper {
       title: data.title,
       artist: data.artist,
       album: data.album,
+      year: data.year,
+      genre: data.genre,
+      youtubeViewCount: data.youtubeViewCount,
       intervalMinutes: data.intervalMinutes,
       easeFactor: data.easeFactor,
       repetitions: data.repetitions,

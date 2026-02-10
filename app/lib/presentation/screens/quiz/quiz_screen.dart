@@ -254,6 +254,10 @@ class _QuizScreenState extends State<QuizScreen> {
                   back: FlashcardBack(
                     title: card.title,
                     artist: card.artist,
+                    album: card.album,
+                    year: card.year,
+                    genre: card.genre,
+                    youtubeViewCount: card.youtubeViewCount,
                     onRate: (rating) =>
                         viewModel.rateCard(rating, advanceDelay: _cardAdvanceDelay),
                     nextIntervals: viewModel.getNextIntervals(),

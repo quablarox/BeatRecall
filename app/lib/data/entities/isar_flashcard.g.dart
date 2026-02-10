@@ -42,45 +42,60 @@ const IsarFlashcardSchema = CollectionSchema(
       name: r'endAtSecond',
       type: IsarType.long,
     ),
-    r'intervalMinutes': PropertySchema(
+    r'genre': PropertySchema(
       id: 5,
+      name: r'genre',
+      type: IsarType.string,
+    ),
+    r'intervalMinutes': PropertySchema(
+      id: 6,
       name: r'intervalMinutes',
       type: IsarType.long,
     ),
     r'nextReviewDate': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'nextReviewDate',
       type: IsarType.dateTime,
     ),
     r'repetitions': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'repetitions',
       type: IsarType.long,
     ),
     r'startAtSecond': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'startAtSecond',
       type: IsarType.long,
     ),
     r'title': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'title',
       type: IsarType.string,
     ),
     r'updatedAt': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'updatedAt',
       type: IsarType.dateTime,
     ),
     r'uuid': PropertySchema(
-      id: 11,
+      id: 12,
       name: r'uuid',
       type: IsarType.string,
     ),
+    r'year': PropertySchema(
+      id: 13,
+      name: r'year',
+      type: IsarType.long,
+    ),
     r'youtubeId': PropertySchema(
-      id: 12,
+      id: 14,
       name: r'youtubeId',
       type: IsarType.string,
+    ),
+    r'youtubeViewCount': PropertySchema(
+      id: 15,
+      name: r'youtubeViewCount',
+      type: IsarType.long,
     )
   },
   estimateSize: _isarFlashcardEstimateSize,
@@ -150,6 +165,12 @@ int _isarFlashcardEstimateSize(
     }
   }
   bytesCount += 3 + object.artist.length * 3;
+  {
+    final value = object.genre;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   bytesCount += 3 + object.title.length * 3;
   bytesCount += 3 + object.uuid.length * 3;
   bytesCount += 3 + object.youtubeId.length * 3;
@@ -167,14 +188,17 @@ void _isarFlashcardSerialize(
   writer.writeDateTime(offsets[2], object.createdAt);
   writer.writeDouble(offsets[3], object.easeFactor);
   writer.writeLong(offsets[4], object.endAtSecond);
-  writer.writeLong(offsets[5], object.intervalMinutes);
-  writer.writeDateTime(offsets[6], object.nextReviewDate);
-  writer.writeLong(offsets[7], object.repetitions);
-  writer.writeLong(offsets[8], object.startAtSecond);
-  writer.writeString(offsets[9], object.title);
-  writer.writeDateTime(offsets[10], object.updatedAt);
-  writer.writeString(offsets[11], object.uuid);
-  writer.writeString(offsets[12], object.youtubeId);
+  writer.writeString(offsets[5], object.genre);
+  writer.writeLong(offsets[6], object.intervalMinutes);
+  writer.writeDateTime(offsets[7], object.nextReviewDate);
+  writer.writeLong(offsets[8], object.repetitions);
+  writer.writeLong(offsets[9], object.startAtSecond);
+  writer.writeString(offsets[10], object.title);
+  writer.writeDateTime(offsets[11], object.updatedAt);
+  writer.writeString(offsets[12], object.uuid);
+  writer.writeLong(offsets[13], object.year);
+  writer.writeString(offsets[14], object.youtubeId);
+  writer.writeLong(offsets[15], object.youtubeViewCount);
 }
 
 IsarFlashcard _isarFlashcardDeserialize(
@@ -189,15 +213,18 @@ IsarFlashcard _isarFlashcardDeserialize(
   object.createdAt = reader.readDateTime(offsets[2]);
   object.easeFactor = reader.readDouble(offsets[3]);
   object.endAtSecond = reader.readLongOrNull(offsets[4]);
+  object.genre = reader.readStringOrNull(offsets[5]);
   object.id = id;
-  object.intervalMinutes = reader.readLong(offsets[5]);
-  object.nextReviewDate = reader.readDateTime(offsets[6]);
-  object.repetitions = reader.readLong(offsets[7]);
-  object.startAtSecond = reader.readLong(offsets[8]);
-  object.title = reader.readString(offsets[9]);
-  object.updatedAt = reader.readDateTime(offsets[10]);
-  object.uuid = reader.readString(offsets[11]);
-  object.youtubeId = reader.readString(offsets[12]);
+  object.intervalMinutes = reader.readLong(offsets[6]);
+  object.nextReviewDate = reader.readDateTime(offsets[7]);
+  object.repetitions = reader.readLong(offsets[8]);
+  object.startAtSecond = reader.readLong(offsets[9]);
+  object.title = reader.readString(offsets[10]);
+  object.updatedAt = reader.readDateTime(offsets[11]);
+  object.uuid = reader.readString(offsets[12]);
+  object.year = reader.readLongOrNull(offsets[13]);
+  object.youtubeId = reader.readString(offsets[14]);
+  object.youtubeViewCount = reader.readLongOrNull(offsets[15]);
   return object;
 }
 
@@ -219,21 +246,27 @@ P _isarFlashcardDeserializeProp<P>(
     case 4:
       return (reader.readLongOrNull(offset)) as P;
     case 5:
-      return (reader.readLong(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 6:
-      return (reader.readDateTime(offset)) as P;
-    case 7:
       return (reader.readLong(offset)) as P;
+    case 7:
+      return (reader.readDateTime(offset)) as P;
     case 8:
       return (reader.readLong(offset)) as P;
     case 9:
-      return (reader.readString(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 10:
-      return (reader.readDateTime(offset)) as P;
-    case 11:
       return (reader.readString(offset)) as P;
+    case 11:
+      return (reader.readDateTime(offset)) as P;
     case 12:
       return (reader.readString(offset)) as P;
+    case 13:
+      return (reader.readLongOrNull(offset)) as P;
+    case 14:
+      return (reader.readString(offset)) as P;
+    case 15:
+      return (reader.readLongOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -1067,6 +1100,160 @@ extension IsarFlashcardQueryFilter
     });
   }
 
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      genreIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'genre',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      genreIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'genre',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      genreEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'genre',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      genreGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'genre',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      genreLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'genre',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      genreBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'genre',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      genreStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'genre',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      genreEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'genre',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      genreContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'genre',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      genreMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'genre',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      genreIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'genre',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      genreIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'genre',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition> idEqualTo(
       Id value) {
     return QueryBuilder.apply(this, (query) {
@@ -1673,6 +1860,79 @@ extension IsarFlashcardQueryFilter
   }
 
   QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      yearIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'year',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      yearIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'year',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition> yearEqualTo(
+      int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'year',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      yearGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'year',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      yearLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'year',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition> yearBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'year',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
       youtubeIdEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -1807,6 +2067,80 @@ extension IsarFlashcardQueryFilter
       ));
     });
   }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      youtubeViewCountIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'youtubeViewCount',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      youtubeViewCountIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'youtubeViewCount',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      youtubeViewCountEqualTo(int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'youtubeViewCount',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      youtubeViewCountGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'youtubeViewCount',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      youtubeViewCountLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'youtubeViewCount',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterFilterCondition>
+      youtubeViewCountBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'youtubeViewCount',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
 }
 
 extension IsarFlashcardQueryObject
@@ -1877,6 +2211,18 @@ extension IsarFlashcardQuerySortBy
       sortByEndAtSecondDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'endAtSecond', Sort.desc);
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> sortByGenre() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'genre', Sort.asc);
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> sortByGenreDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'genre', Sort.desc);
     });
   }
 
@@ -1972,6 +2318,18 @@ extension IsarFlashcardQuerySortBy
     });
   }
 
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> sortByYear() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'year', Sort.asc);
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> sortByYearDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'year', Sort.desc);
+    });
+  }
+
   QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> sortByYoutubeId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'youtubeId', Sort.asc);
@@ -1982,6 +2340,20 @@ extension IsarFlashcardQuerySortBy
       sortByYoutubeIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'youtubeId', Sort.desc);
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
+      sortByYoutubeViewCount() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'youtubeViewCount', Sort.asc);
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
+      sortByYoutubeViewCountDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'youtubeViewCount', Sort.desc);
     });
   }
 }
@@ -2048,6 +2420,18 @@ extension IsarFlashcardQuerySortThenBy
       thenByEndAtSecondDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'endAtSecond', Sort.desc);
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> thenByGenre() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'genre', Sort.asc);
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> thenByGenreDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'genre', Sort.desc);
     });
   }
 
@@ -2155,6 +2539,18 @@ extension IsarFlashcardQuerySortThenBy
     });
   }
 
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> thenByYear() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'year', Sort.asc);
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> thenByYearDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'year', Sort.desc);
+    });
+  }
+
   QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy> thenByYoutubeId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'youtubeId', Sort.asc);
@@ -2165,6 +2561,20 @@ extension IsarFlashcardQuerySortThenBy
       thenByYoutubeIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'youtubeId', Sort.desc);
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
+      thenByYoutubeViewCount() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'youtubeViewCount', Sort.asc);
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QAfterSortBy>
+      thenByYoutubeViewCountDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'youtubeViewCount', Sort.desc);
     });
   }
 }
@@ -2201,6 +2611,13 @@ extension IsarFlashcardQueryWhereDistinct
       distinctByEndAtSecond() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'endAtSecond');
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QDistinct> distinctByGenre(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'genre', caseSensitive: caseSensitive);
     });
   }
 
@@ -2252,10 +2669,23 @@ extension IsarFlashcardQueryWhereDistinct
     });
   }
 
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QDistinct> distinctByYear() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'year');
+    });
+  }
+
   QueryBuilder<IsarFlashcard, IsarFlashcard, QDistinct> distinctByYoutubeId(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'youtubeId', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, IsarFlashcard, QDistinct>
+      distinctByYoutubeViewCount() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'youtubeViewCount');
     });
   }
 }
@@ -2295,6 +2725,12 @@ extension IsarFlashcardQueryProperty
   QueryBuilder<IsarFlashcard, int?, QQueryOperations> endAtSecondProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'endAtSecond');
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, String?, QQueryOperations> genreProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'genre');
     });
   }
 
@@ -2341,9 +2777,22 @@ extension IsarFlashcardQueryProperty
     });
   }
 
+  QueryBuilder<IsarFlashcard, int?, QQueryOperations> yearProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'year');
+    });
+  }
+
   QueryBuilder<IsarFlashcard, String, QQueryOperations> youtubeIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'youtubeId');
+    });
+  }
+
+  QueryBuilder<IsarFlashcard, int?, QQueryOperations>
+      youtubeViewCountProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'youtubeViewCount');
     });
   }
 }

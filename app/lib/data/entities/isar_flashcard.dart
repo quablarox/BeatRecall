@@ -28,6 +28,15 @@ class IsarFlashcard {
   /// Optional album name
   String? album;
 
+  /// Optional release year
+  int? year;
+
+  /// Optional genre
+  String? genre;
+
+  /// Optional YouTube view count
+  int? youtubeViewCount;
+
   /// SRS: Minutes until next review (0 = learning card, <1440 = learning, >=1440 = graduated)
   int intervalMinutes = 0;
 

@@ -477,6 +477,10 @@ class _FlashcardFrontState extends State<FlashcardFront> {
 class FlashcardBack extends StatelessWidget {
   final String title;
   final String artist;
+  final String? album;
+  final int? year;
+  final String? genre;
+  final int? youtubeViewCount;
   final Function(int rating) onRate;
   final Map<int, String> nextIntervals;
 
@@ -484,6 +488,10 @@ class FlashcardBack extends StatelessWidget {
     super.key,
     required this.title,
     required this.artist,
+    this.album,
+    this.year,
+    this.genre,
+    this.youtubeViewCount,
     required this.onRate,
     required this.nextIntervals,
   });
@@ -522,6 +530,33 @@ class FlashcardBack extends StatelessWidget {
                 color: Colors.grey[700],
               ),
               textAlign: TextAlign.center,
+            ),
+            if (album != null) ...[
+              const SizedBox(height: 4),
+              Text(
+                album!,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey[600],
+                  fontStyle: FontStyle.italic,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+            const SizedBox(height: 16),
+            // Additional metadata
+            Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 16,
+              runSpacing: 8,
+              children: [
+                if (year != null)
+                  _buildMetadataChip(Icons.calendar_today, year.toString()),
+                if (genre != null)
+                  _buildMetadataChip(Icons.music_note, genre!),
+                if (youtubeViewCount != null)
+                  _buildMetadataChip(Icons.visibility, _formatViewCount(youtubeViewCount!)),
+              ],
             ),
             const SizedBox(height: 32),
             
@@ -604,6 +639,41 @@ rating: 0,
         ),
       ],
     );
+  }
+
+  Widget _buildMetadataChip(IconData icon, String label) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 16, color: Colors.grey[700]),
+          const SizedBox(width: 4),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey[700],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _formatViewCount(int count) {
+    if (count >= 1000000000) {
+      return '${(count / 1000000000).toStringAsFixed(1)}B';
+    } else if (count >= 1000000) {
+      return '${(count / 1000000).toStringAsFixed(1)}M';
+    } else if (count >= 1000) {
+      return '${(count / 1000).toStringAsFixed(1)}K';
+    }
+    return count.toString();
   }
 }
 

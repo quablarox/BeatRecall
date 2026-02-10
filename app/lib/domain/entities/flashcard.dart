@@ -18,6 +18,15 @@ class Flashcard {
   /// Optional album name
   final String? album;
 
+  /// Optional release year
+  final int? year;
+
+  /// Optional genre
+  final String? genre;
+
+  /// Optional YouTube view count
+  final int? youtubeViewCount;
+
   /// SRS: Minutes until next review (0 = learning card, <1440 = learning, >=1440 = graduated)
   final int intervalMinutes;
 
@@ -48,6 +57,9 @@ class Flashcard {
     required this.title,
     required this.artist,
     this.album,
+    this.year,
+    this.genre,
+    this.youtubeViewCount,
     this.intervalMinutes = 0,
     this.easeFactor = 2.5,
     this.repetitions = 0,
@@ -65,6 +77,9 @@ class Flashcard {
     String? title,
     String? artist,
     String? album,
+    int? year,
+    String? genre,
+    int? youtubeViewCount,
     int? intervalMinutes,
     double? easeFactor,
     int? repetitions,
@@ -80,6 +95,9 @@ class Flashcard {
       title: title ?? this.title,
       artist: artist ?? this.artist,
       album: album ?? this.album,
+      year: year ?? this.year,
+      genre: genre ?? this.genre,
+      youtubeViewCount: youtubeViewCount ?? this.youtubeViewCount,
       intervalMinutes: intervalMinutes ?? this.intervalMinutes,
       easeFactor: easeFactor ?? this.easeFactor,
       repetitions: repetitions ?? this.repetitions,
