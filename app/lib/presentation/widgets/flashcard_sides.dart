@@ -531,25 +531,15 @@ class FlashcardBack extends StatelessWidget {
               ),
               textAlign: TextAlign.center,
             ),
-            if (album != null) ...[
-              const SizedBox(height: 4),
-              Text(
-                album!,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey[600],
-                  fontStyle: FontStyle.italic,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ],
             const SizedBox(height: 16),
-            // Additional metadata
+            // Metadata chips
             Wrap(
               alignment: WrapAlignment.center,
-              spacing: 16,
+              spacing: 12,
               runSpacing: 8,
               children: [
+                if (album != null)
+                  _buildMetadataChip(Icons.album, album!),
                 if (year != null)
                   _buildMetadataChip(Icons.calendar_today, year.toString()),
                 if (genre != null)
